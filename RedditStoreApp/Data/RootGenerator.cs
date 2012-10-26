@@ -6,6 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 namespace RedditStoreApp.Data
 {
     class RootGenerator
@@ -13,6 +16,7 @@ namespace RedditStoreApp.Data
         public enum SortType { Hot, New, Controversial, Top };
 
         private RequestService _reqServ;
+        private bool _isLoggedIn = false;
 
         public RootGenerator()
         {
@@ -28,8 +32,30 @@ namespace RedditStoreApp.Data
             Response resp = await _reqServ.PostAsync("api/login", keyList);
 
             System.Diagnostics.Debugger.Break();
+            _isLoggedIn = !resp.Content.Contains("invalid password");
 
-            return !resp.Content.Contains("invalid password");
+            return _isLoggedIn;
+        }
+
+        public async Task<Listing<Subreddit>> GetSubredditListAsync()
+        {
+            Response resp = await _reqServ.GetAsync("reddits", true);
+
+            if (!resp.IsSuccess)
+            {
+                throw new GeneratorException(GeneratorExceptionType.Connection);
+            }
+
+            try
+            {
+                JObject respObj = JObject.Parse(resp.Content);
+                JArray subredditArray = (JArray)((JObject)respObj["data"])["children"];
+                return Listing<Subreddit>.BuildSubredditListing(subredditArray);
+            }
+            catch (JsonException ex)
+            {
+                throw new GeneratorException(GeneratorExceptionType.Parse);
+            }
         }
     }
 }

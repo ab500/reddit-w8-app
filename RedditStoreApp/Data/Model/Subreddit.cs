@@ -6,11 +6,7 @@ using System.Threading.Tasks;
 
 namespace RedditStoreApp.Data.Model
 {
-    class Listing<T> : List<T>
+    class Subreddit
     {
-        public static Listing<Subreddit> BuildSubredditListing(string input)
-        {
-
-        }
     }
 }
