@@ -18,6 +18,8 @@ namespace RedditStoreApp.Data
         private RequestService _reqServ;
         private bool _isLoggedIn = false;
 
+        public bool IsLoggedIn { get { return _isLoggedIn; } }
+
         public RootGenerator()
         {
             _reqServ = new RequestService();
@@ -31,15 +33,28 @@ namespace RedditStoreApp.Data
 
             Response resp = await _reqServ.PostAsync("api/login", keyList);
 
-            System.Diagnostics.Debugger.Break();
-            _isLoggedIn = !resp.Content.Contains("invalid password");
+            if (!resp.IsSuccess)
+            {
+                throw new GeneratorException(GeneratorExceptionType.Connection);
+            }
 
+            _isLoggedIn = !resp.Content.Contains("invalid password");
             return _isLoggedIn;
         }
 
-        public async Task<Listing<Subreddit>> GetSubredditListAsync()
+        public async Task<Listing<Subreddit>> GetMySubredditsListAsync()
         {
-            Response resp = await _reqServ.GetAsync("reddits", true);
+            return await GetSubredditListAsync("mine");
+        }
+
+        public async Task<Listing<Subreddit>> GetPopularSubredditsListAsync()
+        {
+            return await GetSubredditListAsync("reddits");
+        }
+
+        private async Task<Listing<Subreddit>> GetSubredditListAsync(string resourcePath)
+        {
+            Response resp = await _reqServ.GetAsync(resourcePath, true);
 
             if (!resp.IsSuccess)
             {

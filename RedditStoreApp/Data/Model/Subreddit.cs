@@ -8,5 +8,9 @@ namespace RedditStoreApp.Data.Model
 {
     class Subreddit
     {
+        public Subreddit(JObject jobj)
+        {
+
+        }
     }
 }

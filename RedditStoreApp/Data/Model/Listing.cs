@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace RedditStoreApp.Data.Model
 {
     class Listing<T> : List<T>
     {
-        public static Listing<Subreddit> BuildSubredditListing(string input)
+        public static Listing<Subreddit> BuildSubredditListing(JArray input)
         {
-
+            
         }
     }
 }
