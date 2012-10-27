@@ -10,13 +10,13 @@ using RedditStoreApp.Data.Factory;
 
 namespace RedditStoreApp.Data.Model
 {
-    class Listing<T> where T: class
+    class Listing<T> : IReadOnlyList<T> where T: class
     {
         public Listing(string resource, RequestService reqServ) 
         {
             _resource = resource;
             _reqServ = reqServ;
-            _hasMore = false;
+            _nextId = null;
             _items = new List<T>();
         }
 
@@ -25,22 +25,22 @@ namespace RedditStoreApp.Data.Model
             ParseData(source);
         }
 
-        public bool HasMore { get { return _hasMore; } }
+        public bool HasMore { get { return _nextId != null; } }
         public string Resource { get { return _resource; } }
 
-        private bool _hasMore;
         private string _resource;
         private string _nextId;
         private RequestService _reqServ;
         private List<T> _items;
+        private string _type;
 
         public async Task<int> More()
         {
-            if (!_hasMore)
+            if (_nextId == null)
             {
                 return 0;
             }
-            return await RetrieveData(_nextId);
+            return await RetrieveData(_resource + "?after=" + _nextId);
         }
 
         public async Task<int> Refresh()
@@ -66,6 +66,7 @@ namespace RedditStoreApp.Data.Model
             }
             catch (JsonException ex)
             {
+                Helpers.DebugWrite(ex.Message);
                 throw new FactoryException(FactoryExceptionType.Parse);
             }
         }
@@ -83,9 +84,29 @@ namespace RedditStoreApp.Data.Model
                 _tempList.Add((T)Activator.CreateInstance(typeof(T), new object[] { child }));
             }
 
-            string nextId = (string)source["after"];
+            _nextId = (string)source["after"];
             _items.AddRange(_tempList);
             return _tempList.Count;
+        }
+
+        public T this[int index]
+        {
+            get { return _items[index]; }
+        }
+
+        public int Count
+        {
+            get { return _items.Count; }
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return _items.GetEnumerator();
+        }
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return _items.GetEnumerator();
         }
     }
 }

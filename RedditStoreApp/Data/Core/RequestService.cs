@@ -154,6 +154,14 @@ namespace RedditStoreApp.Data.Core
 
         private void FormatResource(ref string resource)
         {
+            string queryParams = "";
+            if (resource.Contains("?"))
+            {
+                var pieces = resource.Split(new char[] { '?' });
+                resource = pieces[0];
+                queryParams = pieces[1];
+            }
+
             if (resource[0] == '/' && resource.Length > 1)
             {
                 resource = resource.Substring(1, resource.Length - 1);
@@ -164,7 +172,7 @@ namespace RedditStoreApp.Data.Core
                 resource = resource.Substring(0, resource.Length - 1);
             }
 
-            resource = resource + ".json";
+            resource = resource + ".json?" + queryParams;
         }
     }
 }

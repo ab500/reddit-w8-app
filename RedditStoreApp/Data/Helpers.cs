@@ -13,5 +13,10 @@ namespace RedditStoreApp.Data
             var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             return epoch.AddSeconds(unixTime);
         }
+
+        public static void DebugWrite(string msg)
+        {
+            System.Diagnostics.Debug.WriteLine(msg);
+        }
     }
 }
