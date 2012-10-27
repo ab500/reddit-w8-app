@@ -54,23 +54,9 @@ namespace RedditStoreApp.Data
 
         private async Task<Listing<Subreddit>> GetSubredditListAsync(string resourcePath)
         {
-            Response resp = await _reqServ.GetAsync(resourcePath, true);
-
-            if (!resp.IsSuccess)
-            {
-                throw new GeneratorException(GeneratorExceptionType.Connection);
-            }
-
-            try
-            {
-                JObject respObj = JObject.Parse(resp.Content);
-                JArray subredditArray = (JArray)((JObject)respObj["data"])["children"];
-                return Listing<Subreddit>.BuildSubredditListing(subredditArray);
-            }
-            catch (JsonException ex)
-            {
-                throw new GeneratorException(GeneratorExceptionType.Parse);
-            }
+            Listing<Subreddit> _list = new Listing<Subreddit>(resourcePath, _reqServ);
+            await _list.Refresh();
+            return _list;
         }
     }
 }

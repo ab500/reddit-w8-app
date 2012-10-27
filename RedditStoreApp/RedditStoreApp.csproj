@@ -100,18 +100,17 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\Core\PasswordVaultWrapper.cs" />
     <Compile Include="Data\Core\RequestService.cs" />
     <Compile Include="Data\Core\Response.cs" />
+    <Compile Include="Data\GeneratorException.cs" />
     <Compile Include="Data\Model\Comment.cs" />
     <Compile Include="Data\Model\Listing.cs" />
     <Compile Include="Data\Model\Post.cs" />
+    <Compile Include="Data\Model\Subreddit.cs" />
     <Compile Include="Data\RootGenerator.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -143,6 +142,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>.\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '11.0' ">
     <VisualStudioVersion>11.0</VisualStudioVersion>

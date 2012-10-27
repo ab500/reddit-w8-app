@@ -8,9 +8,9 @@ namespace RedditStoreApp.Data
 {
     public enum GeneratorExceptionType { Connection, Parse, NotAuthed };
 
-    class GeneratorException : Exception
+    public class GeneratorException : Exception
     {
-        private GeneratorExceptionType ExceptionType { get; private set; }
+        public GeneratorExceptionType ExceptionType { get; private set; }
 
         public GeneratorException(GeneratorExceptionType type) : base(GetStringFromType(type))
         {

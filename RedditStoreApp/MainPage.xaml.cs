@@ -37,6 +37,7 @@ namespace RedditStoreApp
         {
             RootGenerator rg = new RootGenerator();
             await rg.Login(await PasswordVaultWrapper.GetUsername(), await PasswordVaultWrapper.GetPassword());
+            await rg.GetPopularSubredditsListAsync();
         }
     }
 }
