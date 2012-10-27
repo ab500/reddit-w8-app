@@ -81,7 +81,7 @@ namespace RedditStoreApp.Data.Model
             {
                 // THIS ISN'T COMPILE-TIME CHECKED.
                 // Instances must implement a JObject constructor. Scary.
-                _tempList.Add((T)Activator.CreateInstance(typeof(T), new object[] { child }));
+                _tempList.Add((T)Activator.CreateInstance(typeof(T), new object[] { child, _reqServ }));
             }
 
             _nextId = (string)source["after"];

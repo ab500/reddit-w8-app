@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using RedditStoreApp.Data.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,9 +18,15 @@ namespace RedditStoreApp.Data.Model
         public string Description { get; private set; }
         public string Id { get; private set; }
         public string Type { get; private set; }
+        public string Url { get; private set; }
+        public Listing<Post> Posts { get; private set; }
 
-        public Subreddit(JObject jobj)
+        private RequestService _reqServ;
+
+        public Subreddit(JObject jobj, RequestService reqServ)
         {
+            _reqServ = reqServ;
+
             var data = (JObject)jobj["data"];
             this.DisplayName = data["display_name"].Value<string>();
             this.Title = data["title"].Value<string>();
@@ -29,6 +36,9 @@ namespace RedditStoreApp.Data.Model
             this.Description = data["public_description"].Value<string>();
             this.Id = data["id"].Value<string>();
             this.Type = jobj["kind"].Value<string>();
+            this.Url = data["url"].Value<string>();
+
+            this.Posts = new Listing<Post>(this.Url, _reqServ);
         }
 
         public override string ToString()

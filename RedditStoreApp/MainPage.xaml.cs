@@ -41,8 +41,9 @@ namespace RedditStoreApp
             await rg.Login(await PasswordVaultWrapper.GetUsername(), await PasswordVaultWrapper.GetPassword());
             Listing<Subreddit> l = await rg.GetPopularSubredditsListAsync();
             Listing<Subreddit> l1 = await rg.GetMySubredditsListAsync();
-            await l.More();
-            await l1.Refresh();
+            //await l.More();
+           // await l1.Refresh();
+            await l[0].Posts.Refresh();
             System.Diagnostics.Debugger.Break();
         }
     }
