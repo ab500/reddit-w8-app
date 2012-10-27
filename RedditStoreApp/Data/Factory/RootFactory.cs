@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace RedditStoreApp.Data
+namespace RedditStoreApp.Data.Factory
 {
-    class RootGenerator
+    class RootFactory
     {
         public enum SortType { Hot, New, Controversial, Top };
 
@@ -20,7 +20,7 @@ namespace RedditStoreApp.Data
 
         public bool IsLoggedIn { get { return _isLoggedIn; } }
 
-        public RootGenerator()
+        public RootFactory()
         {
             _reqServ = new RequestService();
         }
@@ -35,7 +35,7 @@ namespace RedditStoreApp.Data
 
             if (!resp.IsSuccess)
             {
-                throw new GeneratorException(GeneratorExceptionType.Connection);
+                throw new FactoryException(FactoryExceptionType.Connection);
             }
 
             _isLoggedIn = !resp.Content.Contains("invalid password");
@@ -44,7 +44,7 @@ namespace RedditStoreApp.Data
 
         public async Task<Listing<Subreddit>> GetMySubredditsListAsync()
         {
-            return await GetSubredditListAsync("mine");
+            return await GetSubredditListAsync("reddits/mine");
         }
 
         public async Task<Listing<Subreddit>> GetPopularSubredditsListAsync()

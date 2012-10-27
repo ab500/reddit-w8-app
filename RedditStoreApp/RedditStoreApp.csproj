@@ -106,12 +106,13 @@
     <Compile Include="Data\Core\PasswordVaultWrapper.cs" />
     <Compile Include="Data\Core\RequestService.cs" />
     <Compile Include="Data\Core\Response.cs" />
-    <Compile Include="Data\GeneratorException.cs" />
+    <Compile Include="Data\Factory\FactoryException.cs" />
+    <Compile Include="Data\Helpers.cs" />
     <Compile Include="Data\Model\Comment.cs" />
     <Compile Include="Data\Model\Listing.cs" />
     <Compile Include="Data\Model\Post.cs" />
     <Compile Include="Data\Model\Subreddit.cs" />
-    <Compile Include="Data\RootGenerator.cs" />
+    <Compile Include="Data\Factory\RootFactory.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

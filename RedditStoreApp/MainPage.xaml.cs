@@ -1,5 +1,7 @@
 ﻿using RedditStoreApp.Data;
 using RedditStoreApp.Data.Core;
+using RedditStoreApp.Data.Factory;
+using RedditStoreApp.Data.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -35,9 +37,11 @@ namespace RedditStoreApp
         /// property is typically used to configure the page.</param>
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            RootGenerator rg = new RootGenerator();
+            RootFactory rg = new RootFactory();
             await rg.Login(await PasswordVaultWrapper.GetUsername(), await PasswordVaultWrapper.GetPassword());
-            await rg.GetPopularSubredditsListAsync();
+            Listing<Subreddit> l = await rg.GetPopularSubredditsListAsync();
+            Listing<Subreddit> l1 = await rg.GetMySubredditsListAsync();
+            System.Diagnostics.Debugger.Break();
         }
     }
 }

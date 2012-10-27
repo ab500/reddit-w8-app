@@ -4,28 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RedditStoreApp.Data
+namespace RedditStoreApp.Data.Factory
 {
-    public enum GeneratorExceptionType { Connection, Parse, NotAuthed };
+    public enum FactoryExceptionType { Connection, Parse, NotAuthed };
 
-    public class GeneratorException : Exception
+    public class FactoryException : Exception
     {
-        public GeneratorExceptionType ExceptionType { get; private set; }
+        public FactoryExceptionType ExceptionType { get; private set; }
 
-        public GeneratorException(GeneratorExceptionType type) : base(GetStringFromType(type))
+        public FactoryException(FactoryExceptionType type) : base(GetStringFromType(type))
         {
             this.ExceptionType = type;
         }
 
-        private static string GetStringFromType(GeneratorExceptionType type)
+        private static string GetStringFromType(FactoryExceptionType type)
         {
             switch (type)
             {
-                case GeneratorExceptionType.Connection:
+                case FactoryExceptionType.Connection:
                     return "A connection error has occured. Please try again";
-                case GeneratorExceptionType.Parse:
+                case FactoryExceptionType.Parse:
                     return "The data received was not in its intented format. Please try again";
-                case GeneratorExceptionType.NotAuthed:
+                case FactoryExceptionType.NotAuthed:
                     return "You're not currently logged in or your password has changed.";
                 default:
                     return "An unspecified error has occurred";

@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RedditStoreApp.Data.Core;
+using RedditStoreApp.Data.Factory;
 
 namespace RedditStoreApp.Data.Model
 {
-    class Listing<T>
+    class Listing<T> where T: class
     {
         public Listing(string resource, RequestService reqServ) 
         {
@@ -54,7 +55,7 @@ namespace RedditStoreApp.Data.Model
 
             if (!resp.IsSuccess)
             {
-                throw new GeneratorException(GeneratorExceptionType.Connection);
+                throw new FactoryException(FactoryExceptionType.Connection);
             }
 
             try
@@ -65,13 +66,26 @@ namespace RedditStoreApp.Data.Model
             }
             catch (JsonException ex)
             {
-                throw new GeneratorException(GeneratorExceptionType.Parse);
+                throw new FactoryException(FactoryExceptionType.Parse);
             }
         }
 
         private int ParseData(JObject source)
         {
-            return 0;
+            JArray children = (JArray)source["children"];
+
+            List<T> _tempList = new List<T>();
+
+            foreach (var child in children)
+            {
+                // THIS ISN'T COMPILE-TIME CHECKED.
+                // Instances must implement a JObject constructor. Scary.
+                _tempList.Add((T)Activator.CreateInstance(typeof(T), new object[] { child }));
+            }
+
+            string nextId = (string)source["after"];
+            _items.AddRange(_tempList);
+            return _tempList.Count;
         }
     }
 }
