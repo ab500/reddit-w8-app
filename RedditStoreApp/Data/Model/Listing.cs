@@ -12,21 +12,25 @@ namespace RedditStoreApp.Data.Model
 {
     class Listing<T> : Thing, IReadOnlyList<T> where T: Thing
     {
-        public Listing(string resource, RequestService reqServ) : base(resource, reqServ)
+        public Listing(string resource, RequestService reqServ, bool ignoreParent = false) : base(resource, reqServ)
         {
             _nextId = null;
+            _ignoreParent = ignoreParent;
             _items = new List<T>();
         }
 
-        public Listing(string resource, JObject source, RequestService reqServ) : this(resource, reqServ)
+        public Listing(string resource, JObject source, RequestService reqServ, bool ignoreParent = false)
+            : this(resource, reqServ)
         {
-            ParseData(source);
+            _ignoreParent = ignoreParent;
+            ParseData((JObject)source["data"]);
         }
 
         public bool HasMore { get { return _nextId != null; } }
 
         private string _nextId;
         private List<T> _items;
+        private bool _ignoreParent;
 
         public async Task<int> More()
         {
@@ -50,6 +54,11 @@ namespace RedditStoreApp.Data.Model
 
         private async Task<int> RetrieveData(string source)
         {
+            if (source == null || source == "")
+            {
+                return 0;
+            }
+
             Response resp = await _reqServ.GetAsync(source, true);
 
             if (!resp.IsSuccess)
@@ -80,7 +89,6 @@ namespace RedditStoreApp.Data.Model
 
             foreach (var child in children)
             {
-                // THIS ISN'T COMPILE-TIME CHECKED.
                 // Instances must implement a JObject constructor. Scary.
                 _tempList.Add((T)Activator.CreateInstance(typeof(T), new object[] { child, _reqServ }));
             }

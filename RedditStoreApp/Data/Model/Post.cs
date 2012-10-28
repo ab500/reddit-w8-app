@@ -27,7 +27,6 @@ namespace RedditStoreApp.Data.Model
         public int Ups { get; private set; }
         public int Downs { get; private set; }
         public DateTime Created { get; private set; }
-
         public bool? Likes { get; private set; }
 
         public Listing<Comment> Comments { get; private set; }
