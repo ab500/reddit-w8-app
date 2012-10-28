@@ -34,7 +34,7 @@ namespace RedditStoreApp.Data.Core
             _client = new HttpClient(_handler);
             _client.DefaultRequestHeaders.Add("user-agent", "wastingtime1's Prototype Windows Store Reddit App");
 
-            _requestTimeout = TimeSpan.FromSeconds(5);
+            _requestTimeout = TimeSpan.FromSeconds(10);
             _cacheTimeout = TimeSpan.FromSeconds(30);
             _cache = new Dictionary<string, Response>();
 

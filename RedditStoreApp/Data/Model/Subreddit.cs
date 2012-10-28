@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RedditStoreApp.Data.Model
 {
-    class Subreddit
+    class Subreddit : Thing
     {
         public string DisplayName { get; private set; }
         public string Title { get; private set; }
@@ -21,11 +21,8 @@ namespace RedditStoreApp.Data.Model
         public string Url { get; private set; }
         public Listing<Post> Posts { get; private set; }
 
-        private RequestService _reqServ;
-
-        public Subreddit(JObject jobj, RequestService reqServ)
+        public Subreddit(JObject jobj, RequestService reqServ) : base(jobj, reqServ)
         {
-            _reqServ = reqServ;
             var data = (JObject)jobj["data"];
             this.DisplayName = data["display_name"].Value<string>();
             this.Title = data["title"].Value<string>();

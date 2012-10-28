@@ -10,12 +10,10 @@ using RedditStoreApp.Data.Factory;
 
 namespace RedditStoreApp.Data.Model
 {
-    class Listing<T> : IReadOnlyList<T> where T: class
+    class Listing<T> : Thing, IReadOnlyList<T> where T: Thing
     {
-        public Listing(string resource, RequestService reqServ) 
+        public Listing(string resource, RequestService reqServ) : base(resource, reqServ)
         {
-            _resource = resource;
-            _reqServ = reqServ;
             _nextId = null;
             _items = new List<T>();
         }
@@ -26,13 +24,9 @@ namespace RedditStoreApp.Data.Model
         }
 
         public bool HasMore { get { return _nextId != null; } }
-        public string Resource { get { return _resource; } }
 
-        private string _resource;
         private string _nextId;
-        private RequestService _reqServ;
         private List<T> _items;
-        private string _type;
 
         public async Task<int> More()
         {
@@ -40,13 +34,18 @@ namespace RedditStoreApp.Data.Model
             {
                 return 0;
             }
-            return await RetrieveData(_resource + "?after=" + _nextId);
+            return await RetrieveData(this.Resource + "?after=" + _nextId);
         }
 
         public async Task<int> Refresh()
         {
             _items.Clear();
-            return await RetrieveData(_resource);
+            return await RetrieveData(this.Resource);
+        }
+
+        public async Task<int> Load()
+        {
+            return await Refresh();
         }
 
         private async Task<int> RetrieveData(string source)
@@ -60,9 +59,11 @@ namespace RedditStoreApp.Data.Model
 
             try
             {
-                JObject respObj = JObject.Parse(resp.Content);
-                JObject subredditArray = (JObject)respObj["data"];
-                return ParseData(subredditArray);
+                JObject respObj = typeof(T) == typeof(Comment) ? 
+                    (JObject)JArray.Parse(resp.Content)[1] : JObject.Parse(resp.Content);
+                this.LoadThingData(respObj);
+                JObject thingArray = (JObject)respObj["data"];
+                return ParseData(thingArray);
             }
             catch (JsonException ex)
             {

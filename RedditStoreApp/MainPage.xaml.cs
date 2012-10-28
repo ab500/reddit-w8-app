@@ -43,7 +43,8 @@ namespace RedditStoreApp
             Listing<Subreddit> l1 = await rg.GetMySubredditsListAsync();
             //await l.More();
            // await l1.Refresh();
-            await l[0].Posts.Refresh();
+            await l[0].Posts.Load();
+            await l[0].Posts[0].Comments.Load();
             System.Diagnostics.Debugger.Break();
         }
     }

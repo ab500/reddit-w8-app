@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace RedditStoreApp.Data.Model
 {
-    class Post
+    class Post : Thing
     {
+
         public string Author { get; private set; }
         public string Domain { get; private set; }
         public bool IsSelf { get; private set; }
@@ -29,12 +30,12 @@ namespace RedditStoreApp.Data.Model
 
         public bool? Likes { get; private set; }
 
-        private RequestService _reqServ;
+        public Listing<Comment> Comments { get; private set; }
 
-        public Post(JObject jobj, RequestService reqServ)
+        public Post(JObject jobj, RequestService reqServ) : base(jobj, reqServ)
         {
-            _reqServ = reqServ;
             var data = (JObject)jobj["data"];
+
             this.Author = data["author"].Value<string>();
             this.Domain = data["domain"].Value<string>();
             this.IsSelf = data["is_self"].Value<string>() == "true";
@@ -65,6 +66,8 @@ namespace RedditStoreApp.Data.Model
             {
                 this.Likes = null;
             }
+
+            this.Comments = new Listing<Comment>("comments/" + this.Id, _reqServ);
         }
     }
 }

@@ -113,6 +113,7 @@
     <Compile Include="Data\Model\Post.cs" />
     <Compile Include="Data\Model\Subreddit.cs" />
     <Compile Include="Data\Factory\RootFactory.cs" />
+    <Compile Include="Data\Model\Thing.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
