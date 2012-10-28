@@ -44,10 +44,27 @@ namespace RedditStoreApp.Data.Model
             this.IsHidden = data["hidden"].Value<string>() == "true";
             this.SelfText = data["selftext"].Value<string>();
             this.Subreddit = data["subreddit"].Value<string>();
-            //this.ThumbnailUrl = data[
+            this.ThumbnailUrl = data["thumbnail"].Value<string>();
+            this.Title = data["title"].Value<string>();
+            this.Url = data["url"].Value<string>();
 
+            this.Ups = data["ups"].Value<int>();
+            this.Downs = data["downs"].Value<int>();
+            this.Created = Helpers.FromUnixTime(data["created"].Value<long>());
 
-
+            string likeValue = data["likes"].Value<string>();
+            if (likeValue == "true")
+            {
+                this.Likes = true;
+            }
+            else if (likeValue == "false")
+            {
+                this.Likes = false;
+            }
+            else
+            {
+                this.Likes = null;
+            }
         }
     }
 }
