@@ -33,6 +33,11 @@ namespace RedditStoreApp.Data.Model
 
         protected void LoadThingData(JObject jobj)
         {
+            if (this.IsLoaded)
+            {
+                return;
+            }
+
             if (jobj["name"] != null)
             {
                 this.Name = jobj["name"].Value<string>();
@@ -55,6 +60,7 @@ namespace RedditStoreApp.Data.Model
             {
                 this.Type = jobj["kind"].Value<string>();
             }
+
             this.IsLoaded = true;
         }
 
