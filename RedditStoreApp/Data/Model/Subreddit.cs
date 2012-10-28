@@ -26,7 +26,6 @@ namespace RedditStoreApp.Data.Model
         public Subreddit(JObject jobj, RequestService reqServ)
         {
             _reqServ = reqServ;
-
             var data = (JObject)jobj["data"];
             this.DisplayName = data["display_name"].Value<string>();
             this.Title = data["title"].Value<string>();
