@@ -15,11 +15,9 @@ namespace RedditStoreApp.Data.Core
         private HttpClientHandler _handler;
         private CookieContainer _cookiejar;
 
-
         private TimeSpan _requestTimeout;
         private TimeSpan _cacheTimeout;
         private Dictionary<string, Response> _cache;
-        private string _cookie;
 
         public RequestService()
         {
@@ -71,6 +69,10 @@ namespace RedditStoreApp.Data.Core
             catch (HttpRequestException ex)
             {
                 httpRespContent = ex.Message;
+            }
+            catch (OperationCanceledException)
+            {
+                httpRespContent = "The task was cancelled.";
             }
 
             Response resp = BuildResponse(httpRespContent, httpResp);

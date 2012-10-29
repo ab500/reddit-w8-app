@@ -37,16 +37,17 @@ namespace RedditStoreApp
         /// property is typically used to configure the page.</param>
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            RootFactory rg = new RootFactory();
-            await rg.Login(await PasswordVaultWrapper.GetUsername(), await PasswordVaultWrapper.GetPassword());
-            Listing<Subreddit> l = await rg.GetPopularSubredditsListAsync();
-            Listing<Subreddit> l1 = await rg.GetMySubredditsListAsync();
+            RedditApi reddit = new RedditApi();
+            await reddit.Login(await PasswordVaultWrapper.GetUsername(), await PasswordVaultWrapper.GetPassword());
+            Listing<Subreddit> l = await reddit.GetPopularSubredditsListAsync();
+            Listing<Subreddit> l1 = await reddit.GetMySubredditsListAsync();
             //await l.More();
            // await l1.Refresh();
             await l[0].Posts.Load();
             await l[0].Posts[1].Comments.Load();
             await l[0].Posts[1].Comments[0].Replies.More();
             await l[0].Posts[1].Comments[0].Replies.Refresh();
+            await l[0].Posts[1].Comments.Refresh();
             System.Diagnostics.Debugger.Break();
         }
     }

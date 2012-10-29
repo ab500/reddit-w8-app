@@ -11,7 +11,7 @@ using Newtonsoft.Json.Linq;
 
 namespace RedditStoreApp.Data.Factory
 {
-    class RootFactory
+    class RedditApi
     {
         public enum SortType { Hot, New, Controversial, Top };
 
@@ -20,7 +20,7 @@ namespace RedditStoreApp.Data.Factory
 
         public bool IsLoggedIn { get { return _isLoggedIn; } }
 
-        public RootFactory()
+        public RedditApi()
         {
             _reqServ = new RequestService();
         }

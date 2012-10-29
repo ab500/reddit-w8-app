@@ -16,8 +16,6 @@ namespace RedditStoreApp.Data.Model
         public bool Over18 { get; private set; }
         public int Subscribers { get; private set; }
         public string Description { get; private set; }
-        public string Id { get; private set; }
-        public string Type { get; private set; }
         public string Url { get; private set; }
         public Listing<Post> Posts { get; private set; }
 
@@ -30,8 +28,6 @@ namespace RedditStoreApp.Data.Model
             this.Over18 = data["over18"].Value<string>() == "true" ? true : false;
             this.Subscribers = data["subscribers"].Value<int>();
             this.Description = data["public_description"].Value<string>();
-            this.Id = data["id"].Value<string>();
-            this.Type = jobj["kind"].Value<string>();
             this.Url = data["url"].Value<string>();
 
             this.Posts = new Listing<Post>(this.Url, _reqServ);
