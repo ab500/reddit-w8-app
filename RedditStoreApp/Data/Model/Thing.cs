@@ -38,6 +38,9 @@ namespace RedditStoreApp.Data.Model
                 return;
             }
 
+            // This sets the name for things. It basically leaves
+            // name and id blank for listings, they don't have these
+            // things really.
             if (jobj["name"] != null)
             {
                 this.Name = jobj["name"].Value<string>();

@@ -54,19 +54,14 @@ namespace RedditStoreApp.Data.Model
 
             if (replyObj != null)
             {
-                if ((string)replyObj.SelectToken("data.children[0].kind") == "more")
-                {
-                    this.Replies = new Listing<Comment>(GetRepliesResource(), _reqServ, true);
-                }
-                else
-                {
-                    this.Replies = new Listing<Comment>(GetRepliesResource(), replyObj, _reqServ, true);
-                }
+                this.Replies = new Listing<Comment>(GetRepliesResource(), replyObj, _reqServ, true);   
             }
             else
             {
                 this.Replies = new Listing<Comment>("", _reqServ);
             }
+
+            this.Replies.SetLinkId(this.LinkId);
         }
 
         private string GetRepliesResource()

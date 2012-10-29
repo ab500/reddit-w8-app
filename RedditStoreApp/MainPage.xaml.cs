@@ -44,7 +44,9 @@ namespace RedditStoreApp
             //await l.More();
            // await l1.Refresh();
             await l[0].Posts.Load();
-            await l[0].Posts[0].Comments.Load();
+            await l[0].Posts[1].Comments.Load();
+            await l[0].Posts[1].Comments[0].Replies.More();
+            await l[0].Posts[1].Comments[0].Replies.Refresh();
             System.Diagnostics.Debugger.Break();
         }
     }
