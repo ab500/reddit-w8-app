@@ -37,6 +37,7 @@ namespace RedditStoreApp
         /// property is typically used to configure the page.</param>
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
+            /*
             RedditApi reddit = new RedditApi();
             await reddit.Login(await PasswordVaultWrapper.GetUsername(), await PasswordVaultWrapper.GetPassword());
             Listing<Subreddit> l = await reddit.GetPopularSubredditsListAsync();
@@ -49,6 +50,7 @@ namespace RedditStoreApp
             await l[0].Posts[1].Comments[0].Replies.Refresh();
             await l[0].Posts[1].Comments.Refresh();
             System.Diagnostics.Debugger.Break();
+             * */
         }
     }
 }
