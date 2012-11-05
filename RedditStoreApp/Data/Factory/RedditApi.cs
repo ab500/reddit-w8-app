@@ -11,7 +11,7 @@ using Newtonsoft.Json.Linq;
 
 namespace RedditStoreApp.Data.Factory
 {
-    class RedditApi
+    class RedditApi : IRedditApi
     {
         public enum SortType { Hot, New, Controversial, Top };
 
@@ -25,7 +25,7 @@ namespace RedditStoreApp.Data.Factory
             _reqServ = new RequestService();
         }
 
-        public async Task<bool> Login(string userName, string password)
+        public async Task<bool> LoginAsync(string userName, string password)
         {
             var keyList = new List<KeyValuePair<string, string>>();
             keyList.Add(new KeyValuePair<string,string>("user", userName));

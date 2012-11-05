@@ -37,6 +37,7 @@ namespace RedditStoreApp
         /// property is typically used to configure the page.</param>
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
+       
             /*
             RedditApi reddit = new RedditApi();
             await reddit.Login(await PasswordVaultWrapper.GetUsername(), await PasswordVaultWrapper.GetPassword());

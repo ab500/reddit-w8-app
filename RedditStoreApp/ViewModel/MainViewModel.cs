@@ -1,4 +1,7 @@
 using GalaSoft.MvvmLight;
+using VModel = RedditStoreApp.ViewModel.Model;
+using DModel = RedditStoreApp.Data.Model;
+using System.Collections.ObjectModel;
 
 namespace RedditStoreApp.ViewModel
 {
@@ -21,6 +24,9 @@ namespace RedditStoreApp.ViewModel
         /// </summary>
         public MainViewModel()
         {
+            this.Subreddits = new ObservableCollection<VModel.Subreddit>();
+
+            
             ////if (IsInDesignMode)
             ////{
             ////    // Code runs in Blend --> create design time data.
@@ -32,5 +38,8 @@ namespace RedditStoreApp.ViewModel
         }
 
         public string HelloString { get { return "hello!"; } }
+
+        public ObservableCollection<VModel.Subreddit> Subreddits { get; private set; }
+
     }
 }

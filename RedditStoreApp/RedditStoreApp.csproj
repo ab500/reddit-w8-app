@@ -109,6 +109,7 @@
     <Compile Include="Data\Core\RequestService.cs" />
     <Compile Include="Data\Core\Response.cs" />
     <Compile Include="Data\Factory\FactoryException.cs" />
+    <Compile Include="Data\Factory\IRedditApi.cs" />
     <Compile Include="Data\Helpers.cs" />
     <Compile Include="Data\Model\Comment.cs" />
     <Compile Include="Data\Model\Listing.cs" />
@@ -116,11 +117,14 @@
     <Compile Include="Data\Model\Subreddit.cs" />
     <Compile Include="Data\Factory\RedditApi.cs" />
     <Compile Include="Data\Model\Thing.cs" />
+    <Compile Include="Helpers\INavigationService.cs" />
+    <Compile Include="Helpers\NavigationService.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\Model\Subreddit.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -135,7 +139,6 @@
     <Content Include="Assets\SmallLogo.png" />
     <Content Include="Assets\SplashScreen.png" />
     <Content Include="Assets\StoreLogo.png" />
-    <Content Include="MVVMLight.Nuget.Readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

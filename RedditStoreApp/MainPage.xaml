@@ -9,6 +9,10 @@
     mc:Ignorable="d">
 
     <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
         <TextBlock x:Name="TestBlock" Text="{Binding HelloString}" />
     </Grid>
 </Page>

@@ -47,7 +47,7 @@ namespace RedditStoreApp.Data.Core
                         vault.Remove(cred);
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     // The password vault is mildly retarded.
                 }

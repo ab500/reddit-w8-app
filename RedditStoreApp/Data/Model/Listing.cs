@@ -38,7 +38,7 @@ namespace RedditStoreApp.Data.Model
         }
 
         public bool HasMore { get { return _nextId != null; } }
-        public bool IsLoaded { get { return _hasLoaded; } }
+        public new bool IsLoaded { get { return _hasLoaded; } }
 
         public async Task<int> More()
         {
