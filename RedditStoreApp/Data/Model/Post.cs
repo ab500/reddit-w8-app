@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RedditStoreApp.Data.Model
 {
-    class Post : Thing
+    public class Post : Thing
     {
 
         public string Author { get; private set; }

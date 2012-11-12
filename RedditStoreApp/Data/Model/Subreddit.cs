@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace RedditStoreApp.Data.Model
 {
-    class Subreddit : Thing
+    public class Subreddit : Thing
     {
         public string DisplayName { get; private set; }
         public string Title { get; private set; }

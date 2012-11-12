@@ -11,7 +11,7 @@ using Newtonsoft.Json.Linq;
 
 namespace RedditStoreApp.Data.Factory
 {
-    class RedditApi : IRedditApi
+    public class RedditApi : IRedditApi
     {
         public enum SortType { Hot, New, Controversial, Top };
 

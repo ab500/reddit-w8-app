@@ -10,7 +10,7 @@ using RedditStoreApp.Data.Factory;
 
 namespace RedditStoreApp.Data.Model
 {
-    class Listing<T> : Thing, IReadOnlyList<T> where T: Thing
+    public class Listing<T> : Thing, IReadOnlyList<T> where T: Thing
     {
 
         private string _nextId;

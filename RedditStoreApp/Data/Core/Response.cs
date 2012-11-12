@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RedditStoreApp.Data.Core
 {
-    class Response
+    public class Response
     {
         public Response(
             String content, 

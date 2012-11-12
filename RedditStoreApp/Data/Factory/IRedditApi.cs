@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace RedditStoreApp.Data.Factory
 {
-    interface IRedditApi
+    public interface IRedditApi
     {
         bool IsLoggedIn { get; }
         Task<bool> LoginAsync(string userName, string password);

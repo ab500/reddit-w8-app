@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RedditStoreApp.ViewModel.Model
+namespace RedditStoreApp.ViewModel
 {
-    public class Subreddit
+    public class SubredditViewModel
     {
     }
 }

@@ -9,7 +9,7 @@ using System.Net;
 
 namespace RedditStoreApp.Data.Core
 {
-    class RequestService
+    public class RequestService
     {
         private HttpClient _client;
         private HttpClientHandler _handler;
