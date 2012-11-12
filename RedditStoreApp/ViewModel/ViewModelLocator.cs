@@ -2,6 +2,7 @@ using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 using RedditStoreApp.Helpers;
+using RedditStoreApp.Data.Factory;
 
 namespace RedditStoreApp.ViewModel
 {
@@ -24,7 +25,7 @@ namespace RedditStoreApp.ViewModel
             }
             else
             {
-                SimpleIoc.Default.Register<RedditStoreApp.Data.Factory.RedditApi>();
+                SimpleIoc.Default.Register<IRedditApi, RedditApi>();
                 SimpleIoc.Default.Register<INavigationService>(() => new NavigationService() );
             }
 
