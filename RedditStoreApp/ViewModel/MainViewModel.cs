@@ -17,18 +17,10 @@ namespace RedditStoreApp.ViewModel
         public MainViewModel(IRedditApi dataService)
         {
             this._dataService = dataService;
-
             this.Subreddits = new ObservableCollection<SubredditViewModel>();
-            
-            ////if (IsInDesignMode)
-            ////{
-            ////    // Code runs in Blend --> create design time data.
-            ////}
-            ////else
-            ////{
-            ////    // Code runs "for real"
-            ////}
         }
+
+        
 
         public string HelloString { get { return "hello!"; } }
 
