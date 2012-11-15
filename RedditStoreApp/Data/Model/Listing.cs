@@ -89,7 +89,7 @@ namespace RedditStoreApp.Data.Model
 
             if (!resp.IsSuccess)
             {
-                throw new FactoryException(FactoryExceptionType.Connection);
+                throw new RedditApiException(RedditApiExceptionType.Connection);
             }
 
             return ParseAndExtractData((string content) => {
@@ -111,7 +111,7 @@ namespace RedditStoreApp.Data.Model
 
             if (!resp.IsSuccess)
             {
-                throw new FactoryException(FactoryExceptionType.Connection);
+                throw new RedditApiException(RedditApiExceptionType.Connection);
             }
 
             return ParseAndExtractData((string content) =>
@@ -171,12 +171,12 @@ namespace RedditStoreApp.Data.Model
             catch (JsonException ex)
             {
                 Helpers.DebugWrite(ex.Message);
-                throw new FactoryException(FactoryExceptionType.Parse);
+                throw new RedditApiException(RedditApiExceptionType.Parse);
             }
             catch (NullReferenceException ex)
             {
                 Helpers.DebugWrite(ex.Message);
-                throw new FactoryException(FactoryExceptionType.Parse);
+                throw new RedditApiException(RedditApiExceptionType.Parse);
             }
         }
 

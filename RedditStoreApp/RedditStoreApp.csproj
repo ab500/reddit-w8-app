@@ -108,7 +108,7 @@
     <Compile Include="Data\Core\PasswordVaultWrapper.cs" />
     <Compile Include="Data\Core\RequestService.cs" />
     <Compile Include="Data\Core\Response.cs" />
-    <Compile Include="Data\Factory\FactoryException.cs" />
+    <Compile Include="Data\Factory\RedditApiException.cs" />
     <Compile Include="Data\Factory\IRedditApi.cs" />
     <Compile Include="Data\Helpers.cs" />
     <Compile Include="Data\Model\Comment.cs" />

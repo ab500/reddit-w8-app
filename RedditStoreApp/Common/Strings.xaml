@@ -12,4 +12,7 @@
     <x:String x:Key="LoginBtn_Login">Login</x:String>
     <x:String x:Key="LoginBtn_Logout">Logout and Clear</x:String>
     <x:String x:Key="LoginBtn_InProgress">Logging In...</x:String>
+
+    <x:String x:Key="Error_AuthFailed">Your username or password was incorrect.</x:String>
+    <x:String x:Key="Error_ConnFailed">The connection is currently unavailable.</x:String>
 </ResourceDictionary>

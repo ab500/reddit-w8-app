@@ -6,26 +6,26 @@ using System.Threading.Tasks;
 
 namespace RedditStoreApp.Data.Factory
 {
-    public enum FactoryExceptionType { Connection, Parse, NotAuthed };
+    public enum RedditApiExceptionType { Connection, Parse, NotAuthed };
 
-    public class FactoryException : Exception
+    public class RedditApiException : Exception
     {
-        public FactoryExceptionType ExceptionType { get; private set; }
+        public RedditApiExceptionType ExceptionType { get; private set; }
 
-        public FactoryException(FactoryExceptionType type) : base(GetStringFromType(type))
+        public RedditApiException(RedditApiExceptionType type) : base(GetStringFromType(type))
         {
             this.ExceptionType = type;
         }
 
-        private static string GetStringFromType(FactoryExceptionType type)
+        private static string GetStringFromType(RedditApiExceptionType type)
         {
             switch (type)
             {
-                case FactoryExceptionType.Connection:
+                case RedditApiExceptionType.Connection:
                     return "A connection error has occured. Please try again";
-                case FactoryExceptionType.Parse:
+                case RedditApiExceptionType.Parse:
                     return "The data received was not in its intented format. Please try again";
-                case FactoryExceptionType.NotAuthed:
+                case RedditApiExceptionType.NotAuthed:
                     return "You're not currently logged in or your password has changed.";
                 default:
                     return "An unspecified error has occurred";

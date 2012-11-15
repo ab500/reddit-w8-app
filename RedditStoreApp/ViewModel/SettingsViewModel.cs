@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using RedditStoreApp.Data.Core;
 using RedditStoreApp.Data.Factory;
 using System;
@@ -44,6 +45,10 @@ namespace RedditStoreApp.ViewModel
 
         private void NotifyStateChange()
         {
+            // Most of these properties change together as a 
+            // group, so we've grouped all the updates in this function.
+
+            // It might make sense later to put them in a different place.
             RaisePropertyChanged("IsFormEditable");
             RaisePropertyChanged("LoginHeader");
             RaisePropertyChanged("LoginText");
@@ -51,6 +56,8 @@ namespace RedditStoreApp.ViewModel
             RaisePropertyChanged("IsProcessing");
             RaisePropertyChanged("ErrorMessage");
             RaisePropertyChanged("ErrorMessageVisible");
+            RaisePropertyChanged("Username");
+            RaisePropertyChanged("Password");
             Login.RaiseCanExecuteChanged();
         }
 
@@ -67,16 +74,44 @@ namespace RedditStoreApp.ViewModel
                 _password = "";
                 PasswordVaultWrapper.Clear();
             }
+
             NotifyStateChange();
 
             if (_currentState == FormState.LoggingIn)
             {
-                await _dataService.LoginAsync(_username, _password);
+                _errorMessage = "";
+                bool didSucceed = false;
 
+                try
+                {
+                    didSucceed = await _dataService.LoginAsync(_username, _password);
+                    if (!didSucceed)
+                    {
+                        _errorMessage = (string)Application.Current.Resources["Error_AuthFailed"];
+                        _password = "";
+                    }
+                }
+                catch (RedditApiException e)
+                {
+                    _errorMessage = (string)Application.Current.Resources["Error_ConnFailed"];
+                }
+
+                if (didSucceed)
+                {
+                    PasswordVaultWrapper.Store(_username, _password);
+                    _currentState = FormState.LoggedIn;
+                }
+                else
+                {
+                    _currentState = FormState.LoggedOut;
+                }
+
+                NotifyStateChange();
             }
         }
 
         public RelayCommand Login { get; private set; }
+        public RelayCommand Close { get; private set; }
 
         public string LoginHeader
         {
@@ -177,11 +212,11 @@ namespace RedditStoreApp.ViewModel
             }
         }
 
-        public bool ErrorMessageVisible
+        public Visibility ErrorMessageVisible
         {
             get
             {
-                return _errorMessage != null && _errorMessage != "";
+                return _errorMessage != null && _errorMessage != "" ? Visibility.Visible : Visibility.Collapsed;
             }
         }
     }

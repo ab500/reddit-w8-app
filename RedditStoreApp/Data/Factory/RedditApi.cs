@@ -35,7 +35,7 @@ namespace RedditStoreApp.Data.Factory
 
             if (!resp.IsSuccess)
             {
-                throw new FactoryException(FactoryExceptionType.Connection);
+                throw new RedditApiException(RedditApiExceptionType.Connection);
             }
 
             _isLoggedIn = !resp.Content.Contains("invalid password");

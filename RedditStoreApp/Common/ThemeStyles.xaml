@@ -4,6 +4,7 @@
     xmlns:local="using:RedditStoreApp.Common">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Brushes.xaml" />
+        <ResourceDictionary Source="StandardStyles.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
         <Style x:Key="SettingsBackButtonStyle" TargetType="Button">

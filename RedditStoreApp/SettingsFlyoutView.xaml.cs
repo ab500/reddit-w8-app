@@ -34,5 +34,11 @@ namespace RedditStoreApp
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            Popup pop = (Popup)this.Parent;
+            pop.IsOpen = false;
+        }
     }
 }

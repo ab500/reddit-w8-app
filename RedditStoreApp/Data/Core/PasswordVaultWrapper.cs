@@ -24,8 +24,16 @@ namespace RedditStoreApp.Data.Core
         public static bool IsStored()
         {
             var vault = new PasswordVault();
-            IReadOnlyList<PasswordCredential> creds = vault.FindAllByResource("redditAuth");
-            return creds != null && creds.Count > 0;
+            try
+            {
+                IReadOnlyList<PasswordCredential> creds = vault.FindAllByResource("redditAuth");
+                return creds != null && creds.Count > 0;
+            }
+            catch (Exception)
+            {
+                // The password vault is midly retarded. How is this good default behavior?
+                return false;
+            }
         }
 
         public static void Store(string userName, string password)
