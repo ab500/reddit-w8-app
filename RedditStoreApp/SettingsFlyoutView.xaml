@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    DataContext="{Binding Source={StaticResource Locator}, Path=Settings}"
     d:DesignHeight="768"
     d:DesignWidth="346">
 
@@ -41,15 +42,15 @@
                             <!-- TextBlock FontWeight="Bold" Text="Welcome, wastingtime1! You Are Currently Logged In." TextWrapping="Wrap" Style="{StaticResource BasicTextStyle}" HorizontalAlignment="Left"/>
                             <TextBlock Text="Your username and password are stored securely. You may clear them at anytime and sign into a different account by logging out." TextWrapping="Wrap" Style="{StaticResource BasicTextStyle}" HorizontalAlignment="Left"/> -->
 
-                            <TextBlock Margin="0,25, 0, 0" Text="Username" TextWrapping="Wrap" Style="{StaticResource BasicTextStyle}" HorizontalAlignment="Left"/>
+                            <TextBlock Margin="0,25, 0, 0" Text="{StaticResource Username}" TextWrapping="Wrap" Style="{StaticResource BasicTextStyle}" HorizontalAlignment="Left"/>
                             <TextBox HorizontalAlignment="Left" Width="250"/>
                             
-                            <TextBlock Margin="0,25, 0, 0" Text="Password" TextWrapping="Wrap" Style="{StaticResource BasicTextStyle}" HorizontalAlignment="Left"/>
+                            <TextBlock Margin="0,25, 0, 0" Text="{StaticResource Password}" TextWrapping="Wrap" Style="{StaticResource BasicTextStyle}" HorizontalAlignment="Left"/>
                             <PasswordBox  HorizontalAlignment="Left" Width="250"/>
                           
                             <StackPanel Orientation="Horizontal">
                                 <Button Margin="0,25 0, 0" Content="Login" />
-                                <ProgressRing />
+                                <ProgressRing  />
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>

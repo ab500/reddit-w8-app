@@ -10,7 +10,7 @@ using Windows.UI.Xaml;
 
 namespace RedditStoreApp.ViewModel
 {
-    class SettingsViewModel : ViewModelBase
+    public class SettingsViewModel : ViewModelBase
     {
         private IRedditApi _dataService;
 
@@ -24,8 +24,6 @@ namespace RedditStoreApp.ViewModel
         {
             _dataService = dataService;
             Login = new RelayCommand(doLogin);
-
-            
         }
 
         private void doLogin()
