@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using RedditStoreApp.Data.Core;
 using RedditStoreApp.Data.Factory;
 using System;
 using System.Collections.Generic;
@@ -23,8 +24,21 @@ namespace RedditStoreApp.ViewModel
         public SettingsViewModel(IRedditApi dataService)
         {
             _dataService = dataService;
-            _currentState = FormState.LoggedOut;
-            Login = new RelayCommand(DoLogin);
+
+            if (PasswordVaultWrapper.IsStored())
+            {
+                _currentState = FormState.LoggedIn;
+                _username = PasswordVaultWrapper.GetUsername();
+                _password = PasswordVaultWrapper.GetPassword();
+            }
+            else
+            {
+                _currentState = FormState.LoggedOut;
+                _username = "";
+                _password = "";
+            }
+
+            Login = new RelayCommand(DoLogin, () => { return _currentState != FormState.LoggingIn; });
         }
 
         private void NotifyStateChange()
@@ -34,6 +48,7 @@ namespace RedditStoreApp.ViewModel
             RaisePropertyChanged("LoginText");
             RaisePropertyChanged("LoginButtonText");
             RaisePropertyChanged("IsProcessing");
+            Login.RaiseCanExecuteChanged();
         }
 
         private void DoLogin()
@@ -41,10 +56,6 @@ namespace RedditStoreApp.ViewModel
             if (_currentState == FormState.LoggedOut)
             {
                 _currentState = FormState.LoggingIn;
-            }
-            else if (_currentState == FormState.LoggingIn)
-            {
-                _currentState = FormState.LoggedIn;
             }
             else
             {
@@ -61,7 +72,7 @@ namespace RedditStoreApp.ViewModel
             {
                 if (_currentState == FormState.LoggedIn)
                 {
-                    return String.Format((string)Application.Current.Resources["AuthedHeader"], "wastingtime1");
+                    return String.Format((string)Application.Current.Resources["AuthedHeader"], _username);
                 }
                 else
                 {
@@ -76,7 +87,7 @@ namespace RedditStoreApp.ViewModel
             {
                 if (_currentState == FormState.LoggedIn)
                 {
-                    return String.Format((string)Application.Current.Resources["AuthedText"], "wastingtime1");
+                    return String.Format((string)Application.Current.Resources["AuthedText"], _username); 
                 }
                 else
                 {

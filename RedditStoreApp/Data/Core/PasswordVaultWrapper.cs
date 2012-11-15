@@ -21,67 +21,55 @@ namespace RedditStoreApp.Data.Core
             vault.RetrieveAll();
         }
 
-        public static async Task<bool> IsStored()
+        public static bool IsStored()
         {
-            return await Task.Factory.StartNew(() =>
+            var vault = new PasswordVault();
+            IReadOnlyList<PasswordCredential> creds = vault.FindAllByResource("redditAuth");
+            return creds != null && creds.Count > 0;
+        }
+
+        public static void Store(string userName, string password)
+        {
+            PasswordCredential pc = new PasswordCredential("redditAuth", userName, password);
+            var vault = new PasswordVault();
+
+            try
             {
-                var vault = new PasswordVault();
                 IReadOnlyList<PasswordCredential> creds = vault.FindAllByResource("redditAuth");
-                return creds != null && creds.Count > 0;
-            });
+                if (creds == null) return;
+                foreach (var cred in creds)
+                {
+                    vault.Remove(cred);
+                }
+            }
+            catch (Exception)
+            {
+                // The password vault is mildly retarded.
+            }
+
+            vault.Add(pc);
         }
 
-        public static async Task Store(string userName, string password)
+        public static string GetUsername()
         {
-            await Task.Factory.StartNew(() =>
-            {
-                PasswordCredential pc = new PasswordCredential("redditAuth", userName, password);
-                var vault = new PasswordVault();
-
-                try
-                {
-                    IReadOnlyList<PasswordCredential> creds = vault.FindAllByResource("redditAuth");
-                    if (creds == null) return;
-                    foreach (var cred in creds)
-                    {
-                        vault.Remove(cred);
-                    }
-                }
-                catch (Exception)
-                {
-                    // The password vault is mildly retarded.
-                }
-
-                vault.Add(pc);
-            });
+            var vault = new PasswordVault();
+            var creds = vault.FindAllByResource("redditAuth");
+            return (creds != null && creds.Count > 0) ? creds[0].UserName : null;
         }
 
-        public static async Task<string> GetUsername()
+        public static string GetPassword()
         {
-            return await Task.Factory.StartNew(() =>
+            var vault = new PasswordVault();
+            var creds = vault.FindAllByResource("redditAuth");
+            if (creds != null && creds.Count > 0)
             {
-                var vault = new PasswordVault();
-                var creds = vault.FindAllByResource("redditAuth");
-                return (creds != null && creds.Count > 0) ? creds[0].UserName : null;
-            });
-        }
-
-        public static async Task<string> GetPassword()
-        {
-            return await Task.Factory.StartNew(() =>
+                creds[0].RetrievePassword();
+                return creds[0].Password;
+            }
+            else
             {
-                var vault = new PasswordVault();
-                var creds = vault.FindAllByResource("redditAuth");
-                if (creds != null && creds.Count > 0)
-                {
-                    creds[0].RetrievePassword();
-                    return creds[0].Password;
-                }
-                else
-                {
-                    return null;
-                }
-            });
+                return null;
+            }
         }
     }
 }
