@@ -6,6 +6,8 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.ApplicationSettings;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -32,6 +34,52 @@ namespace RedditStoreApp
             this.InitializeComponent();
             this.Suspending += OnSuspending;
         }
+
+        protected override void OnWindowCreated(WindowCreatedEventArgs args)
+        {
+            base.OnWindowCreated(args);
+
+            SettingsPane.GetForCurrentView().CommandsRequested += 
+                delegate(SettingsPane settingsPane, SettingsPaneCommandsRequestedEventArgs eventArgs) {
+                   UICommandInvokedHandler handler = new UICommandInvokedHandler(onSettingsCommand);
+                    SettingsCommand generalCommand = new SettingsCommand("AccountsId", "Account", handler);
+                    eventArgs.Request.ApplicationCommands.Add(generalCommand); 
+                };
+        }
+
+        void onSettingsCommand(IUICommand command)
+        {
+
+            // Create a Popup window which will contain our flyout.
+            Popup settingsPopup = new Popup();
+            settingsPopup.Closed += OnPopupClosed;
+            Window.Current.Activated += OnWindowActivated;
+            settingsPopup.IsLightDismissEnabled = true;
+            settingsPopup.Width = settingsWidth;
+            settingsPopup.Height = windowBounds.Height;
+
+            // Add the proper animation for the panel.
+            settingsPopup.ChildTransitions = new TransitionCollection();
+            settingsPopup.ChildTransitions.Add(new PaneThemeTransition()
+            {
+                Edge = (SettingsPane.Edge == SettingsEdgeLocation.Right) ?
+                       EdgeTransitionLocation.Right :
+                       EdgeTransitionLocation.Left
+            });
+
+            // Create a SettingsFlyout the same dimenssions as the Popup.
+            SettingsFlyout mypane = new SettingsFlyout();
+            mypane.Width = settingsWidth;
+            mypane.Height = windowBounds.Height;
+
+            // Place the SettingsFlyout inside our Popup window.
+            settingsPopup.Child = mypane;
+
+            // Let's define the location of our Popup.
+            settingsPopup.SetValue(Canvas.LeftProperty, SettingsPane.Edge == SettingsEdgeLocation.Right ? (windowBounds.Width - settingsWidth) : 0);
+            settingsPopup.SetValue(Canvas.TopProperty, 0);
+            settingsPopup.IsOpen = true;
+        } 
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
