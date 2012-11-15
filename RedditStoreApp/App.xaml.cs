@@ -14,6 +14,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234227
@@ -25,6 +26,7 @@ namespace RedditStoreApp
     /// </summary>
     sealed partial class App : Application
     {
+
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -49,14 +51,15 @@ namespace RedditStoreApp
 
         void onSettingsCommand(IUICommand command)
         {
-
+            double settingsWidth = 646;
+            double settingsHeight = Window.Current.Bounds.Height;
+            
             // Create a Popup window which will contain our flyout.
             Popup settingsPopup = new Popup();
-            settingsPopup.Closed += OnPopupClosed;
-            Window.Current.Activated += OnWindowActivated;
+
             settingsPopup.IsLightDismissEnabled = true;
             settingsPopup.Width = settingsWidth;
-            settingsPopup.Height = windowBounds.Height;
+            settingsPopup.Height = settingsHeight;
 
             // Add the proper animation for the panel.
             settingsPopup.ChildTransitions = new TransitionCollection();
@@ -68,15 +71,15 @@ namespace RedditStoreApp
             });
 
             // Create a SettingsFlyout the same dimenssions as the Popup.
-            SettingsFlyout mypane = new SettingsFlyout();
-            mypane.Width = settingsWidth;
-            mypane.Height = windowBounds.Height;
+            SettingsFlyoutView settingsFlyout = new SettingsFlyoutView();
+            settingsFlyout.Width = settingsWidth;
+            settingsFlyout.Height = settingsHeight;
 
             // Place the SettingsFlyout inside our Popup window.
-            settingsPopup.Child = mypane;
+            settingsPopup.Child = settingsFlyout;
 
             // Let's define the location of our Popup.
-            settingsPopup.SetValue(Canvas.LeftProperty, SettingsPane.Edge == SettingsEdgeLocation.Right ? (windowBounds.Width - settingsWidth) : 0);
+            settingsPopup.SetValue(Canvas.LeftProperty, SettingsPane.Edge == SettingsEdgeLocation.Right ? (Window.Current.Bounds.Width - settingsWidth) : 0);
             settingsPopup.SetValue(Canvas.TopProperty, 0);
             settingsPopup.IsOpen = true;
         } 
@@ -134,5 +137,5 @@ namespace RedditStoreApp
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
-    }
+   }
 }
