@@ -45,6 +45,8 @@
                             <TextBlock Margin="0,25, 0, 0" Text="{StaticResource Password}" TextWrapping="Wrap" Style="{StaticResource BasicTextStyle}" HorizontalAlignment="Left"/>
                             <PasswordBox  HorizontalAlignment="Left" Width="250" Password="{Binding Password, Mode=TwoWay}" IsEnabled="{Binding IsFormEditable}" />
                           
+                            <TextBlock Margin="0,25, 0, 0" Text="{Binding ErrorMessage}"  Visibility="{Binding ErrorMessageVisible}" TextWrapping="Wrap" Style="{StaticResource ErrorTextStyle}" HorizontalAlignment="Left"/>
+                            
                             <StackPanel Orientation="Horizontal" Margin="0,25 0, 0">
                                 <Button Command="{Binding Login}" Margin="0,0 0, 0" Content="{Binding LoginButtonText}" />
                                 <ProgressRing IsActive="{Binding IsProcessing}" />

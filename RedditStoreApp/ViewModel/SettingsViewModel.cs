@@ -17,6 +17,7 @@ namespace RedditStoreApp.ViewModel
 
         private string _username;
         private string _password;
+        private string _errorMessage;
 
         private enum FormState { LoggedIn, LoggingIn, LoggedOut };
         private FormState _currentState;
@@ -48,10 +49,12 @@ namespace RedditStoreApp.ViewModel
             RaisePropertyChanged("LoginText");
             RaisePropertyChanged("LoginButtonText");
             RaisePropertyChanged("IsProcessing");
+            RaisePropertyChanged("ErrorMessage");
+            RaisePropertyChanged("ErrorMessageVisible");
             Login.RaiseCanExecuteChanged();
         }
 
-        private void DoLogin()
+        private async void DoLogin()
         {
             if (_currentState == FormState.LoggedOut)
             {
@@ -60,8 +63,17 @@ namespace RedditStoreApp.ViewModel
             else
             {
                 _currentState = FormState.LoggedOut;
+                _username = "";
+                _password = "";
+                PasswordVaultWrapper.Clear();
             }
-            NotifyStateChange(); 
+            NotifyStateChange();
+
+            if (_currentState == FormState.LoggingIn)
+            {
+                await _dataService.LoginAsync(_username, _password);
+
+            }
         }
 
         public RelayCommand Login { get; private set; }
@@ -154,6 +166,22 @@ namespace RedditStoreApp.ViewModel
             get
             {
                 return _currentState == FormState.LoggedOut;
+            }
+        }
+
+        public string ErrorMessage
+        {
+            get
+            {
+                return _errorMessage;
+            }
+        }
+
+        public bool ErrorMessageVisible
+        {
+            get
+            {
+                return _errorMessage != null && _errorMessage != "";
             }
         }
     }

@@ -50,6 +50,25 @@ namespace RedditStoreApp.Data.Core
             vault.Add(pc);
         }
 
+        public static void Clear()
+        {
+            var vault = new PasswordVault();
+
+            try
+            {
+                IReadOnlyList<PasswordCredential> creds = vault.FindAllByResource("redditAuth");
+                if (creds == null) return;
+                foreach (var cred in creds)
+                {
+                    vault.Remove(cred);
+                }
+            }
+            catch (Exception)
+            {
+                // The password vault is mildly retarded.
+            }
+        }
+
         public static string GetUsername()
         {
             var vault = new PasswordVault();

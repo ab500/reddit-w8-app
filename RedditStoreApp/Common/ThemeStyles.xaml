@@ -102,4 +102,8 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+    <Style x:Key="ErrorTextStyle" TargetType="TextBlock" BasedOn="{StaticResource BasicTextStyle}">
+        <Setter Property="Foreground" Value="{StaticResource RedditError}" />
+    </Style>
 </ResourceDictionary>
