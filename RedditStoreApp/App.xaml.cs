@@ -37,6 +37,8 @@ namespace RedditStoreApp
             this.Suspending += OnSuspending;
         }
 
+        Popup settingsPopup = null;
+
         protected override void OnWindowCreated(WindowCreatedEventArgs args)
         {
             base.OnWindowCreated(args);
@@ -55,7 +57,7 @@ namespace RedditStoreApp
             double settingsHeight = Window.Current.Bounds.Height;
             
             // Create a Popup window which will contain our flyout.
-            Popup settingsPopup = new Popup()
+            settingsPopup = new Popup()
             {
                 IsLightDismissEnabled = true,
                 Width = settingsWidth,

@@ -23,12 +23,34 @@ namespace RedditStoreApp.ViewModel
         public SettingsViewModel(IRedditApi dataService)
         {
             _dataService = dataService;
-            Login = new RelayCommand(doLogin);
+            _currentState = FormState.LoggedOut;
+            Login = new RelayCommand(DoLogin);
         }
 
-        private void doLogin()
+        private void NotifyStateChange()
         {
+            RaisePropertyChanged("IsFormEditable");
+            RaisePropertyChanged("LoginHeader");
+            RaisePropertyChanged("LoginText");
+            RaisePropertyChanged("LoginButtonText");
+            RaisePropertyChanged("IsProcessing");
+        }
 
+        private void DoLogin()
+        {
+            if (_currentState == FormState.LoggedOut)
+            {
+                _currentState = FormState.LoggingIn;
+            }
+            else if (_currentState == FormState.LoggingIn)
+            {
+                _currentState = FormState.LoggedIn;
+            }
+            else
+            {
+                _currentState = FormState.LoggedOut;
+            }
+            NotifyStateChange(); 
         }
 
         public RelayCommand Login { get; private set; }
@@ -39,7 +61,7 @@ namespace RedditStoreApp.ViewModel
             {
                 if (_currentState == FormState.LoggedIn)
                 {
-                    return (string)Application.Current.Resources["AuthedHeader"];
+                    return String.Format((string)Application.Current.Resources["AuthedHeader"], "wastingtime1");
                 }
                 else
                 {
@@ -54,7 +76,7 @@ namespace RedditStoreApp.ViewModel
             {
                 if (_currentState == FormState.LoggedIn)
                 {
-                    return (string)Application.Current.Resources["AuthedText"];
+                    return String.Format((string)Application.Current.Resources["AuthedText"], "wastingtime1");
                 }
                 else
                 {
@@ -82,7 +104,7 @@ namespace RedditStoreApp.ViewModel
             }
         }
 
-        public string Usernmae
+        public string Username
         {
             get
             {
@@ -108,19 +130,19 @@ namespace RedditStoreApp.ViewModel
             }
         }
 
-        public bool IsFormEnabled
-        {
-            get
-            {
-                return _currentState == FormState.LoggedOut;
-            }
-        }
-
         public bool IsProcessing
         {
             get
             {
                 return _currentState == FormState.LoggingIn;
+            }
+        }
+
+        public bool IsFormEditable
+        {
+            get
+            {
+                return _currentState == FormState.LoggedOut;
             }
         }
     }
