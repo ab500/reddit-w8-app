@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="768"
-    d:DesignWidth="646">
+    d:DesignWidth="346">
 
     <Border BorderBrush="{StaticResource FlyoutHeaderBrush}" BorderThickness="1,0,0,0">
         <Grid Background="{StaticResource MainBackgroundBrush}" VerticalAlignment="Stretch">
@@ -38,14 +38,14 @@
                             <TextBlock FontWeight="Bold" Text="Login With Your Account" TextWrapping="Wrap" Style="{StaticResource BasicTextStyle}" HorizontalAlignment="Left"/>
                             <TextBlock Text="Login with your Reddit account to post comments, access your custom list of subreddits, and send and receive messages from other users." TextWrapping="Wrap" Style="{StaticResource BasicTextStyle}" HorizontalAlignment="Left"/>
 
-                            <TextBlock FontWeight="Bold" Text="Welcome, wastingtime1! You Are Currently Logged In." TextWrapping="Wrap" Style="{StaticResource BasicTextStyle}" HorizontalAlignment="Left"/>
-                            <TextBlock Text="Your username and password are stored securely. You may clear them at anytime and sign into a different account by logging out." TextWrapping="Wrap" Style="{StaticResource BasicTextStyle}" HorizontalAlignment="Left"/>
+                            <!-- TextBlock FontWeight="Bold" Text="Welcome, wastingtime1! You Are Currently Logged In." TextWrapping="Wrap" Style="{StaticResource BasicTextStyle}" HorizontalAlignment="Left"/>
+                            <TextBlock Text="Your username and password are stored securely. You may clear them at anytime and sign into a different account by logging out." TextWrapping="Wrap" Style="{StaticResource BasicTextStyle}" HorizontalAlignment="Left"/> -->
 
                             <TextBlock Margin="0,25, 0, 0" Text="Username" TextWrapping="Wrap" Style="{StaticResource BasicTextStyle}" HorizontalAlignment="Left"/>
-                            <TextBox HorizontalAlignment="Left" Width="300"/>
+                            <TextBox HorizontalAlignment="Left" Width="250"/>
                             
                             <TextBlock Margin="0,25, 0, 0" Text="Password" TextWrapping="Wrap" Style="{StaticResource BasicTextStyle}" HorizontalAlignment="Left"/>
-                            <PasswordBox  HorizontalAlignment="Left" Width="300"/>
+                            <PasswordBox  HorizontalAlignment="Left" Width="250"/>
                           
                             <StackPanel Orientation="Horizontal">
                                 <Button Margin="0,25 0, 0" Content="Login" />

@@ -43,23 +43,24 @@ namespace RedditStoreApp
 
             SettingsPane.GetForCurrentView().CommandsRequested += 
                 delegate(SettingsPane settingsPane, SettingsPaneCommandsRequestedEventArgs eventArgs) {
-                   UICommandInvokedHandler handler = new UICommandInvokedHandler(onSettingsCommand);
+                   UICommandInvokedHandler handler = new UICommandInvokedHandler(OnSettingsCommand);
                     SettingsCommand generalCommand = new SettingsCommand("AccountsId", "Account", handler);
                     eventArgs.Request.ApplicationCommands.Add(generalCommand); 
                 };
         }
 
-        void onSettingsCommand(IUICommand command)
+        void OnSettingsCommand(IUICommand command)
         {
-            double settingsWidth = 646;
+            double settingsWidth = 346;
             double settingsHeight = Window.Current.Bounds.Height;
             
             // Create a Popup window which will contain our flyout.
-            Popup settingsPopup = new Popup();
-
-            settingsPopup.IsLightDismissEnabled = true;
-            settingsPopup.Width = settingsWidth;
-            settingsPopup.Height = settingsHeight;
+            Popup settingsPopup = new Popup()
+            {
+                IsLightDismissEnabled = true,
+                Width = settingsWidth,
+                Height = settingsHeight
+            };
 
             // Add the proper animation for the panel.
             settingsPopup.ChildTransitions = new TransitionCollection();
@@ -71,9 +72,11 @@ namespace RedditStoreApp
             });
 
             // Create a SettingsFlyout the same dimenssions as the Popup.
-            SettingsFlyoutView settingsFlyout = new SettingsFlyoutView();
-            settingsFlyout.Width = settingsWidth;
-            settingsFlyout.Height = settingsHeight;
+            SettingsFlyoutView settingsFlyout = new SettingsFlyoutView()
+            {
+                Width = settingsWidth,
+                Height = settingsHeight
+            };
 
             // Place the SettingsFlyout inside our Popup window.
             settingsPopup.Child = settingsFlyout;

@@ -1,0 +1,8 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RedditStoreApp.Common">
+
+    <x:String x:Key="Username">Username</x:String>
+    
+</ResourceDictionary>

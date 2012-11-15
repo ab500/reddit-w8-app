@@ -12,9 +12,12 @@
                     Required by Visual Studio project and item templates
                  -->
                 <ResourceDictionary Source="Common/StandardStyles.xaml" />
-                
+
                 <!-- Our custom appplication-specific styles. -->
                 <ResourceDictionary Source="Common/ThemeStyles.xaml" />
+
+                <!-- Strings for different dialogs. -->
+                <ResourceDictionary Source="Common/Strings.xaml" />                
             </ResourceDictionary.MergedDictionaries>
             <vm:ViewModelLocator x:Key="Locator" d:IsDataSource="True" />
         </ResourceDictionary>
