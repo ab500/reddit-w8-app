@@ -2,5 +2,13 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:RedditStoreApp.Common">
+    <Color x:Key="RedditBlue">#CEE3F8</Color>
+    <Color x:Key="RedditOrange">#FF4500</Color>
+    <Color x:Key="RedditDarkBlue">#336699</Color>
+    <Color x:Key="RedditDarkBackground">#C6C6C6</Color>
     
+    <SolidColorBrush x:Key="HeaderBrush" Color="{StaticResource RedditBlue}" />
+    <SolidColorBrush x:Key="FlyoutHeaderBrush" Color="{StaticResource RedditDarkBlue}" />
+    <SolidColorBrush x:Key="MainBackgroundBrush" Color="White" />
+    <SolidColorBrush x:Key="DarkBackgroundBrush" Color="{StaticResource RedditDarkBackground}" />
 </ResourceDictionary>
