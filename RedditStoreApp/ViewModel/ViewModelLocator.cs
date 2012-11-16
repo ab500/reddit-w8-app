@@ -3,6 +3,7 @@ using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
 using RedditStoreApp.Helpers;
 using RedditStoreApp.Data.Factory;
+using RedditStoreApp.View;
 
 namespace RedditStoreApp.ViewModel
 {
