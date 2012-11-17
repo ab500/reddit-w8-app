@@ -12,6 +12,8 @@ namespace RedditStoreApp.ViewModel
 
         private readonly IRedditApi _dataService;
 
+        private bool _isInitialized = false;
+
         private SubredditViewModel _currentSubreddit;
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
@@ -34,7 +36,20 @@ namespace RedditStoreApp.ViewModel
 
         public async void Initialize()
         {
+            if (_isInitialized)
+            {
+                return;
+            }
 
+            Listing<Subreddit> subreddits = await Data.Helpers.EnsureCompletion<Listing<Subreddit>>(_dataService.GetPopularSubredditsListAsync);
+
+            if (subreddits == null)
+            {
+                return;
+            }
+
+            this.CurrentSubreddit = new SubredditViewModel(subreddits[0]);
+            _isInitialized = true;
         }
 
         public string HelloString { get { return "hello!"; } }
