@@ -10,9 +10,10 @@ using RedditStoreApp.Data.Factory;
 
 namespace RedditStoreApp.Data.Model
 {
+    public enum Sort { Hot, Top, Contro, New };
+
     public class Listing<T> : Thing, IReadOnlyList<T> where T: Thing
     {
-
         private string _nextId;
 
         // Used by the 'morechildren' api on comments.
@@ -22,6 +23,7 @@ namespace RedditStoreApp.Data.Model
         private List<T> _items;
         private bool _ignoreParent;
         private bool _hasLoaded;
+        private Sort _currentSort;
 
         public Listing(string resource, RequestService reqServ, bool ignoreParent = false) : base(resource, reqServ)
         {
@@ -29,6 +31,7 @@ namespace RedditStoreApp.Data.Model
             _ignoreParent = ignoreParent;
             _hasLoaded = false;
             _items = new List<T>();
+            _currentSort = Sort.Hot;
         }
 
         public Listing(string resource, JObject source, RequestService reqServ, bool ignoreParent = false)
@@ -39,6 +42,7 @@ namespace RedditStoreApp.Data.Model
 
         public bool HasMore { get { return _nextId != null; } }
         public new bool IsLoaded { get { return _hasLoaded; } }
+        public Sort CurrentSort { get { return _currentSort; } }
 
         public async Task<int> More()
         {
@@ -52,7 +56,7 @@ namespace RedditStoreApp.Data.Model
             // with the after tag.
             if (typeof(T) == typeof(Comment))
             {
-                return await RetreiveDataComments();
+                return await RetreiveDataMoreComments();
             }
             else
             {
@@ -78,7 +82,12 @@ namespace RedditStoreApp.Data.Model
             }
         }
 
-        private async Task<int> RetreiveDataComments()
+        public async Task ChangeSort(Sort newSort)
+        {
+
+        }
+
+        private async Task<int> RetreiveDataMoreComments()
         {
             List<KeyValuePair<String, String>> postParams = new List<KeyValuePair<String, String>>();
             postParams.Add(new KeyValuePair<string, string>("link_id", _linkId));
