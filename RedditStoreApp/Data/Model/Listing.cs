@@ -10,7 +10,12 @@ using RedditStoreApp.Data.Factory;
 
 namespace RedditStoreApp.Data.Model
 {
-    public enum Sort { Hot, Top, Contro, New };
+    public enum Sort { 
+        Hot, 
+        Top, 
+        Contro, 
+        New 
+    };
 
     public class Listing<T> : Thing, IReadOnlyList<T> where T: Thing
     {
@@ -24,6 +29,13 @@ namespace RedditStoreApp.Data.Model
         private bool _ignoreParent;
         private bool _hasLoaded;
         private Sort _currentSort;
+
+        private static Dictionary<Sort, string> _enumResourceMap = new Dictionary<Sort, string> {
+            { Sort.Contro, "controversial" },
+            { Sort.Hot, "hot"},
+            { Sort.New, "new"},
+            { Sort.Top, "top"}
+        };
 
         public Listing(string resource, RequestService reqServ, bool ignoreParent = false) : base(resource, reqServ)
         {
@@ -58,16 +70,17 @@ namespace RedditStoreApp.Data.Model
             {
                 return await RetreiveDataMoreComments();
             }
-            else
+            else 
             {
-                return await RetrieveData(this.Resource + "?after=" + _nextId);
-            } 
+                return await RetrieveData(GetResourceUrl() + "?after=" + _nextId);
+            }
         }
 
         public async Task<int> Refresh()
         {
             _items.Clear();
-            return await RetrieveData(this.Resource);
+            // Right now we only support Post-type listings sorting.
+           return await RetrieveData(GetResourceUrl());
         }
 
         public async Task<int> Load()
@@ -84,7 +97,30 @@ namespace RedditStoreApp.Data.Model
 
         public async Task ChangeSort(Sort newSort)
         {
+            Sort oldSort = _currentSort;
+            _currentSort = newSort;
 
+            try
+            {
+                await Refresh();
+            }
+            catch (RedditApiException)
+            {
+                _currentSort = oldSort;
+                throw;
+            }
+        }
+
+        private string GetResourceUrl()
+        {
+            if (typeof(T) == typeof(Post))
+            {
+                return this.Resource + "/" + _enumResourceMap[_currentSort];
+            }
+            else
+            {
+                return this.Resource;
+            }
         }
 
         private async Task<int> RetreiveDataMoreComments()
@@ -142,8 +178,6 @@ namespace RedditStoreApp.Data.Model
                 return (JArray)respObj["data"]["children"];
             }, resp.Content);
         }
-
-
 
         public T this[int index]
         {
@@ -253,6 +287,5 @@ namespace RedditStoreApp.Data.Model
             respObj = _ignoreParent ? (JObject)respObj.SelectToken("data.children[0].data.replies") : respObj;
             return respObj;
         }
-
     }
 }
