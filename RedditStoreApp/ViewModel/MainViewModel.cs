@@ -22,9 +22,19 @@ namespace RedditStoreApp.ViewModel
             this.Subreddits = new ObservableCollection<SubredditViewModel>();
             this.TestAction = new RelayCommand(async () =>
             {
-                Listing<Subreddit> subreddits = await _dataService.GetPopularSubredditsListAsync();
+                Listing<Subreddit> subreddits = await Data.Helpers.EnsureCompletion<Listing<Subreddit>>(_dataService.GetPopularSubredditsListAsync);
+                if (subreddits == null)
+                {
+                    return;
+                }
+
                 this.CurrentSubreddit = new SubredditViewModel(subreddits[0]);
             });
+        }
+
+        public async void Initialize()
+        {
+
         }
 
         public string HelloString { get { return "hello!"; } }

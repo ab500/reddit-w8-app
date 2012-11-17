@@ -6,9 +6,25 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     DataContext="{Binding Source={StaticResource Locator}, Path=Main.CurrentSubreddit}"
-    mc:Ignorable="d">
+    d:DesignHeight="768"
+    d:DesignWidth="400"
+    mc:Ignorable="d" Margin="0">
 
-    <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
-        <TextBlock Text="{Binding Name}" />
-    </Grid>
+    <StackPanel Background="{StaticResource DarkBackgroundBrush}">
+        <Grid Height="40" Margin="10,10,0,20">
+         <StackPanel>
+            <TextBlock Text="{Binding DisplayName}" Style="{StaticResource SubheaderTextStyle}"/>
+            <!--<TextBlock Text="{Binding Description}" Style="{StaticResource TitleTextStyle}"/>-->
+        </StackPanel>
+        <ComboBox HorizontalAlignment="Right" Height="Auto" SelectedIndex="0" Width="100" Background="{StaticResource DarkBackgroundBrush}" BorderThickness="0">
+            <ComboBoxItem>Hot</ComboBoxItem>
+            <ComboBoxItem>New</ComboBoxItem>
+            <ComboBoxItem>Top</ComboBoxItem>
+            <ComboBoxItem>Contro.</ComboBoxItem>
+        </ComboBox>           
+        </Grid>
+        <ListView>
+
+        </ListView>
+    </StackPanel>
 </Page>

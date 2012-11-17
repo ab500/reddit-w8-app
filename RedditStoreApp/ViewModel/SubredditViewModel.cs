@@ -18,11 +18,19 @@ namespace RedditStoreApp.ViewModel
             
         }
 
-        public string Name
+        public string DisplayName
         {
             get
             {
-                return _subreddit.Name;
+                return _subreddit.Title;
+            }
+        }
+
+        public string Description
+        {
+            get
+            {
+                return _subreddit.Description;
             }
         }
     }
