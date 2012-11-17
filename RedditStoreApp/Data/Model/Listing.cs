@@ -7,13 +7,18 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RedditStoreApp.Data.Core;
 using RedditStoreApp.Data.Factory;
+using System.ComponentModel.DataAnnotations;
 
 namespace RedditStoreApp.Data.Model
 {
     public enum Sort { 
+        [Display(Name="Hot")]
         Hot, 
+        [Display(Name="Top")]
         Top, 
+        [Display(Name="Controversial")]
         Contro, 
+        [Display(Name="New")]
         New 
     };
 
@@ -95,7 +100,7 @@ namespace RedditStoreApp.Data.Model
             }
         }
 
-        public async Task ChangeSort(Sort newSort)
+        public async void ChangeSort(Sort newSort)
         {
             Sort oldSort = _currentSort;
             _currentSort = newSort;
