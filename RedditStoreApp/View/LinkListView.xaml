@@ -11,7 +11,7 @@
     mc:Ignorable="d" Margin="0">
 
     <StackPanel Background="{StaticResource DarkBackgroundBrush}">
-        <Grid Height="40" Margin="10,10,0,20">
+        <Grid Height="40" Margin="20,10,0,20">
          <StackPanel>
             <TextBlock Text="{Binding DisplayName}" Style="{StaticResource SubheaderTextStyle}"/>
             <!--<TextBlock Text="{Binding Description}" Style="{StaticResource TitleTextStyle}"/>-->

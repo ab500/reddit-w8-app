@@ -22,16 +22,6 @@ namespace RedditStoreApp.ViewModel
         {
             this._dataService = dataService;
             this.Subreddits = new ObservableCollection<SubredditViewModel>();
-            this.TestAction = new RelayCommand(async () =>
-            {
-                Listing<Subreddit> subreddits = await Data.Helpers.EnsureCompletion<Listing<Subreddit>>(_dataService.GetPopularSubredditsListAsync);
-                if (subreddits == null)
-                {
-                    return;
-                }
-
-                this.CurrentSubreddit = new SubredditViewModel(subreddits[0]);
-            });
         }
 
         public async void Initialize()
@@ -51,10 +41,6 @@ namespace RedditStoreApp.ViewModel
             this.CurrentSubreddit = new SubredditViewModel(subreddits[0]);
             _isInitialized = true;
         }
-
-        public string HelloString { get { return "hello!"; } }
-
-        public RelayCommand TestAction { get; private set; }
 
         public ObservableCollection<SubredditViewModel> Subreddits { get; private set; }
 

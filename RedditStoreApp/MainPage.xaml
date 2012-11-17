@@ -12,17 +12,10 @@
 
     <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
-            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="400"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid>
-            <StackPanel>
-                <TextBlock x:Name="TestBlock" Text="{Binding HelloString}" />
-                <Button Content="Load a subreddit" Command="{Binding TestAction}" />
-            </StackPanel>
-        </Grid>
 
-        <Frame Grid.Column="1" SourcePageType="view:LinkListView" />
+        <Frame SourcePageType="view:LinkListView" />
     </Grid>
 </Page>
