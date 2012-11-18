@@ -1,11 +1,11 @@
 using GalaSoft.MvvmLight;
-using RedditStoreApp.ViewModel;
+using RedditStoreApp.ViewModels;
 using RedditStoreApp.Data.Model;
 using RedditStoreApp.Data.Factory;
 using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight.Command;
 
-namespace RedditStoreApp.ViewModel
+namespace RedditStoreApp.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
@@ -39,6 +39,7 @@ namespace RedditStoreApp.ViewModel
             }
 
             this.CurrentSubreddit = new SubredditViewModel(subreddits[0]);
+            this.CurrentSubreddit.Refresh.Execute(null);
             _isInitialized = true;
         }
 

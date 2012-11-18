@@ -17,8 +17,9 @@
 
     <StackPanel Background="{StaticResource DarkBackgroundBrush}">
         <Grid Height="40" Margin="20,10,0,20">
-         <StackPanel>
-            <TextBlock Text="{Binding DisplayName}" Style="{StaticResource SubheaderTextStyle}"/>
+         <StackPanel Orientation="Horizontal">
+                <ProgressRing IsActive="{Binding IsLoading}" />
+                <TextBlock Text="{Binding DisplayName}" Style="{StaticResource SubheaderTextStyle}"/>
             <!--<TextBlock Text="{Binding Description}" Style="{StaticResource TitleTextStyle}"/>-->
         </StackPanel>
             <ComboBox HorizontalAlignment="Right" Height="Auto" Width="150" Background="{StaticResource DarkBackgroundBrush}" BorderThickness="0"
@@ -30,8 +31,12 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
         </Grid>
-        <ListView>
-
+        <ListView ItemsSource="{Binding Posts}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Title}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
     </StackPanel>
 </Page>

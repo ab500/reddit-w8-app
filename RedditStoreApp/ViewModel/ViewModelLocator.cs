@@ -5,7 +5,7 @@ using RedditStoreApp.Helpers;
 using RedditStoreApp.Data.Factory;
 using RedditStoreApp.View;
 
-namespace RedditStoreApp.ViewModel
+namespace RedditStoreApp.ViewModels
 {
     /// <summary>
     /// This class contains static references to all the view models in the

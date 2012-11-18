@@ -18,7 +18,7 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 using RedditStoreApp.View;
-using RedditStoreApp.ViewModel;
+using RedditStoreApp.ViewModels;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234227
 

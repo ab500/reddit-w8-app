@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
-namespace RedditStoreApp.ViewModel
+namespace RedditStoreApp.ViewModels
 {
     public class SettingsViewModel : ViewModelBase
     {

@@ -124,6 +124,7 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\PostViewModel.cs" />
     <Compile Include="View\Converter\SortValueConverter.cs" />
     <Compile Include="View\LinkListView.xaml.cs">
       <DependentUpon>LinkListView.xaml</DependentUpon>

@@ -100,7 +100,7 @@ namespace RedditStoreApp.Data.Model
             }
         }
 
-        public async void ChangeSort(Sort newSort)
+        public async Task ChangeSort(Sort newSort)
         {
             Sort oldSort = _currentSort;
             _currentSort = newSort;
