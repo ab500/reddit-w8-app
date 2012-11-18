@@ -40,7 +40,12 @@ namespace RedditStoreApp.ViewModels
                 return;
             }
 
-            this.CurrentSubreddit = new SubredditViewModel(subreddits[0]);
+            foreach (var subreddit in subreddits)
+            {
+                this.Subreddits.Add(new SubredditViewModel(subreddit));
+            }
+
+            this.CurrentSubreddit = this.Subreddits[0];
             this.CurrentSubreddit.Refresh.Execute(null);
             _isInitialized = true;
         }
