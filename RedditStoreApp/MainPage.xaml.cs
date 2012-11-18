@@ -22,7 +22,7 @@ namespace RedditStoreApp
 {
     public sealed partial class MainPage : Page
     {
-        private bool _isLeft = false;
+        private bool _isLeft = true;
 
         public MainPage()
         {
@@ -59,29 +59,32 @@ namespace RedditStoreApp
                 if (mvm.IsLeft && !_isLeft)
                 {
                     to = -MainGrid.ColumnDefinitions[0].Width.Value;
-                    _isLeft = true;
                 }
                 else if (!mvm.IsLeft && _isLeft)
                 {
                     from = -MainGrid.ColumnDefinitions[0].Width.Value;
-                    _isLeft = false;
                 }
 
-                DoubleAnimation d = new DoubleAnimation()
+                if (_isLeft != mvm.IsLeft)
                 {
-                    BeginTime = new TimeSpan(0),
-                    Duration = new Duration(TimeSpan.FromMilliseconds(400)),
-                    From = from,
-                    To = to,
-                    FillBehavior = FillBehavior.HoldEnd,
-                    EasingFunction = new QuadraticEase()
-                };
+                    DoubleAnimation d = new DoubleAnimation()
+                    {
+                        BeginTime = new TimeSpan(0),
+                        Duration = new Duration(TimeSpan.FromMilliseconds(400)),
+                        From = from,
+                        To = to,
+                        FillBehavior = FillBehavior.HoldEnd,
+                        EasingFunction = new QuadraticEase()
+                    };
 
-                Storyboard s = new Storyboard();
-                s.Children.Add(d);
-                Storyboard.SetTarget(d, MainGrid);
-                Storyboard.SetTargetProperty(d, "(UIElement.RenderTransform).(TranslateTransform.X)");
-                s.Begin();
+                    Storyboard s = new Storyboard();
+                    s.Children.Add(d);
+                    Storyboard.SetTarget(d, MainGrid);
+                    Storyboard.SetTargetProperty(d, "(UIElement.RenderTransform).(TranslateTransform.X)");
+                    s.Begin();
+
+                    _isLeft = !_isLeft;
+                }
             }
         }
     }

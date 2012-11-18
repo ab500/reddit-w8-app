@@ -13,7 +13,7 @@ namespace RedditStoreApp.ViewModels
         private readonly IRedditApi _dataService;
 
         private bool _isInitialized = false;
-        private bool _isLeft = false;
+        private bool _isLeft = true;
 
         private SubredditViewModel _currentSubreddit;
         /// <summary>
@@ -70,6 +70,9 @@ namespace RedditStoreApp.ViewModels
                 {
                     _currentSubreddit.Refresh.Execute(null);
                 }
+
+                IsLeft = true;
+
                 RaisePropertyChanged("CurrentSubreddit");
             }
         }
