@@ -46,7 +46,6 @@ namespace RedditStoreApp.ViewModels
             }
 
             this.CurrentSubreddit = this.Subreddits[0];
-            this.CurrentSubreddit.Refresh.Execute(null);
             _isInitialized = true;
         }
 
@@ -60,7 +59,17 @@ namespace RedditStoreApp.ViewModels
             }
             set
             {
+                value.IsActive = true;
+                if (_currentSubreddit != null)
+                {
+                    _currentSubreddit.IsActive = false;
+                }
+
                 _currentSubreddit = value;
+                if (!_currentSubreddit.IsLoaded)
+                {
+                    _currentSubreddit.Refresh.Execute(null);
+                }
                 RaisePropertyChanged("CurrentSubreddit");
             }
         }

@@ -13,4 +13,5 @@
     <SolidColorBrush x:Key="FlyoutHeaderBrush" Color="{StaticResource RedditDarkBlue}" />
     <SolidColorBrush x:Key="MainBackgroundBrush" Color="White" />
     <SolidColorBrush x:Key="DarkBackgroundBrush" Color="{StaticResource RedditDarkBackground}" />
+	<SolidColorBrush x:Key="SelectionBrush" Color="{StaticResource RedditOrange}" />
 </ResourceDictionary>

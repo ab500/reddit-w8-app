@@ -25,7 +25,7 @@
             <Grid Height="60" Margin="0,0,0,20">
                 <StackPanel Orientation="Horizontal">
                     <lctrls:RotateButton Margin="0,0,15,0" Command="{Binding BackArrowPress}" IsRotated="{Binding IsLeft}" />
-                    <TextBlock VerticalAlignment="Center" Text="programming" Style="{StaticResource SubheaderTextStyle}" FontSize="30" Padding="0, 0" />
+                    <TextBlock VerticalAlignment="Center" Text="{Binding CurrentSubreddit.DisplayName}" Style="{StaticResource SubheaderTextStyle}" FontSize="30" Padding="0, 0" />
                     <!--<TextBlock Text="{Binding Description}" Style="{StaticResource TitleTextStyle}"/>-->
                     <ProgressRing VerticalAlignment="Center" Margin="10,15,0,0" Foreground="Black" Width="20" Height="20" IsActive="{Binding CurrentSubreddit.IsLoading}" />
                 </StackPanel>
@@ -38,7 +38,7 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
             </Grid>
-            <ListView Grid.Row="1" ItemsSource="{Binding CurrentSubreddit.Posts}">
+            <ListView Grid.Row="1" ItemsSource="{Binding CurrentSubreddit.Posts}" SelectedItem="{Binding CurrentSubreddit.SelectedPost, Mode=TwoWay}" ItemContainerStyle="{StaticResource RedditListViewItem}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Title}"/>

@@ -17,8 +17,13 @@ namespace RedditStoreApp.ViewModels
     {
         private Subreddit _subreddit;
         private ObservableCollection<PostViewModel> _posts;
+        private PostViewModel _selectedPost;
 
         private bool _isLoading = false;
+
+        // Workaround of potential bug in nested
+        // data binding.
+        private bool _isActive = false;
 
         private RelayCommand _refreshCommand;
         private RelayCommand _loadMoreCommand;
@@ -31,6 +36,18 @@ namespace RedditStoreApp.ViewModels
             _loadMoreCommand = new RelayCommand(LoadMoreAction);
         }
 
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                _isActive = value;
+            }
+        }
+
         public Sort CurrentSort
         {
             get
@@ -39,9 +56,25 @@ namespace RedditStoreApp.ViewModels
             }
             set
             {
+                if (_subreddit.Posts.CurrentSort != value && _isActive)
+                {
                 // NOTE: Fires off async call.
                 ChangeSort(value);
                 RaisePropertyChanged("CurrentSort");
+                }
+            }
+        }
+
+        public PostViewModel SelectedPost
+        {
+            get
+            {
+                return _selectedPost;
+            }
+            set
+            {
+                _selectedPost = value;
+                RaisePropertyChanged("SelectedPost");
             }
         }
 

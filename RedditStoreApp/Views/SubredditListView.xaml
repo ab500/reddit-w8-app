@@ -34,6 +34,9 @@
 
             <Grid Grid.Row="2">
                 <ListView ItemsSource="{Binding Subreddits}" 
+                         SelectedItem="{Binding CurrentSubreddit, Mode=TwoWay}"
+                         IsSwipeEnabled="False"
+                         ItemContainerStyle="{StaticResource RedditListViewItem}"
                          ScrollViewer.VerticalScrollMode="Enabled" 
                          ScrollViewer.IsVerticalRailEnabled="True" 
                          ScrollViewer.HorizontalScrollMode="Disabled" 
@@ -41,8 +44,7 @@
                          ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                          ScrollViewer.IsHorizontalRailEnabled="False"
                          ScrollViewer.IsVerticalScrollChainingEnabled="True"
-                         SelectionMode="None"
-                         IsItemClickEnabled="True"
+                         SelectionMode="Single"
                          Margin="0,15,0,0">
                     <ListView.ItemTemplate>
                         <DataTemplate>
