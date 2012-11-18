@@ -2,6 +2,7 @@
 using RedditStoreApp.Data.Core;
 using RedditStoreApp.Data.Factory;
 using RedditStoreApp.Data.Model;
+using RedditStoreApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,44 +15,74 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
-
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace RedditStoreApp
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
+        private bool _isLeft = false;
+
         public MainPage()
         {
             this.InitializeComponent();
+            if (this.DataContext != null)
+            {
+                MainViewModel mvm = (MainViewModel)this.DataContext;
+                mvm.PropertyChanged += mvm_PropertyChanged;
+            }
         }
 
-        /// <summary>
-        /// Invoked when this page is about to be displayed in a Frame.
-        /// </summary>
-        /// <param name="e">Event data that describes how this page was reached.  The Parameter
-        /// property is typically used to configure the page.</param>
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        protected override Size MeasureOverride(Size availableSize)
         {
-       
-            /*
-            RedditApi reddit = new RedditApi();
-            await reddit.Login(await PasswordVaultWrapper.GetUsername(), await PasswordVaultWrapper.GetPassword());
-            Listing<Subreddit> l = await reddit.GetPopularSubredditsListAsync();
-            Listing<Subreddit> l1 = await reddit.GetMySubredditsListAsync();
-            //await l.More();
-           // await l1.Refresh();
-            await l[0].Posts.Load();
-            await l[0].Posts[1].Comments.Load();
-            await l[0].Posts[1].Comments[0].Replies.More();
-            await l[0].Posts[1].Comments[0].Replies.Refresh();
-            await l[0].Posts[1].Comments.Refresh();
-            System.Diagnostics.Debugger.Break();
-             * */
+            this.MainGrid.Width = availableSize.Width + this.MainGrid.ColumnDefinitions[0].Width.Value;
+            this.Content.Measure(new Size(availableSize.Width + 500, availableSize.Height));
+            return availableSize;
+        }
+
+        protected override Size ArrangeOverride(Size finalSize)
+        {
+            this.Content.Arrange(new Rect(0, 0, finalSize.Width + 500, finalSize.Height));
+            return finalSize;
+        }
+
+        private void mvm_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "IsLeft")
+            {
+                MainViewModel mvm = (MainViewModel)this.DataContext;
+
+                double to = 0;
+                double from = 0;
+
+                if (mvm.IsLeft && !_isLeft)
+                {
+                    to = -MainGrid.ColumnDefinitions[0].Width.Value;
+                    _isLeft = true;
+                }
+                else if (!mvm.IsLeft && _isLeft)
+                {
+                    from = -MainGrid.ColumnDefinitions[0].Width.Value;
+                    _isLeft = false;
+                }
+
+                DoubleAnimation d = new DoubleAnimation()
+                {
+                    BeginTime = new TimeSpan(0),
+                    Duration = new Duration(TimeSpan.FromMilliseconds(400)),
+                    From = from,
+                    To = to,
+                    FillBehavior = FillBehavior.HoldEnd,
+                    EasingFunction = new QuadraticEase()
+                };
+
+                Storyboard s = new Storyboard();
+                s.Children.Add(d);
+                Storyboard.SetTarget(d, MainGrid);
+                Storyboard.SetTargetProperty(d, "(UIElement.RenderTransform).(TranslateTransform.X)");
+                s.Begin();
+            }
         }
     }
 }

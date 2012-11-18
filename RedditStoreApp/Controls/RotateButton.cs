@@ -51,42 +51,37 @@ namespace RedditStoreApp.Controls
 
         private void IsRotatedChanged(DependencyPropertyChangedEventArgs e)
         {
-            if ((bool)e.OldValue && !(bool)e.NewValue)
+            if (e.OldValue == e.NewValue)
             {
-                DoubleAnimation d = new DoubleAnimation()
-                {
-                    BeginTime = new TimeSpan(0),
-                    Duration = new Duration(TimeSpan.FromMilliseconds(250)),
-                    From = 180,
-                    To = 0,
-                    FillBehavior = FillBehavior.HoldEnd
-                };
-
-                Storyboard s = new Storyboard();
-                s.Children.Add(d);
-                Storyboard.SetTarget(d, _mainButton);
-                Storyboard.SetTargetProperty(d, "(UIElement.RenderTransform).(RotateTransform.Angle)");
-                s.Begin();
+                return;
             }
 
-            if (!(bool)e.OldValue && (bool)e.NewValue)
-            {
-                DoubleAnimation d = new DoubleAnimation()
-                {
-                    BeginTime = new TimeSpan(0),
-                    Duration = new Duration(TimeSpan.FromMilliseconds(250)),
-                    From = 0,
-                    To = 180,
-                    FillBehavior = FillBehavior.HoldEnd
-                };
+            double from = 0;
+            double to = 0;
 
-                Storyboard s = new Storyboard();
-                s.Children.Add(d);
-                Storyboard.SetTarget(d, _mainButton);
-                Storyboard.SetTargetProperty(d, "(UIElement.RenderTransform).(RotateTransform.Angle)");
-                s.Begin();
+            if ((bool)e.OldValue)
+            {
+                from = 180;
+            }
+            else
+            {
+                to = 180;
             }
 
+            DoubleAnimation d = new DoubleAnimation()
+            {
+               BeginTime = new TimeSpan(0),
+               Duration = new Duration(TimeSpan.FromMilliseconds(450)),
+               From = from,
+               To = to,
+               FillBehavior = FillBehavior.HoldEnd
+            };
+
+            Storyboard s = new Storyboard();
+            s.Children.Add(d);
+            Storyboard.SetTarget(d, _mainButton);
+            Storyboard.SetTargetProperty(d, "(UIElement.RenderTransform).(RotateTransform.Angle)");
+            s.Begin();
         }
 
         public bool IsRotated
