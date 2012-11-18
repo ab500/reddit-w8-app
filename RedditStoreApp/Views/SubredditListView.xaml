@@ -34,22 +34,27 @@
             </StackPanel>
 
             <Grid Grid.Row="2">
-                <ListView ItemsSource="{Binding Subreddits}" 
+               <ListView ItemsSource="{Binding Subreddits}" 
                          SelectedItem="{Binding CurrentSubreddit, Mode=TwoWay}"
                          IsSwipeEnabled="False"
                          ItemContainerStyle="{StaticResource RedditListViewItem}"
-                         ScrollViewer.VerticalScrollMode="Enabled" 
-                         ScrollViewer.IsVerticalRailEnabled="True" 
-                         ScrollViewer.HorizontalScrollMode="Disabled" 
-                         ScrollViewer.ZoomMode="Disabled" 
-                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                         ScrollViewer.IsHorizontalRailEnabled="False"
-                         ScrollViewer.IsVerticalScrollChainingEnabled="True"
                          SelectionMode="Single"
                          Margin="0,15,0,0">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Text="{Binding DisplayName}" />
+                            <Grid Margin="15,5,15,25">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Style="{StaticResource SubheaderTextStyle}" FontSize="20" Text="{Binding DisplayName}" />
+                                <TextBlock Margin="0,10,0,0" Grid.Row="1" FontSize="16" Style="{StaticResource BasicTextStyle}" Text="{Binding Description}" />
+                                <StackPanel Margin="0,10,0,0" Grid.Row="2" Orientation="Horizontal">
+                                    <TextBlock Style="{StaticResource BasicTextStyle}" FontSize="10" Text="{Binding Subscribers}" />
+                                    <TextBlock Style="{StaticResource BasicTextStyle}" FontSize="10" Text=" subscribers." />
+                                </StackPanel>
+                            </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

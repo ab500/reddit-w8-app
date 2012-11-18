@@ -98,7 +98,7 @@ namespace RedditStoreApp.ViewModels
         {
             get
             {
-                return _subreddit.Title;
+                return _subreddit.DisplayName;
             }
         }
 
@@ -106,7 +106,15 @@ namespace RedditStoreApp.ViewModels
         {
             get
             {
-                return _subreddit.Description;
+                return _subreddit.Description.Trim();
+            }
+        }
+
+        public int Subscribers
+        {
+            get
+            {
+                return _subreddit.Subscribers;
             }
         }
 
