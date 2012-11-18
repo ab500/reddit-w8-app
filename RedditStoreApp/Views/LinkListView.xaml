@@ -16,8 +16,9 @@
         <converters:SortValueConverter x:Key="SortValueConverter"/>
     </Page.Resources>
 
-    <StackPanel Background="{StaticResource DarkBackgroundBrush}">
-        <Grid Height="60" Margin="20,10,0,20">
+    <Grid Background="{StaticResource DarkBackgroundBrush}">
+    <StackPanel Margin="20,10,20,10" Background="{StaticResource DarkBackgroundBrush}">
+        <Grid Height="60" Margin="0,0,0,20">
             <StackPanel Orientation="Horizontal">
                 <lctrls:RotateButton Margin="0,0,15,0" Command="{Binding BackArrowPress}" IsRotated="{Binding IsLeft}" />
                 <TextBlock VerticalAlignment="Center" Text="programming" Style="{StaticResource SubheaderTextStyle}" FontSize="30" Padding="0, 0" />
@@ -41,4 +42,5 @@
             </ListView.ItemTemplate>
         </ListView>
     </StackPanel>
+    </Grid>
 </Page>

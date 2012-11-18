@@ -15,4 +15,10 @@
 
     <x:String x:Key="Error_AuthFailed">Your username or password was incorrect.</x:String>
     <x:String x:Key="Error_ConnFailed">The connection is currently unavailable.</x:String>
+
+    <x:String x:Key="Subreddits">subreddits</x:String>
+    <x:String x:Key="Retry">Retry</x:String>
+    <x:String x:Key="Cancel">Cancel</x:String>
+    <x:String x:Key="Error_Permanent">A Permanent error has occurred. Please try again later.</x:String>
+    <x:String x:Key="Error_Temporary">Request failed. Would you like to retry?</x:String>
 </ResourceDictionary>

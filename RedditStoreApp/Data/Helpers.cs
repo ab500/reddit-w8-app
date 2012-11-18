@@ -24,9 +24,18 @@ namespace RedditStoreApp.Data
             System.Diagnostics.Debug.WriteLine(msg);
         }
 
-        public static async Task<T> EnsureCompletion<T>(Func<Task<T>> apiCall) where T: class
+        public static async Task EnsureCompletion(Func<Task> task)
         {
-            T result = null;
+            // We use interger as a dumby type for now...
+            var result = await EnsureCompletion<int>(async () => {
+                await task();
+                return 0;
+            });
+        }
+
+        public static async Task<T> EnsureCompletion<T>(Func<Task<T>> apiCall)
+        {
+            T result = default(T);
             FailureType failureMode = FailureType.NoFail;
 
             do
@@ -45,22 +54,23 @@ namespace RedditStoreApp.Data
 
                 if (failureMode == FailureType.Permanent)
                 {
-                    var msg = new MessageDialog("A Permanent error has occurred. Please try again later.");
+                    var msg = new MessageDialog((string)App.Current.Resources["Error_Permanent"]);
                     await msg.ShowAsync();
-                    return null;
+                    return default(T);
                 }
 
                 if (failureMode == FailureType.Temporary)
                 {
-                    var msg = new MessageDialog("Request failed. Would you like to retry?");
-                    msg.Commands.Add(new UICommand("Retry"));
-                    msg.Commands.Add(new UICommand("Cancel"));
+                    var msg = new MessageDialog((string)App.Current.Resources["Error_Temporary"]);
+                    string cancelWord = (string)App.Current.Resources["Cancel"];
+                    msg.Commands.Add(new UICommand((string)App.Current.Resources["Retry"]));
+                    msg.Commands.Add(new UICommand(cancelWord));
 
                     IUICommand msgResult = await msg.ShowAsync();
 
-                    if (msgResult.Label == "Cancel")
+                    if (msgResult.Label == cancelWord)
                     {
-                        return null;
+                        return default(T);
                     }
                 }
             } 

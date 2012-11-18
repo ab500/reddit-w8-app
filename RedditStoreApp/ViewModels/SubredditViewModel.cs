@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using RedditStoreApp.ViewModels;
 using System.Collections.ObjectModel;
+using DataNs = RedditStoreApp.Data;
+
 using GalaSoft.MvvmLight.Command;
 
 namespace RedditStoreApp.ViewModels
@@ -117,7 +119,12 @@ namespace RedditStoreApp.ViewModels
             this.IsLoading = true;
             _posts.Clear();
 
-            await _subreddit.Posts.ChangeSort(value);
+            Func<Task> func = async () =>
+            {
+                await _subreddit.Posts.ChangeSort(value);
+            };
+            await DataNs.Helpers.EnsureCompletion(func);
+
             foreach (var post in _subreddit.Posts)
             {
                 _posts.Add(new PostViewModel(post));
@@ -131,7 +138,7 @@ namespace RedditStoreApp.ViewModels
             this.IsLoading = true;
             _posts.Clear();
 
-            await _subreddit.Posts.Refresh();
+            await DataNs.Helpers.EnsureCompletion(_subreddit.Posts.Refresh);
 
             foreach (var post in _subreddit.Posts)
             {
@@ -145,7 +152,7 @@ namespace RedditStoreApp.ViewModels
         {
             this.IsLoading = true;
 
-            int newPosts = await _subreddit.Posts.More();
+            int newPosts = await DataNs.Helpers.EnsureCompletion<int>(_subreddit.Posts.More);
 
             for (int i = _subreddit.Posts.Count - newPosts; i < _subreddit.Posts.Count; i++)
             {
