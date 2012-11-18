@@ -13,6 +13,7 @@ namespace RedditStoreApp.ViewModels
         private readonly IRedditApi _dataService;
 
         private bool _isInitialized = false;
+        private bool _isLeft = false;
 
         private SubredditViewModel _currentSubreddit;
         /// <summary>
@@ -22,6 +23,7 @@ namespace RedditStoreApp.ViewModels
         {
             this._dataService = dataService;
             this.Subreddits = new ObservableCollection<SubredditViewModel>();
+            this.BackArrowPress = new RelayCommand(BackArrowPressAction);
         }
 
         public async void Initialize()
@@ -45,7 +47,8 @@ namespace RedditStoreApp.ViewModels
 
         public ObservableCollection<SubredditViewModel> Subreddits { get; private set; }
 
-        public SubredditViewModel CurrentSubreddit {
+        public SubredditViewModel CurrentSubreddit
+        {
             get
             {
                 return _currentSubreddit;
@@ -57,5 +60,24 @@ namespace RedditStoreApp.ViewModels
             }
         }
 
+        public bool IsLeft
+        {
+            get
+            {
+                return _isLeft;
+            }
+            private set
+            {
+                _isLeft = value;
+                RaisePropertyChanged("IsLeft");
+            }
+        }
+
+        public RelayCommand BackArrowPress { get; private set; }
+
+        private void BackArrowPressAction()
+        {
+            this.IsLeft = !this.IsLeft;
+        }
     }
 }

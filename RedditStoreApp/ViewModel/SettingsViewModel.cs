@@ -91,7 +91,7 @@ namespace RedditStoreApp.ViewModels
                         _password = "";
                     }
                 }
-                catch (RedditApiException e)
+                catch (RedditApiException)
                 {
                     _errorMessage = (string)Application.Current.Resources["Error_ConnFailed"];
                 }

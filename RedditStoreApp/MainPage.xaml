@@ -12,10 +12,11 @@
 
     <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="500"/>
             <ColumnDefinition Width="475"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-
-        <Frame SourcePageType="view:LinkListView" />
+        <Frame SourcePageType="view:SubredditListView" />
+        <Frame Grid.Column="1" SourcePageType="view:LinkListView" />
     </Grid>
 </Page>
