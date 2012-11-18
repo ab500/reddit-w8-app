@@ -24,18 +24,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="local:CueTextBox">
                     <TextBox x:Name="MainTextBox" 
-                             Background="{TemplateBinding Background}" 
-                             BorderBrush="{TemplateBinding BorderBrush}"
                              Foreground="{TemplateBinding ActualTextBrush}"
-                             FontFamily="{TemplateBinding FontFamily}"
-                             FontSize="{TemplateBinding FontSize}"
-                             FontStretch="{TemplateBinding FontStretch}"
-                             FontStyle="{TemplateBinding FontStyle}"
-                             FontWeight="{TemplateBinding FontWeight}"
-                             TextAlignment="{TemplateBinding TextAlignment}"
-                             TextWrapping="{TemplateBinding TextChanged}"
-                             VerticalAlignment="{TemplateBinding VerticalAlignment}"
-                             HorizontalAlignment="{TemplateBinding HoriztonalAlignment}"
                              Text="{TemplateBinding ActualText}"
                              Width="{TemplateBinding Width}"
                              Height="{TemplateBinding Height}" />

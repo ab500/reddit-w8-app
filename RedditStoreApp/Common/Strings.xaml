@@ -21,4 +21,10 @@
     <x:String x:Key="Cancel">Cancel</x:String>
     <x:String x:Key="Error_Permanent">A Permanent error has occurred. Please try again later.</x:String>
     <x:String x:Key="Error_Temporary">Request failed. Would you like to retry?</x:String>
+
+    <x:String x:Key="MySubreddits">my subreddits</x:String>
+    <x:String x:Key="PopularSubreddits">most popular subreddits</x:String>
+
+    <x:String x:Key="QuickNav_CueText">Enter a subreddit here. e.g. 'r/pics' or 'pics'</x:String>
+    <x:String x:Key="QuickNav_Header">Quick Navigation</x:String>
 </ResourceDictionary>

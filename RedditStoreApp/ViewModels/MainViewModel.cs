@@ -5,6 +5,8 @@ using RedditStoreApp.Data.Factory;
 using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight.Command;
 using RedditStoreApp.Data.Core;
+using System;
+using System.Threading.Tasks;
 
 namespace RedditStoreApp.ViewModels
 {
@@ -42,15 +44,27 @@ namespace RedditStoreApp.ViewModels
 
             if (PasswordVaultWrapper.IsStored())
             {
+                Func<Task<bool>> loginAction = async () => {
+                   return await _dataService.LoginAsync(PasswordVaultWrapper.GetUsername(), PasswordVaultWrapper.GetPassword()); 
+                };
 
+                bool didLogin = await Data.Helpers.EnsureCompletion<bool>(loginAction);
+
+                if (didLogin)
+                {
+                    this.SubredditListHeader = (string)App.Current.Resources["MySubreddits"];
+                    subreddits = await Data.Helpers.EnsureCompletion<Listing<Subreddit>>(_dataService.GetMySubredditsListAsync);
+                }
             }
             else
             {
+                this.SubredditListHeader = (string)App.Current.Resources["PopularSubreddits"];
                 subreddits = await Data.Helpers.EnsureCompletion<Listing<Subreddit>>(_dataService.GetPopularSubredditsListAsync);
             }
 
             if (subreddits == null)
             {
+                this.IsLoading = false;
                 return;
             }
 
