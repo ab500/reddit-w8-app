@@ -4,6 +4,7 @@ using RedditStoreApp.Data.Model;
 using RedditStoreApp.Data.Factory;
 using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight.Command;
+using RedditStoreApp.Data.Core;
 
 namespace RedditStoreApp.ViewModels
 {
@@ -14,6 +15,10 @@ namespace RedditStoreApp.ViewModels
 
         private bool _isInitialized = false;
         private bool _isLeft = true;
+        private bool _isLoading = true;
+
+        private string _quickNavText;
+        private string _subredditListHeader;
 
         private SubredditViewModel _currentSubreddit;
         /// <summary>
@@ -33,7 +38,16 @@ namespace RedditStoreApp.ViewModels
                 return;
             }
 
-            Listing<Subreddit> subreddits = await Data.Helpers.EnsureCompletion<Listing<Subreddit>>(_dataService.GetPopularSubredditsListAsync);
+            Listing<Subreddit> subreddits = null;
+
+            if (PasswordVaultWrapper.IsStored())
+            {
+
+            }
+            else
+            {
+                subreddits = await Data.Helpers.EnsureCompletion<Listing<Subreddit>>(_dataService.GetPopularSubredditsListAsync);
+            }
 
             if (subreddits == null)
             {
@@ -47,6 +61,7 @@ namespace RedditStoreApp.ViewModels
 
             this.CurrentSubreddit = this.Subreddits[0];
             _isInitialized = true;
+            this.IsLoading = false;
         }
 
         public ObservableCollection<SubredditViewModel> Subreddits { get; private set; }
@@ -87,6 +102,45 @@ namespace RedditStoreApp.ViewModels
             {
                 _isLeft = value;
                 RaisePropertyChanged("IsLeft");
+            }
+        }
+
+        public bool IsLoading
+        {
+            get
+            {
+                return _isLoading;
+            }
+            private set
+            {
+                _isLoading = value;
+                RaisePropertyChanged("IsLoading");
+            }
+        }
+
+        public string SubredditListHeader
+        {
+            get
+            {
+                return _subredditListHeader;
+            }
+            private set
+            {
+                _subredditListHeader = value;
+                RaisePropertyChanged("SubredditListHeader");
+            }
+        }
+
+        public string QuickNavText
+        {
+            get
+            {
+                return _quickNavText;
+            }
+            set
+            {
+                _quickNavText = value;
+                RaisePropertyChanged("QuickNavText");
             }
         }
 
