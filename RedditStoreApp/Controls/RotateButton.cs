@@ -66,11 +66,11 @@ namespace RedditStoreApp.Controls
 
             if ((bool)e.OldValue)
             {
-                from = 180;
+                to = 180;
             }
             else
             {
-                to = 180;
+                from = 180;
             }
 
             DoubleAnimation d = new DoubleAnimation()
