@@ -20,6 +20,7 @@ using Windows.UI.Xaml.Navigation;
 using RedditStoreApp.View;
 using RedditStoreApp.ViewModels;
 
+using GalaSoft.MvvmLight;
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234227
 
 namespace RedditStoreApp
@@ -90,7 +91,16 @@ namespace RedditStoreApp
             settingsPopup.SetValue(Canvas.LeftProperty, SettingsPane.Edge == SettingsEdgeLocation.Right ? (Window.Current.Bounds.Width - settingsWidth) : 0);
             settingsPopup.SetValue(Canvas.TopProperty, 0);
             settingsPopup.IsOpen = true;
-        } 
+        }
+
+        private void SetupMessager()
+        {
+            GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<DialogMessage>(this, async (DialogMessage d) =>
+            {
+                MessageDialog md = new MessageDialog(d.Message);
+                await md.ShowAsync();
+            });
+        }
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
@@ -100,6 +110,7 @@ namespace RedditStoreApp
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs args)
         {
+
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
@@ -131,7 +142,9 @@ namespace RedditStoreApp
             // Ensure the current window is active
             Window.Current.Activate();
 
+            // View Model Setup Stuff
             ((ViewModelLocator)this.Resources["Locator"]).Main.Initialize();
+            SetupMessager();
         }
 
         /// <summary>

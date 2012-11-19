@@ -9,5 +9,6 @@ namespace RedditStoreApp.Data.Factory
         Task<bool> LoginAsync(string userName, string password);
         Task<Listing<Subreddit>> GetMySubredditsListAsync();
         Task<Listing<Subreddit>> GetPopularSubredditsListAsync();
+        Task<Subreddit> GetSubredditByName(string name);
     }
 }

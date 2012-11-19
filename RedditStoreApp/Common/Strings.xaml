@@ -27,4 +27,6 @@
 
     <x:String x:Key="QuickNav_CueText">Enter a subreddit here. e.g. 'r/pics' or 'pics'</x:String>
     <x:String x:Key="QuickNav_Header">Quick Navigation</x:String>
+
+    <x:String x:Key="Error_NotFound">That Subreddit does not exist.</x:String>
 </ResourceDictionary>

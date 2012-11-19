@@ -51,6 +51,11 @@ namespace RedditStoreApp.Controls
 
         private void IsRotatedChanged(DependencyPropertyChangedEventArgs e)
         {
+            if (_mainButton == null)
+            {
+                return;
+            }
+
             if (e.OldValue == e.NewValue)
             {
                 return;

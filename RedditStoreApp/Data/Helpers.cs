@@ -33,7 +33,7 @@ namespace RedditStoreApp.Data
             });
         }
 
-        public static async Task<T> EnsureCompletion<T>(Func<Task<T>> apiCall)
+        public static async Task<T> EnsureCompletion<T>(Func<Task<T>> apiCall, string customErrorMessage = null)
         {
             T result = default(T);
             FailureType failureMode = FailureType.NoFail;
@@ -54,7 +54,9 @@ namespace RedditStoreApp.Data
 
                 if (failureMode == FailureType.Permanent)
                 {
-                    var msg = new MessageDialog((string)App.Current.Resources["Error_Permanent"]);
+                    string errorMessage = customErrorMessage == null ? 
+                        (string)App.Current.Resources["Error_Permanent"] : customErrorMessage;
+                    var msg = new MessageDialog(errorMessage);
                     await msg.ShowAsync();
                     return default(T);
                 }

@@ -25,7 +25,6 @@
                 <ControlTemplate TargetType="local:CueTextBox">
                     <TextBox x:Name="MainTextBox" 
                              Foreground="{TemplateBinding ActualTextBrush}"
-                             Text="{TemplateBinding ActualText}"
                              Width="{TemplateBinding Width}"
                              Height="{TemplateBinding Height}" />
                 </ControlTemplate>

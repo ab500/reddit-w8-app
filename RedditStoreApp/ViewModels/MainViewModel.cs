@@ -4,8 +4,10 @@ using RedditStoreApp.Data.Model;
 using RedditStoreApp.Data.Factory;
 using System.Collections.ObjectModel;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using RedditStoreApp.Data.Core;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace RedditStoreApp.ViewModels
@@ -31,6 +33,7 @@ namespace RedditStoreApp.ViewModels
             this._dataService = dataService;
             this.Subreddits = new ObservableCollection<SubredditViewModel>();
             this.BackArrowPress = new RelayCommand(BackArrowPressAction);
+            this.QuickNavigate = new RelayCommand(QuickNavigateAction);
         }
 
         public async void Initialize()
@@ -158,11 +161,78 @@ namespace RedditStoreApp.ViewModels
             }
         }
 
+        public RelayCommand QuickNavigate { get; private set; }
         public RelayCommand BackArrowPress { get; private set; }
 
         private void BackArrowPressAction()
         {
             this.IsLeft = !this.IsLeft;
+        }
+
+        private async void QuickNavigateAction()
+        {
+            string subredditName = ParseQuickNav();
+            string notFoundError = (string)App.Current.Resources["Error_NotFound"];
+
+            if (subredditName == null)
+            {
+                Messenger.Default.Send<DialogMessage>(new DialogMessage()
+                {
+                    Message = notFoundError
+                });
+                return;
+            }
+
+            SubredditViewModel subredditViewModel = null;
+
+            if (!TryGetExistingSubreddit(subredditName, out subredditViewModel))
+            {
+
+                Func<Task<Subreddit>> action = async () =>
+                {
+                    return await _dataService.GetSubredditByName(ParseQuickNav());
+                };
+
+                Subreddit sr = await Data.Helpers.EnsureCompletion<Subreddit>(action, notFoundError);
+
+                if (sr != null)
+                {
+                    subredditViewModel = new SubredditViewModel(sr);
+                    this.Subreddits.Insert(0, subredditViewModel);
+                }
+            }
+
+            if (subredditViewModel != null)
+            {
+                this.CurrentSubreddit = subredditViewModel;
+            }
+        }
+
+        private bool TryGetExistingSubreddit(string subredditName, out SubredditViewModel result)
+        {
+            result = (from sr in this.Subreddits where subredditName.Equals(sr.DisplayName, StringComparison.OrdinalIgnoreCase) select sr).FirstOrDefault();
+            return result != null;
+        }
+
+        private string ParseQuickNav()
+        {
+            string val = this.QuickNavText;
+            if (string.IsNullOrEmpty(val))
+            {
+                return null;
+            }
+
+            val = val.Trim();
+            val = val.Trim(new char[] { '/' });
+
+            if (val.StartsWith("r/"))
+            {
+                val = val.Remove(0, 2);
+            }
+
+            val = val.Replace(" ", "");
+
+            return val;
         }
     }
 }

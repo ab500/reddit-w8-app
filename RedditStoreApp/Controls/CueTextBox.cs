@@ -17,15 +17,22 @@ namespace RedditStoreApp.Controls
         private enum TextBoxState { Empty, Typing, HasText };
         private TextBoxState _currentState = TextBoxState.Empty;
 
+        private TextBox _mainBox;
+
         public CueTextBox()
         {
             this.DefaultStyleKey = typeof(CueTextBox);
-            this.GotFocus += CueTextBox_GotFocus;
-            this.LostFocus += CueTextBox_LostFocus;
+            this.Text = "";
+            this.ActualTextBrush = this.CueTextBrush; 
         }
 
         protected override void OnApplyTemplate()
         {
+            _mainBox = (TextBox)GetTemplateChild("MainTextBox");
+            _mainBox.GotFocus += CueTextBox_GotFocus;
+            _mainBox.LostFocus += CueTextBox_LostFocus;
+            _mainBox.TextChanged += OnTextChanged;
+            _mainBox.Text = this.CueText;
             base.OnApplyTemplate();
         }
 
@@ -33,7 +40,7 @@ namespace RedditStoreApp.Controls
         {
             if (_currentState == TextBoxState.Empty)
             {
-                this.ActualText = "";
+                _mainBox.Text = "";
                 this.ActualTextBrush = this.Foreground;
             }
             _currentState = TextBoxState.Typing;
@@ -41,11 +48,11 @@ namespace RedditStoreApp.Controls
 
         private void CueTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (String.IsNullOrEmpty(this.ActualText))
+            if (String.IsNullOrEmpty(_mainBox.Text))
             {
-                this.ActualText = this.CueText;
-                this.ActualTextBrush = this.CueTextBrush;
                 _currentState = TextBoxState.Empty;
+                _mainBox.Text = this.CueText;
+                this.ActualTextBrush = this.CueTextBrush;
             }
             else
             {
@@ -63,9 +70,9 @@ namespace RedditStoreApp.Controls
 
         private void OnCueTextChanged(DependencyPropertyChangedEventArgs e)
         {
-            if (_currentState == TextBoxState.Empty)
+            if (_mainBox != null && _currentState == TextBoxState.Empty)
             {
-                this.ActualText = this.CueText;
+                _mainBox.Text = this.CueText;
                 this.ActualTextBrush = this.CueTextBrush;                
             }
         }
@@ -82,31 +89,11 @@ namespace RedditStoreApp.Controls
             }
         }
 
-        public static DependencyProperty ActualTextProperty = DependencyProperty.Register("ActualText", typeof(string), typeof(CueTextBox), new PropertyMetadata("", OnActualTextChanged));
-
-        public string ActualText
+        private void OnTextChanged(object sender, RoutedEventArgs e)
         {
-            get
+            if (_mainBox != null && _currentState == TextBoxState.Typing)
             {
-                return (string)GetValue(ActualTextProperty);
-            }
-            set
-            {
-                SetValue(ActualTextProperty, value);
-            }
-        }
-
-        private static void OnActualTextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            CueTextBox c = (CueTextBox)sender;
-            c.OnActualTextChanged(e);
-        }
-
-        private void OnActualTextChanged(DependencyPropertyChangedEventArgs e)
-        {
-            if (_currentState == TextBoxState.Typing)
-            {
-                this.Text = this.ActualText;
+                this.Text = _mainBox.Text;
             }
         }
 

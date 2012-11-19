@@ -119,6 +119,7 @@
     <Compile Include="Data\Model\Subreddit.cs" />
     <Compile Include="Data\Factory\RedditApi.cs" />
     <Compile Include="Data\Model\Thing.cs" />
+    <Compile Include="DialogMessage.cs" />
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Helpers\INavigationService.cs" />
     <Compile Include="Helpers\NavigationService.cs" />

@@ -27,8 +27,8 @@
             <StackPanel Grid.Row="1">
                 <TextBlock Style="{StaticResource BasicTextStyle}" Text="{StaticResource QuickNav_Header}" />
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,15">
-                    <lctrls:CueTextBox Width="300" Margin="0,0,15,0" Text="{Binding QuickNavText}" CueText="{StaticResource QuickNav_CueText}"/>
-                    <Button Content="Go!" />
+                    <lctrls:CueTextBox Width="300" Margin="0,0,15,0" Text="{Binding QuickNavText, Mode=TwoWay}" CueText="{StaticResource QuickNav_CueText}"/>
+                    <Button Content="Go!" Command="{Binding QuickNavigate}"/>
                 </StackPanel>
                 <TextBlock Text="{Binding SubredditListHeader}" FontSize="20" Style="{StaticResource GroupHeaderTextStyle}"/>
             </StackPanel>

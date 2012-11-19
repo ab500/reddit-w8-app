@@ -58,5 +58,31 @@ namespace RedditStoreApp.Data.Factory
             await _list.Refresh();
             return _list;
         }
+
+        public async Task<Subreddit> GetSubredditByName(string resource)
+        {
+            Response resp = await _reqServ.GetAsync("r/" + resource + "/about", true);
+
+            if (!resp.IsSuccess)
+            {
+                throw new RedditApiException(RedditApiExceptionType.Connection);
+            }
+
+            try
+            {
+                var jobj = JObject.Parse(resp.Content);
+                return new Subreddit(jobj, _reqServ);
+            }
+            catch (JsonException ex)
+            {
+                Helpers.DebugWrite(ex.Message);
+                throw new RedditApiException(RedditApiExceptionType.Parse);
+            }
+            catch (NullReferenceException ex)
+            {
+                Helpers.DebugWrite(ex.Message);
+                throw new RedditApiException(RedditApiExceptionType.Parse);
+            }        
+        }
     }
 }
