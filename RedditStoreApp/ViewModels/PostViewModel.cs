@@ -31,5 +31,45 @@ namespace RedditStoreApp.ViewModels
                 return _post.Title;
             }
         }
+
+        public int CommentCount
+        {
+            get
+            {
+                return _post.CommentCount;
+            }
+        }
+
+        public int Upvotes
+        {
+            get
+            {
+                return _post.Ups;
+            }
+        }
+
+        public int Downvotes
+        {
+            get
+            {
+                return _post.Downs;
+            }
+        }
+
+        public string Domain 
+        {
+            get
+            {
+                return _post.Domain;
+            }
+        }
+
+        public string Author
+        {
+            get
+            {
+                return _post.Author;
+            }
+        }
     }
 }
