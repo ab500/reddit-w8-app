@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Data;
 
-namespace RedditStoreApp.View.Converter
+namespace RedditStoreApp.View.Converters
 {
     // From Enum to String
     public class SortValueConverter : IValueConverter

@@ -16,6 +16,14 @@ namespace RedditStoreApp.ViewModels
             _post = post;
         }
 
+        public string ThumbnailUrl
+        {
+            get
+            {
+                return _post.ThumbnailUrl;
+            }
+        }
+
         public string Name
         {
             get

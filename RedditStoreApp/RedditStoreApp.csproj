@@ -128,10 +128,11 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\PostViewModel.cs" />
-    <Compile Include="Views\Converter\SortValueConverter.cs" />
+    <Compile Include="Views\Converters\SortValueConverter.cs" />
     <Compile Include="Views\LinkListView.xaml.cs">
       <DependentUpon>LinkListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Selectors\PostSelector.cs" />
     <Compile Include="Views\SettingsFlyoutView.xaml.cs">
       <DependentUpon>SettingsFlyoutView.xaml</DependentUpon>
     </Compile>
