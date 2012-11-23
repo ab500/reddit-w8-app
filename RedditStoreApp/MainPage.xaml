@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:RedditStoreApp"
-    xmlns:view="using:RedditStoreApp.View"
+    xmlns:views="using:RedditStoreApp.Views"
     xmlns:co="using:Callisto.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -13,12 +13,17 @@
         <Grid.RenderTransform>
             <TranslateTransform X="-500" />
         </Grid.RenderTransform>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="500"/>
             <ColumnDefinition Width="475"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Frame SourcePageType="view:SubredditListView" />
-        <Frame Grid.Column="1" SourcePageType="view:LinkListView" />
+        <Frame Grid.RowSpan="2" SourcePageType="views:SubredditListView" />
+        <Frame Grid.RowSpan="2" Grid.Column="1" SourcePageType="views:LinkListView" />
+        <Frame Grid.Column="2" SourcePageType="views:PostHeader" />
     </Grid>
 </Page>

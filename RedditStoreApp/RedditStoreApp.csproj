@@ -132,6 +132,9 @@
     <Compile Include="Views\LinkListView.xaml.cs">
       <DependentUpon>LinkListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\PostHeader.xaml.cs">
+      <DependentUpon>PostHeader.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Selectors\PostSelector.cs" />
     <Compile Include="Views\SettingsFlyoutView.xaml.cs">
       <DependentUpon>SettingsFlyoutView.xaml</DependentUpon>
@@ -190,6 +193,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\LinkListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PostHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -17,7 +17,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
-using RedditStoreApp.View;
+using RedditStoreApp.Views;
 using RedditStoreApp.ViewModels;
 
 using GalaSoft.MvvmLight;
