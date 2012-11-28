@@ -1,19 +1,70 @@
-﻿using RedditStoreApp.Data.Model;
+﻿using GalaSoft.MvvmLight;
+using RedditStoreApp.Data.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Data;
 
 namespace RedditStoreApp.ViewModels
 {
-    public class PostViewModel
+    public class PostViewModel: ViewModelBase
     {
         private Post _post;
-
+        private IncrementalObservableCollection<CommentViewModel> _comments;
+        private bool _isLoading;
+ 
         public PostViewModel(Post post)
         {
+            _comments = new IncrementalObservableCollection<CommentViewModel>(
+                () => { return _post.Comments.HasMore; },
+                (uint count) =>
+                {
+                    Func<Task<LoadMoreItemsResult>> taskFunc = async () =>
+                    {
+                        this.IsLoading = true;
+                        int newComments = await _post.Comments.More();
+
+                        int currentPostCount = _comments.Count;
+                        for (int i = currentPostCount; i < _post.Comments.Count; i++)
+                        {
+                            _comments.Add(new CommentViewModel(_post.Comments[i]));
+                        }
+                        this.IsLoading = false;
+
+                        return new LoadMoreItemsResult()
+                        {
+                            Count = (uint)newComments
+                        };                       
+                    };
+                    Task<LoadMoreItemsResult> loadMorePostsTask = taskFunc();
+                    return loadMorePostsTask.AsAsyncOperation<LoadMoreItemsResult>();
+                }
+            );
+
             _post = post;
+        }
+
+        public bool IsLoading
+        {
+            get
+            {
+                return _isLoading;
+            }
+            set
+            {
+                _isLoading = value;
+                RaisePropertyChanged("IsLoading");
+            }
+        }
+
+        public IncrementalObservableCollection<CommentViewModel> Comments
+        {
+            get
+            {
+                return _comments;
+            }
         }
 
         public string ThumbnailUrl
