@@ -145,7 +145,7 @@
                     <TextBlock Margin="5,0,0,0" Style="{StaticResource BasicTextStyle}" FontSize="14" FontWeight="Bold" Text="i.imgur.com"/>
                 </StackPanel>
             </Grid>-->
-            <ListView Width="Auto" Grid.Row="1" ItemTemplateSelector="{StaticResource PostDataTemplateSelector}" ItemsSource="{Binding CurrentSubreddit.Posts}" SelectedItem="{Binding CurrentSubreddit.SelectedPost, Mode=TwoWay}" ItemContainerStyle="{StaticResource RedditListViewItem}">
+            <ListView  Width="Auto" Grid.Row="1" ItemTemplateSelector="{StaticResource PostDataTemplateSelector}" ItemsSource="{Binding CurrentSubreddit.Posts}" SelectedItem="{Binding CurrentSubreddit.SelectedPost, Mode=TwoWay}" ItemContainerStyle="{StaticResource RedditListViewItem}">
             </ListView>
         </Grid>
     </Grid>

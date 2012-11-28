@@ -178,7 +178,7 @@ namespace RedditStoreApp.Data.Model
                 // If it's a comment we grab the link id. When
                 // this fails it just returns null.
                 _linkId = (string)respObj.SelectToken("data.children[0].data.link_id");
-                _nextId = (string)respObj["after"];
+                _nextId = (string)respObj.SelectToken("data.after");
 
                 return (JArray)respObj["data"]["children"];
             }, resp.Content);

@@ -10,13 +10,16 @@ using System.Collections.ObjectModel;
 using DataNs = RedditStoreApp.Data;
 
 using GalaSoft.MvvmLight.Command;
+using Windows.UI.Xaml.Data;
+using Windows.Foundation;
+using Windows.UI.Core;
 
 namespace RedditStoreApp.ViewModels
 {
     public class SubredditViewModel : ViewModelBase
     {
         private Subreddit _subreddit;
-        private ObservableCollection<PostViewModel> _posts;
+        private SupportIncrementalLoadingWrapper<PostViewModel> _posts;
         private PostViewModel _selectedPost;
 
         private bool _isLoading = false;
@@ -30,7 +33,40 @@ namespace RedditStoreApp.ViewModels
 
         public SubredditViewModel(Subreddit s)
         {
-            _posts = new ObservableCollection<PostViewModel>();
+            _posts = new SupportIncrementalLoadingWrapper<PostViewModel>(() => { return _subreddit.Posts.HasMore; }, (uint count) =>
+            {
+                var dispatcher = Windows.UI.Core.CoreWindow.GetForCurrentThread().Dispatcher;
+                this.IsLoading = true;
+
+                Func<LoadMoreItemsResult> loadAction = () =>
+                {
+                    Task<int> t = Task.Factory.StartNew<Task<int>>(async () =>
+                    {
+                        return await _subreddit.Posts.More();
+                    }).Unwrap<int>();
+                    t.Wait();
+
+                    int newPosts = t.Result;
+
+                    IAsyncAction iaa = dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                    {
+                        int currentPostCount = _posts.Count;
+                        for (int i = currentPostCount; i < _subreddit.Posts.Count; i++)
+                        {
+                            _posts.Add(new PostViewModel(_subreddit.Posts[i]));
+                        }
+                        this.IsLoading = false;
+                    });
+
+                    return new LoadMoreItemsResult()
+                    {
+                        Count = (uint)newPosts
+                    };
+                };
+
+                return Task.Run(loadAction).AsAsyncOperation<LoadMoreItemsResult>();
+            });
+
             _subreddit = s;
             _refreshCommand = new RelayCommand(RefreshAction);
             _loadMoreCommand = new RelayCommand(LoadMoreAction);
@@ -58,9 +94,9 @@ namespace RedditStoreApp.ViewModels
             {
                 if (_subreddit.Posts.CurrentSort != value && _isActive)
                 {
-                // NOTE: Fires off async call.
-                ChangeSort(value);
-                RaisePropertyChanged("CurrentSort");
+                    // NOTE: Fires off async call.
+                    ChangeSort(value);
+                    RaisePropertyChanged("CurrentSort");
                 }
             }
         }
@@ -118,7 +154,7 @@ namespace RedditStoreApp.ViewModels
             }
         }
 
-        public ObservableCollection<PostViewModel> Posts
+        public SupportIncrementalLoadingWrapper<PostViewModel> Posts
         {
             get
             {
