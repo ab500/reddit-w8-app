@@ -9,12 +9,12 @@ using Windows.UI.Xaml.Data;
 
 namespace RedditStoreApp.ViewModels
 {
-    public class SupportIncrementalLoadingWrapper<T>: ObservableCollection<T>, ISupportIncrementalLoading
+    public class IncrementalObservableCollection<T>: ObservableCollection<T>, ISupportIncrementalLoading
     {
         private Func<bool> _hasMoreItems;
         private Func<uint, IAsyncOperation<LoadMoreItemsResult>> _loadMoreItems;
 
-        public SupportIncrementalLoadingWrapper(Func<bool> hasMoreItems, Func<uint, IAsyncOperation<LoadMoreItemsResult>> loadMoreItems)
+        public IncrementalObservableCollection(Func<bool> hasMoreItems, Func<uint, IAsyncOperation<LoadMoreItemsResult>> loadMoreItems)
         {
             _hasMoreItems = hasMoreItems;
             _loadMoreItems = loadMoreItems;
