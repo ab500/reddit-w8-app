@@ -130,5 +130,13 @@ namespace RedditStoreApp.ViewModels
                 return _post.Author;
             }
         }
+
+        public DateTime Created
+        {
+            get
+            {
+                return _post.Created;
+            }
+        }
     }
 }

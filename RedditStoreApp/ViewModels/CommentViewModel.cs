@@ -63,7 +63,7 @@ namespace RedditStoreApp.ViewModels
         {
             get
             {
-                return replies;
+                return _replies;
             }
         }
     }

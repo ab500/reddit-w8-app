@@ -4,18 +4,57 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:lctrls="using:RedditStoreApp.Controls"
     xmlns:local="using:RedditStoreApp.Views"
+    xmlns:fusao="using:Fusao.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
-    d:DesignHeight="100"
+    d:DesignHeight="120"
     d:DesignWidth="800">
     <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
         <Grid Margin="20,10,20,10">
-            <StackPanel Orientation="Horizontal">
-                <lctrls:RotateButton Margin="0,0,15,0" Command="{Binding BackArrowPress}" IsRotated="False" />
-                <TextBlock VerticalAlignment="Center" Text="{Binding CurrentSubreddit.SelectedPost.Title}" Style="{StaticResource SubheaderTextStyle}" FontSize="30" Padding="0, 0" />
-                <ProgressRing VerticalAlignment="Center" Margin="10,15,0,0" Foreground="Black" Width="20" Height="20" IsActive="{Binding CurrentSubreddit.IsLoading}" />
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <fusao:RotateButton Margin="0,0,15,0" Command="{Binding BackArrowPress}" IsRotated="False" />
+                        <StackPanel Grid.Column="1" Orientation="Horizontal">
+                            <TextBlock VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding CurrentSubreddit.SelectedPost.Title}" Style="{StaticResource SubheaderTextStyle}" FontSize="30" Padding="0, 0" />
+                            <ProgressRing VerticalAlignment="Center" Margin="10,15,0,0" Foreground="Black" Width="20" Height="20" IsActive="{Binding CurrentSubreddit.SelectedPost.IsLoading}" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
+                            <fusao:ApproximateDateBlock Width="180" Margin="2,3,0,1" Style="{StaticResource BasicDateTextStyle}" FontSize="14" Date="{Binding CurrentSubreddit.SelectedPost.Created}" />
+                            <TextBlock Margin="2,8,0,0" Style="{StaticResource BasicTextStyle}" FontSize="14" Text=" via "/>
+                            <TextBlock Margin="5,8,0,0" Style="{StaticResource BasicTextStyle}" FontSize="14" FontWeight="Bold" Text="{Binding CurrentSubreddit.SelectedPost.Domain}"/>
+
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
+                            <TextBlock Margin="0,10,0,0" Style="{StaticResource BasicTextStyle}" FontSize="14" Text="{Binding CurrentSubreddit.SelectedPost.Upvotes}" Foreground="{StaticResource UpvoteBrush}"/>
+                            <TextBlock Margin="0,10,0,0" FontFamily="Segoe UI Symbol" Style="{StaticResource BasicTextStyle}" FontSize="14" Foreground="{StaticResource UpvoteBrush}" Text="&#xE110;" />
+                            <TextBlock Margin="15,10,0,0" Style="{StaticResource BasicTextStyle}" FontSize="14" Text="{Binding CurrentSubreddit.SelectedPost.Downvotes}" Foreground="{StaticResource DownvoteBrush}"/>
+                            <TextBlock Margin="0,10,0,0" FontFamily="Segoe UI Symbol" Style="{StaticResource BasicTextStyle}" FontSize="14" Text="&#xE110;" RenderTransformOrigin="0.5,0.5" Foreground="{StaticResource DownvoteBrush}">
+                                <TextBlock.RenderTransform>
+                                    <RotateTransform Angle="180"/>
+                                </TextBlock.RenderTransform>
+                            </TextBlock>
+                            <TextBlock Margin="15,10,0,0" Style="{StaticResource BasicTextStyle}" FontSize="14" Text="{Binding CurrentSubreddit.SelectedPost.CommentCount}"/>
+                            <TextBlock Margin="5,10,0,0" FontFamily="Segoe UI Symbol" Style="{StaticResource BasicTextStyle}" FontSize="14" Text="&#xE200;"/>
+
+                            <TextBlock Margin="40,10,0,0" FontFamily="Segoe UI Symbol" Style="{StaticResource BasicTextStyle}" FontSize="16" Text="&#xE13D;"/>
+                            <TextBlock Margin="2,10,0,0" Style="{StaticResource BasicTextStyle}" FontSize="14" Text="{Binding CurrentSubreddit.SelectedPost.Author}" Height="22" VerticalAlignment="Top"/>
+                        </StackPanel>
+                    </Grid>
+
+                </StackPanel>
+
             </StackPanel>
         </Grid>
     </Grid>
