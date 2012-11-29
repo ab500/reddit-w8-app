@@ -50,7 +50,7 @@ namespace RedditStoreApp.Data.Model
 
             this.Ups = data["ups"].Value<int>();
             this.Downs = data["downs"].Value<int>();
-            this.Created = Helpers.FromUnixTime(data["created"].Value<long>());
+            this.Created = Helpers.FromUnixTime(data["created_utc"].Value<long>());
 
             string likeValue = data["likes"].Value<string>();
             if (likeValue == "true")
