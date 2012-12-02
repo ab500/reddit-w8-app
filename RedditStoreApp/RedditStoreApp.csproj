@@ -129,6 +129,7 @@
     <Compile Include="ViewModels\PostViewModel.cs" />
     <Compile Include="ViewModels\SupportIncrementalLoadingWrapper.cs" />
     <Compile Include="Views\Converters\SortValueConverter.cs" />
+    <Compile Include="Views\Converters\VisibilityConverter.cs" />
     <Compile Include="Views\LinkListView.xaml.cs">
       <DependentUpon>LinkListView.xaml</DependentUpon>
     </Compile>

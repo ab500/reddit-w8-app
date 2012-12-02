@@ -83,6 +83,14 @@ namespace RedditStoreApp.ViewModels
             }
         }
 
+        public string SelfText
+        {
+            get
+            {
+                return _post.SelfText;
+            }
+        }
+
         public string Title
         {
             get
