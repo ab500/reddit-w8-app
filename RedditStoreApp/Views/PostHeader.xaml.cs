@@ -35,7 +35,7 @@ namespace RedditStoreApp.Views
             {
                 if (msg.PropertyName == "CurrentPost")
                 {
-                    UpdatePosition(msg.NewValue.IsShowingComments);
+                    UpdatePosition(((MainViewModel)this.DataContext).IsShowingComments);
                 }
             });
 

@@ -15,13 +15,9 @@ namespace RedditStoreApp.ViewModels
         private Post _post;
         private IncrementalObservableCollection<CommentViewModel> _comments;
         private bool _isLoading;
-        private RelayCommand _changeView;
-
-        private bool _isShowingComments = false;
 
         public PostViewModel(Post post)
         {
-            _isShowingComments = true;
             _post = post;
             _comments = new IncrementalObservableCollection<CommentViewModel>(
                 () => { return _post.Comments.HasMore; },
@@ -48,42 +44,9 @@ namespace RedditStoreApp.ViewModels
                     return loadMorePostsTask.AsAsyncOperation<LoadMoreItemsResult>();
                 }
             );
-
-            _changeView = new RelayCommand(ChangeViewAction, () =>
-            {
-                return !_post.IsSelf && !String.IsNullOrEmpty(_post.Url);
-            });
         }
 
 
-        private void ChangeViewAction()
-        {
-            this.IsShowingComments = !this.IsShowingComments; 
-        }
-
-        public bool IsShowingComments
-        {
-            get
-            {
-                return _isShowingComments || (_post.IsSelf && !String.IsNullOrEmpty(_post.Url));
-            }
-            set
-            {
-                if (this.IsShowingComments != value)
-                {
-                    _isShowingComments = value;
-                    RaisePropertyChanged("IsShowingComments", !_isShowingComments, _isShowingComments, true);
-                }
-            }
-        }
-
-        public RelayCommand ChangeView
-        {
-            get
-            {
-                return _changeView;
-            }
-        }
 
         public bool IsLoading
         {
@@ -207,6 +170,14 @@ namespace RedditStoreApp.ViewModels
             get
             {
                 return new Uri(_post.Url, UriKind.Absolute);
+            }
+        }
+
+        public string UriString
+        {
+            get
+            {
+                return _post.Url;
             }
         }
     }

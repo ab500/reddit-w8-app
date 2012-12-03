@@ -24,6 +24,9 @@ namespace RedditStoreApp.ViewModels
         private string _quickNavText;
         private string _subredditListHeader;
 
+        private RelayCommand _changeView;
+        private bool _isShowingComments = false;
+
         private SubredditViewModel _currentSubreddit;
         private PostViewModel _currentPost;
 
@@ -44,6 +47,8 @@ namespace RedditStoreApp.ViewModels
                     this.CurrentPost = msg.NewValue;
                 }
             });
+
+            _changeView = new RelayCommand(ChangeViewAction);
         }
 
         public async void Initialize()
@@ -262,5 +267,35 @@ namespace RedditStoreApp.ViewModels
 
             return val;
         }
+
+        private void ChangeViewAction()
+        {
+            this.IsShowingComments = !this.IsShowingComments; 
+        }
+
+        public bool IsShowingComments
+        {
+            get
+            {
+                return _isShowingComments || (_currentPost != null && _currentPost.IsSelf && !String.IsNullOrEmpty(_currentPost.UriString));
+            }
+            set
+            {
+                if (this.IsShowingComments != value)
+                {
+                    _isShowingComments = value;
+                    RaisePropertyChanged("IsShowingComments", !_isShowingComments, _isShowingComments, true);
+                }
+            }
+        }
+
+        public RelayCommand ChangeView
+        {
+            get
+            {
+                return _changeView;
+            }
+        }
+
     }
 }
