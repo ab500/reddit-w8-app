@@ -102,8 +102,9 @@ namespace RedditStoreApp.ViewModels
             }
             set
             {
+                PostViewModel oldValue = _selectedPost;
                 _selectedPost = value;
-                RaisePropertyChanged("SelectedPost");
+                RaisePropertyChanged("SelectedPost", oldValue, _selectedPost, true);
             }
         }
 

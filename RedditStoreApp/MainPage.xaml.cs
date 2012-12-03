@@ -22,7 +22,7 @@ namespace RedditStoreApp
 {
     public sealed partial class MainPage : Page
     {
-        private bool _isLeft = true;
+        private bool _isLeft = false;
 
         public MainPage()
         {

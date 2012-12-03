@@ -18,13 +18,15 @@ namespace RedditStoreApp.ViewModels
         private readonly IRedditApi _dataService;
 
         private bool _isInitialized = false;
-        private bool _isLeft = true;
+        private bool _isLeft = false;
         private bool _isLoading = true;
 
         private string _quickNavText;
         private string _subredditListHeader;
 
         private SubredditViewModel _currentSubreddit;
+        private PostViewModel _currentPost;
+
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
@@ -34,6 +36,14 @@ namespace RedditStoreApp.ViewModels
             this.Subreddits = new ObservableCollection<SubredditViewModel>();
             this.BackArrowPress = new RelayCommand(BackArrowPressAction);
             this.QuickNavigate = new RelayCommand(QuickNavigateAction);
+
+            Messenger.Default.Register<PropertyChangedMessage<PostViewModel>>(this, (msg) =>
+            {
+                if (msg.PropertyName == "SelectedPost")
+                {
+                    this.CurrentPost = msg.NewValue;
+                }
+            });
         }
 
         public async void Initialize()
@@ -103,9 +113,22 @@ namespace RedditStoreApp.ViewModels
                     _currentSubreddit.Refresh.Execute(null);
                 }
 
-                IsLeft = true;
+                //IsLeft = true;
 
                 RaisePropertyChanged("CurrentSubreddit");
+            }
+        }
+
+        public PostViewModel CurrentPost
+        {
+            get
+            {
+                return _currentPost;
+            }
+            set
+            {
+                _currentPost = value;
+                RaisePropertyChanged("CurrentPost");
             }
         }
 

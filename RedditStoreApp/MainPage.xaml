@@ -11,19 +11,18 @@
     mc:Ignorable="d">
     <Grid x:Name="MainGrid" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RenderTransform>
-            <TranslateTransform X="-500" />
+            <TranslateTransform X="0" />
         </Grid.RenderTransform>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="500"/>
             <ColumnDefinition Width="475"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Frame Grid.RowSpan="2" SourcePageType="views:SubredditListView" />
-        <Frame Grid.RowSpan="2" Grid.Column="1" SourcePageType="views:LinkListView" />
+        <Frame SourcePageType="views:SubredditListView" />
+        <Frame Grid.Column="1" SourcePageType="views:LinkListView" />
         <Frame Grid.Column="2" SourcePageType="views:PostHeader" />
     </Grid>
 </Page>
