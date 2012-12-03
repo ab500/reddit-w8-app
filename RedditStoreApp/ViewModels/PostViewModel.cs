@@ -201,5 +201,13 @@ namespace RedditStoreApp.ViewModels
                 return _post.IsSelf;
             }
         }
+
+        public Uri Link
+        {
+            get
+            {
+                return new Uri(_post.Url, UriKind.Absolute);
+            }
+        }
     }
 }

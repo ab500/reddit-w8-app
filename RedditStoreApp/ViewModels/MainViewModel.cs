@@ -44,7 +44,6 @@ namespace RedditStoreApp.ViewModels
                     this.CurrentPost = msg.NewValue;
                 }
             });
-
         }
 
         public async void Initialize()

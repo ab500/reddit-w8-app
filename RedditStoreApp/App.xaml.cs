@@ -21,6 +21,8 @@ using RedditStoreApp.Views;
 using RedditStoreApp.ViewModels;
 
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Messaging;
+using System.Threading.Tasks;
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234227
 
 namespace RedditStoreApp
@@ -47,19 +49,29 @@ namespace RedditStoreApp
         {
             base.OnWindowCreated(args);
 
-            SettingsPane.GetForCurrentView().CommandsRequested += 
-                delegate(SettingsPane settingsPane, SettingsPaneCommandsRequestedEventArgs eventArgs) {
-                   UICommandInvokedHandler handler = new UICommandInvokedHandler(OnSettingsCommand);
+            SettingsPane.GetForCurrentView().CommandsRequested +=
+                delegate(SettingsPane settingsPane, SettingsPaneCommandsRequestedEventArgs eventArgs)
+                {
+                    UICommandInvokedHandler handler = new UICommandInvokedHandler(OnSettingsCommand);
                     SettingsCommand generalCommand = new SettingsCommand("AccountsId", "Account", handler);
-                    eventArgs.Request.ApplicationCommands.Add(generalCommand); 
+                    eventArgs.Request.ApplicationCommands.Add(generalCommand);
                 };
         }
 
-        void OnSettingsCommand(IUICommand command)
+        async void OnSettingsCommand(IUICommand command)
         {
+            Messenger.Default.Send<OverlayDialogMessage>(new OverlayDialogMessage()
+            {
+                Showing = true
+            });
+            
+            // BUGFIX: Delay in the webview screenshotting process. Allows for
+            // UI repaint.
+            await Task.Delay(100);
+
             double settingsWidth = 346;
             double settingsHeight = Window.Current.Bounds.Height;
-            
+
             // Create a Popup window which will contain our flyout.
             settingsPopup = new Popup()
             {
@@ -91,14 +103,35 @@ namespace RedditStoreApp
             settingsPopup.SetValue(Canvas.LeftProperty, SettingsPane.Edge == SettingsEdgeLocation.Right ? (Window.Current.Bounds.Width - settingsWidth) : 0);
             settingsPopup.SetValue(Canvas.TopProperty, 0);
             settingsPopup.IsOpen = true;
+
+            settingsPopup.Closed += delegate
+            {
+                Messenger.Default.Send<OverlayDialogMessage>(new OverlayDialogMessage()
+                {
+                    Showing = false
+                });
+            };
         }
 
         private void SetupMessager()
         {
             GalaSoft.MvvmLight.Messaging.Messenger.Default.Register<DialogMessage>(this, async (DialogMessage d) =>
             {
+                Messenger.Default.Send<OverlayDialogMessage>(new OverlayDialogMessage()
+                {
+                    Showing = true 
+                });
+
+                // BUGFIX: Delay in the webview screenshotting process. Allows for
+                // UI repaint.
+                await Task.Delay(100);
+
                 MessageDialog md = new MessageDialog(d.Message);
                 await md.ShowAsync();
+                Messenger.Default.Send<OverlayDialogMessage>(new OverlayDialogMessage()
+                {
+                    Showing = false
+                });
             });
         }
 
@@ -160,5 +193,5 @@ namespace RedditStoreApp
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
-   }
+    }
 }

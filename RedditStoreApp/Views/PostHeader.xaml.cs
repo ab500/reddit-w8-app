@@ -1,9 +1,11 @@
-﻿using GalaSoft.MvvmLight.Messaging;
+﻿using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using RedditStoreApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -21,8 +23,9 @@ namespace RedditStoreApp.Views
 {
     public sealed partial class PostHeader : Page
     {
-        private bool _isShowingComments = true;
         private double _translateAmount = 0.0;
+        private bool _isShowingComments = false;
+        private int _showCount = 0;
 
         public PostHeader()
         {
@@ -41,6 +44,35 @@ namespace RedditStoreApp.Views
                 if (msg.PropertyName == "IsShowingComments")
                 {
                     UpdatePosition(msg.NewValue);
+                }
+            });
+
+            Messenger.Default.Register<OverlayDialogMessage>(this, async (msg) =>
+            {
+                if (msg.Showing)
+                {
+                    this.WebViewBrush.Redraw();
+
+                    // BUGFIX: Wait for redraw to occur.
+                    await Task.Delay(50);
+
+                    this.WebViewRect.Visibility = Visibility.Visible;
+
+                    await Task.Delay(50);
+
+                    this.WebView.Visibility = Visibility.Collapsed;
+
+                    _showCount++;
+                }
+                else
+                {
+                    _showCount--;
+                    if (_showCount == 0)
+                    {
+                        await Task.Delay(100);
+                        this.WebView.Visibility = Visibility.Visible;
+                        this.WebViewRect.Visibility = Visibility.Collapsed;
+                    }
                 }
             });
         }
@@ -117,5 +149,6 @@ namespace RedditStoreApp.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
         }
+
     }
 }

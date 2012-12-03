@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight.Messaging;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -40,5 +41,6 @@ namespace RedditStoreApp.Views
             Popup pop = (Popup)this.Parent;
             pop.IsOpen = false;
         }
+
     }
 }
