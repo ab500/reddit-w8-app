@@ -11,39 +11,45 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
-    d:DesignHeight="120"
+    d:DesignHeight="520"
     d:DesignWidth="800">
     <Page.Resources>
         <converters:VisibilityConverter x:Name="VisibilityConverter" IsInverse="False"/>
         <converters:NullVisibilityConverter x:Name="NullVisibilityConverter"/>
     </Page.Resources>
 
-    <Grid Width="{Binding ActualWidth, ElementName=_page}" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
-        <Grid Visibility="{Binding CurrentPost, Converter={StaticResource NullVisibilityConverter}}" Background="Aqua" Margin="20,10,20,10">
+    <Grid x:Name="MainGrid" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+        <Grid x:Name="ChildGrid" Visibility="{Binding CurrentPost, Converter={StaticResource NullVisibilityConverter}}" Background="Aqua" Margin="20,10,20,10">
+            <Grid.RenderTransform>
+                <TranslateTransform X="0" />
+            </Grid.RenderTransform>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <fusao:RotateButton Margin="0,0,15,0" Command="{Binding CurrentPost.ChangeView}" IsRotated="{Binding CurrentPost.IsShowingComments}" IsVertical="True"/>
+                <Border Grid.Row="1" x:Name="Row1Piece2">
+                    <fusao:RotateButton Margin="0,10,15,0" Command="{Binding CurrentPost.ChangeView}" IsRotated="{Binding CurrentPost.IsShowingComments}" IsVertical="True"/>
+                </Border>
 
-                <TextBlock Grid.Column="1" VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding CurrentPost.Title}" Style="{StaticResource SubheaderTextStyle}" FontSize="30" Padding="0, 0" />
+                <TextBlock Margin="0,10,0,0" x:Name="Row1Piece1" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding CurrentPost.Title}" Style="{StaticResource SubheaderTextStyle}" FontSize="30" Padding="0, 0" />
                 <!--<ProgressRing VerticalAlignment="Center" Margin="10,15,0,0" Foreground="Black" Width="20" Height="20" IsActive="{Binding CurrentPost.IsLoading}" />-->
 
-                <StackPanel Grid.Column="1" Grid.Row="1" Orientation="Horizontal">
+                <StackPanel x:Name="Row2Piece" Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
                     <fusao:ApproximateDateBlock Width="130" TextAlignment="Right" Margin="0,0,0,1" Style="{StaticResource BasicDateTextStyle}" FontSize="14" Date="{Binding CurrentPost.Created}" />
                     <TextBlock Margin="2,0,0,0" Style="{StaticResource BasicTextStyle}" FontSize="14" Text=" via "/>
                     <TextBlock Margin="5,0,5,0" Style="{StaticResource BasicTextStyle}" FontSize="14" FontWeight="Bold" Text="{Binding CurrentPost.Domain}"/>
                 </StackPanel>
 
-                <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal">
+                <StackPanel x:Name="Row3Piece" Grid.Column="1" Grid.Row="3" Orientation="Horizontal">
                     <TextBlock Margin="0,10,0,0" Style="{StaticResource BasicTextStyle}" FontSize="14" Text="{Binding CurrentPost.Upvotes}" Foreground="{StaticResource UpvoteBrush}"/>
                     <TextBlock Margin="0,10,0,0" FontFamily="Segoe UI Symbol" Style="{StaticResource BasicTextStyle}" FontSize="14" Foreground="{StaticResource UpvoteBrush}" Text="&#xE110;" />
                     <TextBlock Margin="15,10,0,0" Style="{StaticResource BasicTextStyle}" FontSize="14" Text="{Binding CurrentPost.Downvotes}" Foreground="{StaticResource DownvoteBrush}"/>
@@ -59,7 +65,7 @@
                     <TextBlock Margin="2,10,0,0" Style="{StaticResource BasicTextStyle}" FontSize="14" Text="{Binding CurrentPost.Author}" Height="22" VerticalAlignment="Top"/>
                 </StackPanel>
 
-                <Border Grid.Column="1" Grid.Row="3" Background="Beige" BorderBrush="Pink">
+                <Border x:Name="Row4Piece" Grid.Column="1" Grid.Row="4" Background="Beige" BorderBrush="Pink">
                     <TextBlock TextWrapping="Wrap" Visibility="{Binding CurrentPost.IsSelf, Converter={StaticResource VisibilityConverter}}"  Margin="0,10,15,15" Style="{StaticResource BasicTextStyle}" Text="{Binding CurrentPost.SelfText}"/>
                 </Border>
             </Grid>

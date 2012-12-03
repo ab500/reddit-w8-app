@@ -16,9 +16,6 @@ using Windows.UI.Xaml.Navigation;
 
 namespace RedditStoreApp.Views
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class PostHeader : Page
     {
         public PostHeader()
@@ -26,11 +23,21 @@ namespace RedditStoreApp.Views
             this.InitializeComponent();
         }
 
-        /// <summary>
-        /// Invoked when this page is about to be displayed in a Frame.
-        /// </summary>
-        /// <param name="e">Event data that describes how this page was reached.  The Parameter
-        /// property is typically used to configure the page.</param>
+        protected override Size ArrangeOverride(Size finalSize)
+        {
+            double fixedSize = 0;
+            fixedSize += Math.Max(Row1Piece1.DesiredSize.Height, Row1Piece2.DesiredSize.Height);
+            fixedSize += Row2Piece.DesiredSize.Height;
+            fixedSize += Row3Piece.DesiredSize.Height;
+            fixedSize += Row4Piece.DesiredSize.Height;
+            double finalHeight = (finalSize.Height - fixedSize) * 2 + fixedSize;
+
+            ((TranslateTransform)ChildGrid.RenderTransform).Y = -(finalSize.Height - fixedSize);
+
+            this.Content.Arrange(new Rect(0, 0, finalSize.Width, finalHeight));
+            return finalSize;
+        } 
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
         }
