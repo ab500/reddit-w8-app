@@ -48,7 +48,10 @@ namespace RedditStoreApp.ViewModels
                 }
             );
 
-            _changeView = new RelayCommand(ChangeViewAction);
+            _changeView = new RelayCommand(ChangeViewAction, () =>
+            {
+                return !_post.IsSelf && !String.IsNullOrEmpty(_post.Url);
+            });
         }
 
 
@@ -61,12 +64,15 @@ namespace RedditStoreApp.ViewModels
         {
             get
             {
-                return _isShowingComments;
+                return _isShowingComments || (_post.IsSelf && !String.IsNullOrEmpty(_post.Url));
             }
             private set
             {
-                _isShowingComments = value;
-                RaisePropertyChanged("IsShowingComments");
+                if (this.IsShowingComments != value)
+                {
+                    _isShowingComments = value;
+                    RaisePropertyChanged("IsShowingComments");
+                }
             }
         }
 
@@ -176,6 +182,22 @@ namespace RedditStoreApp.ViewModels
             get
             {
                 return _post.Created;
+            }
+        }
+
+        public bool HasSelfText
+        {
+            get
+            {
+                return !String.IsNullOrEmpty(_post.SelfText) && _post.IsSelf;
+            }
+        }
+
+        public bool IsSelf
+        {
+            get
+            {
+                return _post.IsSelf;
             }
         }
     }

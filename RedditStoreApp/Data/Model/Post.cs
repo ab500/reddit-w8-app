@@ -37,11 +37,11 @@ namespace RedditStoreApp.Data.Model
 
             this.Author = data["author"].Value<string>();
             this.Domain = data["domain"].Value<string>();
-            this.IsSelf = data["is_self"].Value<string>() == "true";
+            this.IsSelf = data["is_self"].Value<bool>();
             this.CommentCount = data["num_comments"].Value<int>();
-            this.Over18 = data["over_18"].Value<string>() == "true";
+            this.Over18 = data["over_18"].Value<bool>();
             this.PermaLink = data["permalink"].Value<string>();
-            this.IsHidden = data["hidden"].Value<string>() == "true";
+            this.IsHidden = data["hidden"].Value<bool>();
             this.SelfText = data["selftext"].Value<string>();
             this.Subreddit = data["subreddit"].Value<string>();
             this.ThumbnailUrl = data["thumbnail"].Value<string>();
