@@ -112,6 +112,10 @@ namespace RedditStoreApp.Data.Core
             {
                 httpRespContent = ex.Message;
             }
+            catch (OperationCanceledException)
+            {
+                httpRespContent = "The task was cancelled.";
+            }
 
             return BuildResponse(httpRespContent, httpResp);
         }
