@@ -130,6 +130,10 @@ namespace RedditStoreApp.ViewModels
             {
                 PostViewModel oldValue = _currentPost;
                 _currentPost = value;
+                if (_currentPost != null)
+                {
+                    this.IsLeft = true;
+                }
                 RaisePropertyChanged("CurrentPost", oldValue, _currentPost, true);
             }
         }

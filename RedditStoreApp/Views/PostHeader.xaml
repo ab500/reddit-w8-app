@@ -15,6 +15,7 @@
     d:DesignWidth="800">
     <Page.Resources>
         <converters:VisibilityConverter x:Name="VisibilityConverter" IsInverse="False"/>
+        <converters:VisibilityConverter x:Name="InverseVisibilityConverter" IsInverse="True"/>
         <converters:NullVisibilityConverter x:Name="NullVisibilityConverter"/>
     </Page.Resources>
 
@@ -37,7 +38,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Border Grid.Row="1" x:Name="Row1Piece2">
-                    <fusao:RotateButton Margin="0,10,15,0" Command="{Binding CurrentPost.ChangeView}" IsRotated="{Binding CurrentPost.IsShowingComments}" IsVertical="True"/>
+                    <fusao:RotateButton  Visibility="{Binding CurrentPost.IsSelf,Converter={StaticResource InverseVisibilityConverter}}" Margin="0,10,15,0" Command="{Binding CurrentPost.ChangeView}" IsRotated="{Binding CurrentPost.IsShowingComments}" IsVertical="True"/>
                 </Border>
 
                 <TextBlock Margin="0,10,0,0" x:Name="Row1Piece1" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding CurrentPost.Title}" Style="{StaticResource SubheaderTextStyle}" FontSize="30" Padding="0, 0" />
