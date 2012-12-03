@@ -44,6 +44,7 @@ namespace RedditStoreApp.ViewModels
                     this.CurrentPost = msg.NewValue;
                 }
             });
+
         }
 
         public async void Initialize()
@@ -127,8 +128,9 @@ namespace RedditStoreApp.ViewModels
             }
             set
             {
+                PostViewModel oldValue = _currentPost;
                 _currentPost = value;
-                RaisePropertyChanged("CurrentPost");
+                RaisePropertyChanged("CurrentPost", oldValue, _currentPost, true);
             }
         }
 

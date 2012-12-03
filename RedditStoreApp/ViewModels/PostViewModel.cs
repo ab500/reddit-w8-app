@@ -21,6 +21,7 @@ namespace RedditStoreApp.ViewModels
 
         public PostViewModel(Post post)
         {
+            _isShowingComments = true;
             _post = post;
             _comments = new IncrementalObservableCollection<CommentViewModel>(
                 () => { return _post.Comments.HasMore; },
@@ -66,12 +67,12 @@ namespace RedditStoreApp.ViewModels
             {
                 return _isShowingComments || (_post.IsSelf && !String.IsNullOrEmpty(_post.Url));
             }
-            private set
+            set
             {
                 if (this.IsShowingComments != value)
                 {
                     _isShowingComments = value;
-                    RaisePropertyChanged("IsShowingComments");
+                    RaisePropertyChanged("IsShowingComments", !_isShowingComments, _isShowingComments, true);
                 }
             }
         }

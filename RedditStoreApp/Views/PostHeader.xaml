@@ -66,8 +66,8 @@
                 </StackPanel>
 
                 <Border x:Name="Row4Piece" Grid.Column="1" Grid.Row="4" Background="Beige" BorderBrush="Pink">
-                    <ScrollViewer MaxHeight="400">
-                        <TextBlock TextWrapping="Wrap" Visibility="{Binding CurrentPost.HasSelfText, Converter={StaticResource VisibilityConverter}}"  Margin="0,10,15,15" Style="{StaticResource BasicTextStyle}" Text="{Binding CurrentPost.SelfText}"/>
+                    <ScrollViewer Visibility="{Binding CurrentPost.HasSelfText, Converter={StaticResource VisibilityConverter}}" ScrollViewer.VerticalScrollBarVisibility="Visible" MaxHeight="300">
+                        <TextBlock TextWrapping="Wrap" Margin="0,10,15,15" Style="{StaticResource BasicTextStyle}" Text="{Binding CurrentPost.SelfText}"/>
                     </ScrollViewer>
                 </Border>
             </Grid>
