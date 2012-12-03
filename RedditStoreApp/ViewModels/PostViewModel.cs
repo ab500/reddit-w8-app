@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using RedditStoreApp.Data.Model;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,13 @@ namespace RedditStoreApp.ViewModels
         private Post _post;
         private IncrementalObservableCollection<CommentViewModel> _comments;
         private bool _isLoading;
- 
+        private RelayCommand _changeView;
+
+        private bool _isShowingComments = false;
+
         public PostViewModel(Post post)
         {
+            _post = post;
             _comments = new IncrementalObservableCollection<CommentViewModel>(
                 () => { return _post.Comments.HasMore; },
                 (uint count) =>
@@ -43,7 +48,34 @@ namespace RedditStoreApp.ViewModels
                 }
             );
 
-            _post = post;
+            _changeView = new RelayCommand(ChangeViewAction);
+        }
+
+
+        private void ChangeViewAction()
+        {
+            this.IsShowingComments = !this.IsShowingComments; 
+        }
+
+        public bool IsShowingComments
+        {
+            get
+            {
+                return _isShowingComments;
+            }
+            private set
+            {
+                _isShowingComments = value;
+                RaisePropertyChanged("IsShowingComments");
+            }
+        }
+
+        public RelayCommand ChangeView
+        {
+            get
+            {
+                return _changeView;
+            }
         }
 
         public bool IsLoading

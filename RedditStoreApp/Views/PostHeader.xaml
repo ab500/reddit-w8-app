@@ -14,11 +14,12 @@
     d:DesignHeight="120"
     d:DesignWidth="800">
     <Page.Resources>
-        <converters:VisibilityConverter x:Name="VisibilityConverter" IsInverse="False" />
+        <converters:VisibilityConverter x:Name="VisibilityConverter" IsInverse="False"/>
+        <converters:NullVisibilityConverter x:Name="NullVisibilityConverter"/>
     </Page.Resources>
 
     <Grid Width="{Binding ActualWidth, ElementName=_page}" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
-        <Grid Background="Aqua" Margin="20,10,20,10">
+        <Grid Visibility="{Binding CurrentSubreddit.SelectedPost, Converter={StaticResource NullVisibilityConverter}}" Background="Aqua" Margin="20,10,20,10">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -30,7 +31,7 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <fusao:RotateButton Margin="0,0,15,0" Command="{Binding BackArrowPress}" IsRotated="False" />
+                <fusao:RotateButton Margin="0,0,15,0" Command="{Binding CurrentSubreddit.SelectedPost.ChangeView}" IsRotated="{Binding CurrentSubreddit.SelectedPost.IsShowingComments}" IsVertical="True"/>
 
                 <TextBlock Grid.Column="1" VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding CurrentSubreddit.SelectedPost.Title}" Style="{StaticResource SubheaderTextStyle}" FontSize="30" Padding="0, 0" />
                 <!--<ProgressRing VerticalAlignment="Center" Margin="10,15,0,0" Foreground="Black" Width="20" Height="20" IsActive="{Binding CurrentSubreddit.SelectedPost.IsLoading}" />-->
