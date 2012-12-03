@@ -49,6 +49,7 @@
                     </StackPanel>
                     <StackPanel  Grid.Column="1" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
                         <fusao:ApproximateDateBlock Width="180" TextAlignment="Right" Margin="2,0,0,0" Style="{StaticResource BasicDateTextStyle}" FontSize="14" Date="{Binding Created}" />
+                        <TextBlock Style="{StaticResource BasicTextStyle}" FontSize="14" Text=" via " />
                         <TextBlock Margin="5,0,0,0" Style="{StaticResource BasicTextStyle}" FontSize="14" FontWeight="Bold" Text="{Binding Domain}"/>
                     </StackPanel>
                 </Grid>
@@ -86,6 +87,7 @@
                     </StackPanel>
                     <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
                         <fusao:ApproximateDateBlock Width="180" TextAlignment="Right" Margin="2,0,0,0" Style="{StaticResource BasicDateTextStyle}" FontSize="14" Date="{Binding Created}" />
+                        <TextBlock Style="{StaticResource BasicTextStyle}" FontSize="14" Text=" via " />
                         <TextBlock Margin="5,0,0,0" Style="{StaticResource BasicTextStyle}" FontSize="14" FontWeight="Bold" Text="{Binding Domain}"/>
                     </StackPanel>
                 </Grid>

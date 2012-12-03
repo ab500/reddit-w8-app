@@ -79,7 +79,14 @@ namespace RedditStoreApp.Views
 
                 d.Completed += delegate
                 {
-                    ((TranslateTransform)ChildGrid.RenderTransform).Y = to;
+                    if (isShowingComments)
+                    {
+                        ((TranslateTransform)ChildGrid.RenderTransform).Y = -_translateAmount;
+                    }
+                    else
+                    {
+                        ((TranslateTransform)ChildGrid.RenderTransform).Y = 0;
+                    }
                     s.Stop();
                 };
 
