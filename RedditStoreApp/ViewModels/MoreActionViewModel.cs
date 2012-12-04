@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using RedditStoreApp.Data.Model;
+using Data = RedditStoreApp.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,11 +57,11 @@ namespace RedditStoreApp.ViewModels
 
                 if (!_parent.IsLoaded)
                 {
-                    newComments = await _parent.Load();
+                    newComments = await Data.Helpers.EnsureCompletion<int>(_parent.Load);
                 }
                 else
                 {
-                    newComments = await _parent.More();
+                    newComments = await Data.Helpers.EnsureCompletion<int>(_parent.More);
                 }
 
                 for (int i = _parent.Count - newComments; i < _parent.Count; i++)

@@ -142,6 +142,11 @@ namespace RedditStoreApp.Views
                 ((TranslateTransform)ChildGrid.RenderTransform).Y = -_translateAmount;
             }
 
+            // BUGFIX: Microsoft's virtualization is a little dumb when it comes
+            // to accounting for the TranslateTransform unless we manually specify
+            // the height. 
+            Row5Piece.Height = _translateAmount;
+
             this.Content.Arrange(new Rect(0, 0, finalSize.Width, finalHeight));
             return finalSize;
         }
