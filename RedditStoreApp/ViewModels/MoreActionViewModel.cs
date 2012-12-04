@@ -48,7 +48,7 @@ namespace RedditStoreApp.ViewModels
 
                 for (int i = _parent.Count - newComments; i < _parent.Count; i++)
                 {
-                    _listParent.Insert(_listParent.IndexOf(this), new CommentViewModel(_parent[i], _indentLevel)); 
+                    _listParent.VisitComment(_parent[i], _indentLevel, this);
                 }
 
                 if (!_parent.HasMore)

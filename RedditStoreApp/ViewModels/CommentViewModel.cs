@@ -10,13 +10,21 @@ namespace RedditStoreApp.ViewModels
     public class CommentViewModel: FlatCommentCollectionItem
     {
         private Comment _comment;
+        private int _indentLevel;
 
         public CommentViewModel(Comment c, int indentLevel) : base()
         {
             _comment = c;
-
+            _indentLevel = indentLevel;
         }
 
+        public int IndentLevel
+        {
+            get
+            {
+                return _indentLevel;
+            }
+        }
         public string Body
         {
             get
@@ -33,7 +41,7 @@ namespace RedditStoreApp.ViewModels
             }
         }
 
-        public int Ups
+        public int Upvotes
         {
             get
             {
@@ -41,7 +49,7 @@ namespace RedditStoreApp.ViewModels
             }
         }
 
-        public int Downs
+        public int Downvotes
         {
             get
             {

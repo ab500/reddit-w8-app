@@ -132,6 +132,7 @@
     <Compile Include="ViewModels\MoreActionViewModel.cs" />
     <Compile Include="ViewModels\PostViewModel.cs" />
     <Compile Include="ViewModels\SupportIncrementalLoadingWrapper.cs" />
+    <Compile Include="Views\Converters\IndentThicknessConverter.cs" />
     <Compile Include="Views\Converters\NullVisibilityConverter.cs" />
     <Compile Include="Views\Converters\SortValueConverter.cs" />
     <Compile Include="Views\Converters\VisibilityConverter.cs" />

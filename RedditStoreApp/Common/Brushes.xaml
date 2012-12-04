@@ -16,4 +16,5 @@
 	<SolidColorBrush x:Key="SelectionBrush" Color="{StaticResource RedditOrange}" />
     <SolidColorBrush x:Key="UpvoteBrush" Color="{StaticResource RedditOrange}" />
     <SolidColorBrush x:Key="DownvoteBrush" Color="{StaticResource RedditDarkBlue}" />
+    <SolidColorBrush x:Key="ReplyHighlightBrush" Color="{StaticResource RedditOrange}" />
 </ResourceDictionary>

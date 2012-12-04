@@ -17,6 +17,43 @@
         <converters:VisibilityConverter x:Name="VisibilityConverter" IsInverse="False"/>
         <converters:VisibilityConverter x:Name="InverseVisibilityConverter" IsInverse="True"/>
         <converters:NullVisibilityConverter x:Name="NullVisibilityConverter"/>
+        <converters:IndentThicknessConverter x:Name="IndentThicknessConverter"/>
+        
+        <DataTemplate x:Key="StandardCommentTemplate">
+            <Grid Background="White">
+                <Border BorderBrush="{StaticResource ReplyHighlightBrush}" BorderThickness="4,0,0,0" Margin="{Binding IndentLevel,Converter={StaticResource IndentThicknessConverter}}">
+                    <Grid Background="White" Margin="15,5,15,5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Grid.Row="1" Margin="0" Style="{StaticResource BasicTextStyle}" FontSize="14" Text="{Binding Body}" />
+                        <StackPanel Grid.Row="0" Orientation="Horizontal">
+                            <TextBlock Margin="0,10,0,0" Style="{StaticResource BasicTextStyle}" FontSize="14" Text="{Binding Upvotes}" Foreground="{StaticResource UpvoteBrush}"/>
+                            <TextBlock Margin="0,10,0,0" FontFamily="Segoe UI Symbol" Style="{StaticResource BasicTextStyle}" FontSize="14" Foreground="{StaticResource UpvoteBrush}" Text="&#xE110;" />
+                            <TextBlock Margin="15,10,0,0" Style="{StaticResource BasicTextStyle}" FontSize="14" Text="{Binding Downvotes}" Foreground="{StaticResource DownvoteBrush}"/>
+                            <TextBlock Margin="0,10,0,0" FontFamily="Segoe UI Symbol" Style="{StaticResource BasicTextStyle}" FontSize="14" Text="&#xE110;" RenderTransformOrigin="0.5,0.5" Foreground="{StaticResource DownvoteBrush}">
+                                <TextBlock.RenderTransform>
+                                    <RotateTransform Angle="180"/>
+                                </TextBlock.RenderTransform>
+                            </TextBlock>
+                        </StackPanel>
+                        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
+                            <TextBlock Margin="40,10,0,0" FontFamily="Segoe UI Symbol" Style="{StaticResource BasicTextStyle}" FontSize="16" Text="&#xE13D;"/>
+                            <TextBlock Margin="2,10,0,0" Style="{StaticResource BasicTextStyle}" FontSize="14" Text="{Binding Author}"/>
+                        </StackPanel>
+                        <!--<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                        <fusao:ApproximateDateBlock Width="180" TextAlignment="Right" Margin="2,0,0,0" Style="{StaticResource BasicDateTextStyle}" FontSize="14" Date="{Binding Created}" />
+                        <TextBlock Style="{StaticResource BasicTextStyle}" FontSize="14" Text=" via " />
+                        <TextBlock Margin="5,0,0,0" Style="{StaticResource BasicTextStyle}" FontSize="14" FontWeight="Bold" Text="{Binding Domain}"/>
+                    </StackPanel>-->
+                    </Grid>
+                </Border>
+            </Grid>
+        </DataTemplate>
     </Page.Resources>
 
     <Grid x:Name="MainGrid" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
@@ -44,7 +81,7 @@
                         <WebViewBrush x:Name="WebViewBrush" SourceName="WebView"/>
                     </Rectangle.Fill>
                 </Rectangle>
-                
+
                 <Border Grid.Row="1" x:Name="Row1Piece2">
                     <fusao:RotateButton  Visibility="{Binding CurrentPost.IsSelf,Converter={StaticResource InverseVisibilityConverter}}" Margin="0,10,15,0" Command="{Binding ChangeView}" IsRotated="{Binding IsShowingComments}" IsVertical="True"/>
                 </Border>
@@ -79,11 +116,15 @@
                         <TextBlock TextWrapping="Wrap" Margin="10,10,10,15" Style="{StaticResource BasicTextStyle}" Text="{Binding CurrentPost.SelfText}"/>
                     </ScrollViewer>
                 </Border>
-                
+
                 <Border Grid.ColumnSpan="2" Grid.Row="5">
-                        <ListView ItemsSource="{Binding CurrentPost.Comments}">
-                            
-                        </ListView>
+                    <ListView ItemsSource="{Binding CurrentPost.Comments}" ItemTemplate="{StaticResource StandardCommentTemplate}" SelectionMode="None" IsItemClickEnabled="True">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
                 </Border>
             </Grid>
 

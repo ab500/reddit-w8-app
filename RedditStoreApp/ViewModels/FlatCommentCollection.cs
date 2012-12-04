@@ -25,31 +25,48 @@ namespace RedditStoreApp.ViewModels
             {
                 VisitComment(comment, 0);
             }
-            AddGetMoreToList(_root, 0);
+            AddGetMoreToList(_root, 0, null);
         }
 
-        private void VisitComment(Comment comment, int indentLevel)
+        public void VisitComment(Comment comment, int indentLevel, FlatCommentCollectionItem insertBefore = null)
         {
-            AddCommentToList(comment, indentLevel);
+            AddCommentToList(comment, indentLevel, insertBefore);
             foreach (Comment childComment in comment.Replies)
             {
-                VisitComment(childComment, indentLevel + 1);
+                VisitComment(childComment, indentLevel + 1, insertBefore);
             }
 
             if (comment.Replies.HasMore)
             {
-                AddGetMoreToList(comment.Replies, indentLevel + 1);
+                AddGetMoreToList(comment.Replies, indentLevel + 1, insertBefore);
             }
         }
 
-        private void AddCommentToList(Comment comment, int indentLevel)
+        private void AddCommentToList(Comment comment, int indentLevel, FlatCommentCollectionItem insertBefore)
         {
-            this.Add(new CommentViewModel(comment, indentLevel));
+            CommentViewModel cvm = new CommentViewModel(comment, indentLevel);
+
+            if (insertBefore != null)
+            {
+                this.Insert(IndexOf(insertBefore), cvm);
+            }
+            else
+            {
+                this.Add(cvm);
+            }
         }
 
-        private void AddGetMoreToList(Listing<Comment> listing, int indentLevel)
+        private void AddGetMoreToList(Listing<Comment> listing, int indentLevel, FlatCommentCollectionItem insertBefore)
         {
-            this.Add(new MoreActionViewModel(listing, indentLevel, this));
+            MoreActionViewModel mavm = new MoreActionViewModel(listing, indentLevel, this);
+             if (insertBefore != null)
+            {
+                this.Insert(IndexOf(insertBefore), mavm);
+            }
+            else
+            {
+                this.Add(mavm);
+            }
         }
     }
 }
