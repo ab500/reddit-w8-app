@@ -7,13 +7,11 @@ using System.Threading.Tasks;
 
 namespace RedditStoreApp.ViewModels
 {
-    public class CommentViewModel
+    public class CommentViewModel: FlatCommentCollectionItem
     {
         private Comment _comment;
-        private IncrementalObservableCollection<CommentViewModel> _replies;
-        private bool _isLoading;
 
-        public CommentViewModel(Comment c)
+        public CommentViewModel(Comment c, int indentLevel) : base()
         {
             _comment = c;
 
@@ -48,22 +46,6 @@ namespace RedditStoreApp.ViewModels
             get
             {
                 return _comment.Downs;
-            }
-        }
-
-        public bool IsLoading
-        {
-            get
-            {
-                return _isLoading;
-            }
-        }
-
-        public IncrementalObservableCollection<CommentViewModel> Replies
-        {
-            get
-            {
-                return _replies;
             }
         }
     }

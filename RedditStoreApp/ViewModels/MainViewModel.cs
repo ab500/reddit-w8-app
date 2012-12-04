@@ -137,6 +137,11 @@ namespace RedditStoreApp.ViewModels
                 if (_currentPost != null)
                 {
                     this.IsLeft = true;
+
+                    if (!_currentPost.HasLoadedComments)
+                    {
+                        ((MoreActionViewModel)_currentPost.Comments[0]).LoadMore.Execute(null);
+                    }
                 }
                 RaisePropertyChanged("CurrentPost", oldValue, _currentPost, true);
             }

@@ -13,37 +13,13 @@ namespace RedditStoreApp.ViewModels
     public class PostViewModel: ViewModelBase
     {
         private Post _post;
-        private IncrementalObservableCollection<CommentViewModel> _comments;
+        private FlatCommentCollection _comments;
         private bool _isLoading;
 
         public PostViewModel(Post post)
         {
             _post = post;
-            _comments = new IncrementalObservableCollection<CommentViewModel>(
-                () => { return _post.Comments.HasMore; },
-                (uint count) =>
-                {
-                    Func<Task<LoadMoreItemsResult>> taskFunc = async () =>
-                    {
-                        this.IsLoading = true;
-                        int newComments = await _post.Comments.More();
-
-                        int currentPostCount = _comments.Count;
-                        for (int i = currentPostCount; i < _post.Comments.Count; i++)
-                        {
-                            _comments.Add(new CommentViewModel(_post.Comments[i]));
-                        }
-                        this.IsLoading = false;
-
-                        return new LoadMoreItemsResult()
-                        {
-                            Count = (uint)newComments
-                        };                       
-                    };
-                    Task<LoadMoreItemsResult> loadMorePostsTask = taskFunc();
-                    return loadMorePostsTask.AsAsyncOperation<LoadMoreItemsResult>();
-                }
-            );
+            _comments = new FlatCommentCollection(_post.Comments);
         }
 
 
@@ -61,7 +37,7 @@ namespace RedditStoreApp.ViewModels
             }
         }
 
-        public IncrementalObservableCollection<CommentViewModel> Comments
+        public FlatCommentCollection Comments
         {
             get
             {
@@ -146,6 +122,14 @@ namespace RedditStoreApp.ViewModels
             get
             {
                 return _post.Created;
+            }
+        }
+
+        public bool HasLoadedComments
+        {
+            get
+            {
+                return _post.Comments.IsLoaded;
             }
         }
 

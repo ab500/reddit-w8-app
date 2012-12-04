@@ -79,6 +79,12 @@
                         <TextBlock TextWrapping="Wrap" Margin="10,10,10,15" Style="{StaticResource BasicTextStyle}" Text="{Binding CurrentPost.SelfText}"/>
                     </ScrollViewer>
                 </Border>
+                
+                <Border Grid.ColumnSpan="2" Grid.Row="5">
+                        <ListView ItemsSource="{Binding CurrentPost.Comments}">
+                            
+                        </ListView>
+                </Border>
             </Grid>
 
 
