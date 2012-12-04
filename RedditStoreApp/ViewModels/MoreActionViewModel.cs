@@ -40,11 +40,28 @@ namespace RedditStoreApp.ViewModels
             }
         }
 
+        public int IndentLevel
+        {
+            get
+            {
+                return _indentLevel;
+            }
+        }
+
         public async void LoadMoreAction()
         {
             if (_parent.HasMore || !_parent.IsLoaded)
             {
-                int newComments = await _parent.Load();
+                int newComments = 0;
+
+                if (!_parent.IsLoaded)
+                {
+                    newComments = await _parent.Load();
+                }
+                else
+                {
+                    newComments = await _parent.More();
+                }
 
                 for (int i = _parent.Count - newComments; i < _parent.Count; i++)
                 {
@@ -53,6 +70,7 @@ namespace RedditStoreApp.ViewModels
 
                 if (!_parent.HasMore)
                 {
+                    _listParent.Remove(this);
                     RaisePropertyChanged("HasMore");
                 }
             }
