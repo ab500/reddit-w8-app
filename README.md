@@ -22,7 +22,9 @@ At that point it should be a pretty fully-featured Reddit client.
 ![Screenshot 2](reddit-w8-app/raw/master/Screenshots/screenshot2.png)
 ![Screenshot 3](reddit-w8-app/raw/master/Screenshots/screenshot3.png)
 
-
+Compiling
+=========
+I think the only trick is you'll have to checkout my fun-w8-controls repo in a directory next to this repo. If you're using the Windows GitHub client it'll work the way you think it does. I've been refactoring useful controls into fun-w8-controls in the hopes of polishing them off and making them a stand alone toolkit. 
 
 Contributing
 ============
