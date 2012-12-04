@@ -18,9 +18,10 @@ On the short-term road-map I'm looking at implementing the following features:
 
 At that point it should be a pretty fully-featured Reddit client. 
 
-![Screenshot 1](ab500.github.com/reddit-w8-app/Screenshots/screenshot1.png)
-![Screenshot 2](ab500.github.com/reddit-w8-app/Screenshots/screenshot2.png)
-![Screenshot 3](ab500.github.com/reddit-w8-app/Screenshots/screenshot3.png)
+![Screenshot 1](reddit-w8-app/Screenshots/screenshot1.png)
+![Screenshot 2](reddit-w8-app/Screenshots/screenshot2.png)
+![Screenshot 3](reddit-w8-app/Screenshots/screenshot3.png)
+
 
 
 Contributing
