@@ -25,7 +25,6 @@ namespace RedditStoreApp.Views
     {
         private double _translateAmount = 0.0;
         private bool _isShowingComments = false;
-        private int _showCount = 0;
 
         public PostHeader()
         {
@@ -47,34 +46,7 @@ namespace RedditStoreApp.Views
                 }
             });
 
-            Messenger.Default.Register<OverlayDialogMessage>(this, async (msg) =>
-            {
-                if (msg.Showing)
-                {
-                    this.WebViewBrush.Redraw();
 
-                    // BUGFIX: Wait for redraw to occur.
-                    await Task.Delay(50);
-
-                    this.WebViewRect.Visibility = Visibility.Visible;
-
-                    await Task.Delay(50);
-
-                    this.WebView.Visibility = Visibility.Collapsed;
-
-                    _showCount++;
-                }
-                else
-                {
-                    _showCount--;
-                    if (_showCount == 0)
-                    {
-                        await Task.Delay(100);
-                        this.WebView.Visibility = Visibility.Visible;
-                        this.WebViewRect.Visibility = Visibility.Collapsed;
-                    }
-                }
-            });
         }
 
         private void UpdatePosition(bool isShowingComments)

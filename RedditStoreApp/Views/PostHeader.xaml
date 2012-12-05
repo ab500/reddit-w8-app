@@ -92,12 +92,7 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <WebView Grid.Row="0" Grid.ColumnSpan="2" Source="{Binding CurrentPost.Link}"  x:Name="WebView" Visibility="Visible" />
-                <Rectangle Grid.Row="0" x:Name="WebViewRect" Grid.ColumnSpan="2" Visibility="Collapsed">
-                    <Rectangle.Fill>
-                        <WebViewBrush x:Name="WebViewBrush" SourceName="WebView"/>
-                    </Rectangle.Fill>
-                </Rectangle>
+                <Frame Grid.Row="0" Grid.ColumnSpan="2" SourcePageType="local:BrowserView"/>
 
                 <Border Grid.Row="1" x:Name="Row1Piece2">
                     <fusao:RotateButton  Visibility="{Binding CurrentPost.IsSelf,Converter={StaticResource InverseVisibilityConverter}}" Margin="0,10,15,0" Command="{Binding ChangeView}" IsRotated="{Binding IsShowingComments}" IsVertical="True"/>
