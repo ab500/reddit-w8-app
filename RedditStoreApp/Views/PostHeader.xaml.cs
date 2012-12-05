@@ -155,5 +155,26 @@ namespace RedditStoreApp.Views
         {
         }
 
+        // NOTE: This is a workaround. Eventually Trigger-esque events should
+        // be implemented.
+        private void OnStackPanelTapped(object sender, TappedRoutedEventArgs e)
+        {
+            StackPanel sp = sender as StackPanel;
+            if (sp == null)
+            {
+                return;
+            }
+
+            MoreActionViewModel mavm = sp.DataContext as MoreActionViewModel;
+            if (mavm == null)
+            {
+                return;
+            }
+
+            if (mavm.HasMore && !mavm.IsInProgress)
+            {
+                mavm.LoadMore.Execute(null);
+            }
+        }
     }
 }

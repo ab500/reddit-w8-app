@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 
 namespace RedditStoreApp.ViewModels
 {
@@ -15,9 +16,11 @@ namespace RedditStoreApp.ViewModels
         private int _indentLevel;
         private FlatCommentCollection _listParent;
         private RelayCommand _loadMore;
+        private bool _isInProcess;
 
         public MoreActionViewModel(Listing<Comment> parent, int indentLevel, FlatCommentCollection listParent) : base()
         {
+            _isInProcess = false;
             _parent = parent;
             _indentLevel = indentLevel;
             _listParent = listParent;
@@ -30,6 +33,35 @@ namespace RedditStoreApp.ViewModels
             get
             {
                 return _loadMore;
+            }
+        }
+
+        public bool IsInProgress
+        {
+            get
+            {
+                return _isInProcess;
+            }
+            set
+            {
+                _isInProcess = value;
+                RaisePropertyChanged("IsInProgress");
+                RaisePropertyChanged("CommandText");
+            }
+        }
+
+        public string CommandText
+        {
+            get
+            {
+                if (_isInProcess)
+                {
+                    return (string)Application.Current.Resources["LoadMore_InProgress"];
+                }
+                else
+                {
+                    return (string)Application.Current.Resources["LoadMore_Default"];
+                }
             }
         }
 
@@ -51,6 +83,8 @@ namespace RedditStoreApp.ViewModels
 
         public async void LoadMoreAction()
         {
+            this.IsInProgress = true;
+
             if (_parent.HasMore || !_parent.IsLoaded)
             {
                 int newComments = 0;
@@ -75,6 +109,8 @@ namespace RedditStoreApp.ViewModels
                     RaisePropertyChanged("HasMore");
                 }
             }
+
+            this.IsInProgress = false;
         }
     }
 }

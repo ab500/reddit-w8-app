@@ -29,4 +29,9 @@
     <x:String x:Key="QuickNav_Header">Quick Navigation</x:String>
 
     <x:String x:Key="Error_NotFound">That Subreddit does not exist.</x:String>
+
+    <x:String x:Key="LoadMore_Default">Load more comments...</x:String>
+    <x:String x:Key="LoadMore_InProgress">Loading more comments...</x:String>
+    
+    <x:String x:Key="TimeUserSeperator"> via </x:String>
 </ResourceDictionary>
