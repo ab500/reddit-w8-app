@@ -3,24 +3,28 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:RedditStoreApp.Views"
+    xmlns:converters="using:RedditStoreApp.Views.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    DataContext="{Binding Source={StaticResource Locator}, Path=Main}"
+    DataContext="{Binding Source={StaticResource Locator}, Path=Browser}"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <converters:BrowserStateVisibility x:Key="VideoModeVisible" VisibileState="Video" />
+    </Page.Resources>
     <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" HorizontalAlignment="Right" Orientation="Horizontal">
-            <Button Margin="5,5,10,5" IsEnabled="False"  Style="{StaticResource RewindButtonStyle}"/>
-            <Button Style="{StaticResource PlayButtonStyle}"/>
+            <Button Margin="5,5,10,5" IsEnabled="False"  Style="{StaticResource RewindButtonStyle}" Visibility="{Binding BrowserState,Converter={StaticResource VideoModeVisible}}"/>
+            <Button Style="{StaticResource PlayButtonStyle}" Visibility="{Binding BrowserState,Converter={StaticResource VideoModeVisible}}"/>
             <Button Margin="25,5,10,5" Style="{StaticResource GoBackButtonStyle}"/>
             <Button Margin="0,5,10,5" Style="{StaticResource HomeButtonStyle}"/>
         </StackPanel>
         <Grid Grid.Row="1">
-            <WebView Source="{Binding CurrentPost.Link}"  x:Name="WebView" Visibility="Visible" />
+            <WebView Source="{Binding CurrentUri}"  x:Name="WebView" Visibility="Visible" />
             <Rectangle x:Name="WebViewRect" Visibility="Collapsed">
                 <Rectangle.Fill>
                     <WebViewBrush x:Name="WebViewBrush" SourceName="WebView"/>

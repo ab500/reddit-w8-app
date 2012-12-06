@@ -32,6 +32,7 @@ namespace RedditStoreApp.ViewModels
 
             SimpleIoc.Default.Register<MainViewModel>();
             SimpleIoc.Default.Register<SettingsViewModel>();
+            SimpleIoc.Default.Register<BrowserViewModel>();
         }
 
         public MainViewModel Main
@@ -49,7 +50,15 @@ namespace RedditStoreApp.ViewModels
                 return ServiceLocator.Current.GetInstance<SettingsViewModel>();
             }
         }
-        
+
+        public BrowserViewModel Browser
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<BrowserViewModel>();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

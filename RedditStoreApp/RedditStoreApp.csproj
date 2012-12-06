@@ -136,6 +136,7 @@
     <Compile Include="Views\BrowserView.xaml.cs">
       <DependentUpon>BrowserView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Converters\BrowserStateVisibility.cs" />
     <Compile Include="Views\Converters\IndentThicknessConverter.cs" />
     <Compile Include="Views\Converters\NullVisibilityConverter.cs" />
     <Compile Include="Views\Converters\SortValueConverter.cs" />
