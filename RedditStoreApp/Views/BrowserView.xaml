@@ -9,11 +9,23 @@
     mc:Ignorable="d">
 
     <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
-        <WebView Source="{Binding CurrentPost.Link}"  x:Name="WebView" Visibility="Visible" />
-        <Rectangle x:Name="WebViewRect" Visibility="Collapsed">
-            <Rectangle.Fill>
-                <WebViewBrush x:Name="WebViewBrush" SourceName="WebView"/>
-            </Rectangle.Fill>
-        </Rectangle>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" HorizontalAlignment="Right" Orientation="Horizontal">
+            <Button Margin="5,5,10,5" IsEnabled="False"  Style="{StaticResource RewindButtonStyle}"/>
+            <Button Style="{StaticResource PlayButtonStyle}"/>
+            <Button Margin="25,5,10,5" Style="{StaticResource GoBackButtonStyle}"/>
+            <Button Margin="0,5,10,5" Style="{StaticResource HomeButtonStyle}"/>
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <WebView Source="{Binding CurrentPost.Link}"  x:Name="WebView" Visibility="Visible" />
+            <Rectangle x:Name="WebViewRect" Visibility="Collapsed">
+                <Rectangle.Fill>
+                    <WebViewBrush x:Name="WebViewBrush" SourceName="WebView"/>
+                </Rectangle.Fill>
+            </Rectangle>
+        </Grid>
     </Grid>
 </Page>
