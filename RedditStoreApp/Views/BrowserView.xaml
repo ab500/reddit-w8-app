@@ -11,6 +11,8 @@
 
     <Page.Resources>
         <converters:BrowserStateVisibility x:Key="VideoModeVisible" VisibileState="Video" />
+        <converters:BrowserStateVisibility x:Key="WebModeVisible" VisibileState="Web" />
+        <converters:BrowserStateVisibility x:Key="ImageModeVisible" VisibileState="Image" />
     </Page.Resources>
     <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
@@ -24,12 +26,17 @@
             <Button Margin="0,5,10,5" Style="{StaticResource HomeButtonStyle}" Command="{Binding GoHome}"/>
         </StackPanel>
         <Grid Grid.Row="1">
-            <WebView Source="{Binding CurrentUri}"  x:Name="WebView" Visibility="Visible" />
-            <Rectangle x:Name="WebViewRect" Visibility="Collapsed">
-                <Rectangle.Fill>
-                    <WebViewBrush x:Name="WebViewBrush" SourceName="WebView"/>
-                </Rectangle.Fill>
-            </Rectangle>
+            <Grid Visibility="{Binding BrowserState, Converter={StaticResource WebModeVisible}}">
+                <WebView Source="{Binding CurrentUri}"  x:Name="WebView" Visibility="Visible" />
+                <Rectangle x:Name="WebViewRect" Visibility="Collapsed">
+                    <Rectangle.Fill>
+                        <WebViewBrush x:Name="WebViewBrush" SourceName="WebView"/>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </Grid>
+            <Grid Visibility="{Binding BrowserState, Converter={StaticResource ImageModeVisible}}">
+                <Image VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Source="{Binding CurrentImageUri}" />
+            </Grid>
         </Grid>
     </Grid>
 </Page>

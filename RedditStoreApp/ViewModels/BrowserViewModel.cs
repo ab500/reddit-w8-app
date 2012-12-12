@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace RedditStoreApp.ViewModels
 {
@@ -34,9 +35,8 @@ namespace RedditStoreApp.ViewModels
             {
                 if (!msg.NewValue.IsSelf)
                 {
-                    this.CurrentUri = msg.NewValue.Link;
+                    SetUri(msg.NewValue.Link);
                     this._rootUri = this.CurrentUri;
-                    this.BrowserState = ViewModels.BrowserState.Web;
                 }
             });
         }
@@ -44,14 +44,14 @@ namespace RedditStoreApp.ViewModels
         private void GoHomeAction()
         {
             _historyStack.Clear();
-            this.CurrentUri = _rootUri;
+            SetUri(_rootUri);
         }
 
         private void GoBackAction()
         {
             if (_historyStack.Count > 0)
             {
-                this.CurrentUri = _historyStack.Pop();
+                SetUri(_historyStack.Pop());
             }
         }
 
@@ -60,16 +60,52 @@ namespace RedditStoreApp.ViewModels
             _historyStack.Push(uri);
         }
 
+        private void SetUri(Uri uri)
+        {
+            Uri finalUri = uri;
+            if (uri != null)
+            {
+                string uriString = uri.ToString();
+
+                Regex imageRegex1 = new Regex(".+.imgur.com/.+.(?:jpg|jpeg|png)");
+                Regex imageRegex2 = new Regex("http://imgur.com/(.*)");
+                if (imageRegex1.IsMatch(uriString))
+                {
+                    this.BrowserState = ViewModels.BrowserState.Image;
+                }
+                else if (imageRegex2.IsMatch(uriString))
+                {
+                    this.BrowserState = ViewModels.BrowserState.Image;
+                    finalUri = new Uri("http://i.imgur.com/" + imageRegex2.Match(uriString).Groups[1].Value + ".jpg", UriKind.Absolute);
+                }
+                else
+                {
+                    this.BrowserState = ViewModels.BrowserState.Web;
+                }
+            }
+
+            this.CurrentUri = finalUri;
+        }
+
         public Uri CurrentUri
         {
             get
             {
-                return _currentUri;
+                return _browserState == ViewModels.BrowserState.Web ? _currentUri : null;
             }
             private set
             {
                 _currentUri = value;
                 RaisePropertyChanged("CurrentUri");
+                RaisePropertyChanged("CurrentImageUri");
+            }
+        }
+
+        public Uri CurrentImageUri
+        {
+            get
+            {
+                return _browserState == ViewModels.BrowserState.Image? _currentUri : null;
             }
         }
 
@@ -83,6 +119,8 @@ namespace RedditStoreApp.ViewModels
             {
                 _browserState = value;
                 RaisePropertyChanged("BrowserState");
+                RaisePropertyChanged("CurrentUri");
+                RaisePropertyChanged("CurrentImageUri");
             }
         }
 
