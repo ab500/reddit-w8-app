@@ -20,8 +20,8 @@
         <StackPanel Grid.Row="0" HorizontalAlignment="Right" Orientation="Horizontal">
             <Button Margin="5,5,10,5" IsEnabled="False"  Style="{StaticResource RewindButtonStyle}" Visibility="{Binding BrowserState,Converter={StaticResource VideoModeVisible}}"/>
             <Button Style="{StaticResource PlayButtonStyle}" Visibility="{Binding BrowserState,Converter={StaticResource VideoModeVisible}}"/>
-            <Button Margin="25,5,10,5" Style="{StaticResource GoBackButtonStyle}"/>
-            <Button Margin="0,5,10,5" Style="{StaticResource HomeButtonStyle}"/>
+            <Button Margin="25,5,10,5" Style="{StaticResource GoBackButtonStyle}" Command="{Binding GoBack}"/>
+            <Button Margin="0,5,10,5" Style="{StaticResource HomeButtonStyle}" Command="{Binding GoHome}"/>
         </StackPanel>
         <Grid Grid.Row="1">
             <WebView Source="{Binding CurrentUri}"  x:Name="WebView" Visibility="Visible" />

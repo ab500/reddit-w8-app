@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Messaging;
+using RedditStoreApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -56,6 +57,11 @@ namespace RedditStoreApp.Views
                     }
                 }
             });
+
+            this.WebView.LoadCompleted += delegate
+            {
+                ((BrowserViewModel)this.DataContext).PushUri(this.WebView.Source);
+            };
         }
 
         /// <summary>
