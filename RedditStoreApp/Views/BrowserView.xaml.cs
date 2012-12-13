@@ -29,6 +29,9 @@ namespace RedditStoreApp.Views
         public BrowserView()
         {
             this.InitializeComponent();
+
+            // Handles the display of XAML elements overtop of
+            // the HTML webview.
             Messenger.Default.Register<OverlayDialogMessage>(this, async (msg) =>
             {
                 if (msg.Showing)
@@ -60,8 +63,12 @@ namespace RedditStoreApp.Views
 
             this.WebView.LoadCompleted += delegate
             {
-                ((BrowserViewModel)this.DataContext).PushUri(this.WebView.Source);
+                if (this.WebView.Source != null)
+                {
+                    ((BrowserViewModel)this.DataContext).PushNavigatedUri(this.WebView.Source);
+                }
             };
+
         }
 
         /// <summary>

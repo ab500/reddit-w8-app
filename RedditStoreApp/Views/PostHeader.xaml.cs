@@ -35,6 +35,10 @@ namespace RedditStoreApp.Views
                 if (msg.PropertyName == "CurrentPost")
                 {
                     UpdatePosition(((MainViewModel)this.DataContext).IsShowingComments);
+                    if (Row5Piece.Items.Count > 0)
+                    {
+                        Row5Piece.ScrollIntoView(Row5Piece.Items[0], ScrollIntoViewAlignment.Default);
+                    }
                 }
             });
 

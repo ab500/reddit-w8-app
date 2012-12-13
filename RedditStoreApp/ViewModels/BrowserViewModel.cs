@@ -33,10 +33,10 @@ namespace RedditStoreApp.ViewModels
 
             Messenger.Default.Register<PropertyChangedMessage<PostViewModel>>(this, (msg) =>
             {
-                if (!msg.NewValue.IsSelf)
+                if (!msg.NewValue.IsSelf && msg.PropertyName == "CurrentPost")
                 {
                     SetUri(msg.NewValue.Link);
-                    this._rootUri = this.CurrentUri;
+                    this._rootUri = msg.NewValue.Link;
                 }
             });
 
@@ -62,15 +62,24 @@ namespace RedditStoreApp.ViewModels
 
         private void GoBackAction()
         {
-            if (_historyStack.Count > 0)
+            if (_historyStack.Count > 1)
             {
-                SetUri(_historyStack.Pop());
+                _historyStack.Pop();
+                SetUri(_historyStack.Peek());
             }
         }
 
-        public void PushUri(Uri uri)
+        /// <summary>
+        /// Pushes a URI that was clicked on in the browser window onto the
+        /// stack to give us a nice back history. URIs set by changing the
+        /// current post are not recorded with this function.
+        /// </summary>
+        public void PushNavigatedUri(Uri uri)
         {
-            _historyStack.Push(uri);
+            if (this.CurrentUri != uri)
+            {
+                _historyStack.Push(uri);
+            }
         }
 
         private void SetUri(Uri uri)
@@ -97,6 +106,7 @@ namespace RedditStoreApp.ViewModels
                 }
             }
 
+            _historyStack.Push(uri);
             this.CurrentUri = finalUri;
         }
 
