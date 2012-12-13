@@ -26,6 +26,11 @@ namespace RedditStoreApp.ViewModels
             _post = post;
             _comments = new FlatCommentCollection(_post.Comments);
 
+            _comments.EditBoxAdded += delegate(object sender, EditBoxAddedEventArgs e)
+            {
+                this.CurrentEditBox = e.NewCommentViewModel;
+            };
+
             _upvote = new RelayCommand(UpvoteAction);
             _downvote = new RelayCommand(DownvoteAction);
             _addComment = new RelayCommand(AddCommentAction);
@@ -67,7 +72,7 @@ namespace RedditStoreApp.ViewModels
 
         private void AddCommentAction()
         {
-            this.CurrentEditBox = _comments.AddReplyBox(null);
+            _comments.AddReplyBox(null);
         }
 
         public NewCommentViewModel CurrentEditBox

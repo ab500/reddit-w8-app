@@ -9,8 +9,28 @@ using System.Threading.Tasks;
 
 namespace RedditStoreApp.ViewModels
 {
-    public class FlatCommentCollection: ObservableCollection<FlatCommentCollectionItem>
+    public class EditBoxAddedEventArgs : EventArgs
     {
+        private NewCommentViewModel _newCommentViewModel;
+
+        public EditBoxAddedEventArgs(NewCommentViewModel ncvm)
+        {
+            _newCommentViewModel = ncvm;
+        }
+
+        public NewCommentViewModel NewCommentViewModel
+        {
+            get
+            {
+                return _newCommentViewModel;
+            }
+        }
+    }
+
+    public class FlatCommentCollection : ObservableCollection<FlatCommentCollectionItem>
+    {
+        public event EventHandler<EditBoxAddedEventArgs> EditBoxAdded;
+
         Listing<Comment> _root;
 
         public FlatCommentCollection(Listing<Comment> root)
@@ -19,20 +39,26 @@ namespace RedditStoreApp.ViewModels
             Initialize();
         }
 
-        public NewCommentViewModel AddReplyBox(FlatCommentCollectionItem insertBefore)
+        public void AddReplyBox(FlatCommentCollectionItem insertBefore)
         {
-            var ncvm = new NewCommentViewModel("", 0, this);
+            NewCommentViewModel ncvm = null;
 
             if (insertBefore == null)
             {
+                ncvm = new NewCommentViewModel("", 0, this);
                 this.Insert(0, ncvm);
             }
             else
             {
-                this.Insert(this.IndexOf(insertBefore)+1, ncvm);
+                int newIndentLevel = ((CommentViewModel)insertBefore).IndentLevel + 1;
+                ncvm = new NewCommentViewModel("", newIndentLevel, this);
+                this.Insert(this.IndexOf(insertBefore) + 1, ncvm);
             }
 
-            return ncvm;
+            if (EditBoxAdded != null)
+            {
+                EditBoxAdded(this, new EditBoxAddedEventArgs(ncvm));
+            }
         }
 
         private void Initialize()
@@ -60,7 +86,7 @@ namespace RedditStoreApp.ViewModels
 
         private void AddCommentToList(Comment comment, int indentLevel, FlatCommentCollectionItem insertBefore)
         {
-            CommentViewModel cvm = new CommentViewModel(comment, indentLevel);
+            CommentViewModel cvm = new CommentViewModel(comment, indentLevel, this);
 
             if (insertBefore != null)
             {
@@ -75,7 +101,8 @@ namespace RedditStoreApp.ViewModels
         private void AddGetMoreToList(Listing<Comment> listing, int indentLevel, FlatCommentCollectionItem insertBefore)
         {
             MoreActionViewModel mavm = new MoreActionViewModel(listing, indentLevel, this);
-             if (insertBefore != null)
+
+            if (insertBefore != null)
             {
                 this.Insert(IndexOf(insertBefore), mavm);
             }

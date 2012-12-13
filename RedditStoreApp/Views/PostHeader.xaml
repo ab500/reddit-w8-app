@@ -49,9 +49,9 @@
                             </StackPanel>
                         </Grid>
                         <StackPanel VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding IsSelected, Converter={StaticResource VisibilityConverter}}">
-                            <Button Margin="5,10,5,0" Style="{StaticResource ReplyButtonStyle}"  />
-                            <Button Margin="5,10,5,0" Style="{StaticResource UpvoteButtonStyle}" />
-                            <Button Margin="5,10,5,0" Style="{StaticResource DownvoteButtonStyle}" />
+                            <Button Margin="5,10,5,0" Command="{Binding AddComment}" Style="{StaticResource ReplyButtonStyle}"  />
+                            <Button Margin="5,10,5,0" Command="{Binding Upvote}" Style="{StaticResource UpvoteButtonStyle}" />
+                            <Button Margin="5,10,5,0" Command="{Binding Downvote}" Style="{StaticResource DownvoteButtonStyle}" />
                         </StackPanel>
                     </Grid>
                 </Border>
