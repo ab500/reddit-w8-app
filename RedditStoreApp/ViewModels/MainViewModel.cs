@@ -48,6 +48,14 @@ namespace RedditStoreApp.ViewModels
                 }
             });
 
+            Messenger.Default.Register<LinkClickedMessage>(this, (msg) =>
+            {
+                if (this.IsShowingComments)
+                {
+                    ChangeViewAction();
+                }
+            });
+
             _changeView = new RelayCommand(ChangeViewAction);
         }
 

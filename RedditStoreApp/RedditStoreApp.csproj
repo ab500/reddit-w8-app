@@ -119,8 +119,11 @@
     <Compile Include="Data\Model\Thing.cs" />
     <Compile Include="DialogMessage.cs" />
     <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="Helpers\HtmlToRtfConverter.cs" />
     <Compile Include="Helpers\INavigationService.cs" />
+    <Compile Include="Helpers\MarkdownSharp.cs" />
     <Compile Include="Helpers\NavigationService.cs" />
+    <Compile Include="LinkClickedMessage.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

@@ -8,6 +8,7 @@
     <Color x:Key="RedditDarkBackground">#C6C6C6</Color>
     <Color x:Key="RedditError">#FF1111</Color>    
 
+    <SolidColorBrush x:Key="LinkBrush" Color="{StaticResource RedditDarkBlue}" />
     <SolidColorBrush x:Key="ErrorTextBrush" Color="{StaticResource RedditError}" />
     <SolidColorBrush x:Key="HeaderBrush" Color="{StaticResource RedditBlue}" />
     <SolidColorBrush x:Key="FlyoutHeaderBrush" Color="{StaticResource RedditDarkBlue}" />

@@ -22,8 +22,6 @@ namespace RedditStoreApp.ViewModels
             _comments = new FlatCommentCollection(_post.Comments);
         }
 
-
-
         public bool IsLoading
         {
             get

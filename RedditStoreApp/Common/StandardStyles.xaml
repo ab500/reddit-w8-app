@@ -41,6 +41,8 @@
         <Setter Property="Typography.CaseSensitiveForms" Value="True"/>
     </Style>
 
+
+
     <Style x:Key="BaselineRichTextStyle" TargetType="RichTextBlock" BasedOn="{StaticResource BasicRichTextStyle}">
         <Setter Property="LineHeight" Value="20"/>
         <Setter Property="LineStackingStrategy" Value="BlockLineHeight"/>
@@ -150,7 +152,11 @@
         commands.
     -->
     <Style x:Key="TextButtonStyle" TargetType="ButtonBase">
-        <Setter Property="MinWidth" Value="0"/>
+        <Setter Property="FontSize" Value="{StaticResource ControlContentThemeFontSize}"/>
+        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}"/>
+         <Setter Property="Typography.StylisticSet20" Value="True"/>
+        <Setter Property="Typography.DiscretionaryLigatures" Value="True"/>
+        <Setter Property="Typography.CaseSensitiveForms" Value="True"/>        <Setter Property="MinWidth" Value="0"/>
         <Setter Property="MinHeight" Value="0"/>
         <Setter Property="Template">
             <Setter.Value>

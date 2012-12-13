@@ -39,6 +39,19 @@ namespace RedditStoreApp.ViewModels
                     this._rootUri = this.CurrentUri;
                 }
             });
+
+            Messenger.Default.Register<LinkClickedMessage>(this, (msg) =>
+            {
+                try
+                {
+                    Uri newUri = new Uri(msg.UriToNavigate, UriKind.Absolute);
+                    SetUri(newUri);
+                }
+                catch
+                {
+                    System.Diagnostics.Debugger.Break();
+                }
+            });
         }
 
         private void GoHomeAction()
@@ -105,7 +118,7 @@ namespace RedditStoreApp.ViewModels
         {
             get
             {
-                return _browserState == ViewModels.BrowserState.Image? _currentUri : null;
+                return _browserState == ViewModels.BrowserState.Image ? _currentUri : null;
             }
         }
 

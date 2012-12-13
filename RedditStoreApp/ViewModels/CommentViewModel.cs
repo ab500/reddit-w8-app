@@ -29,10 +29,14 @@ namespace RedditStoreApp.ViewModels
         {
             get
             {
-                return _comment.Body;
+                return (new MarkdownSharp.Markdown(new MarkdownSharp.MarkdownOptions()
+                {
+                    AutoNewlines = false,
+                    AutoHyperlink = true
+                })).Transform(_comment.Body);
             }
         }
-
+       
         public string Author
         {
             get
