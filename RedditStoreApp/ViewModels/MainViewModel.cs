@@ -29,6 +29,7 @@ namespace RedditStoreApp.ViewModels
 
         private SubredditViewModel _currentSubreddit;
         private PostViewModel _currentPost;
+        private CommentViewModel _currentComment;
 
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
@@ -152,6 +153,31 @@ namespace RedditStoreApp.ViewModels
                     }
                 }
                 RaisePropertyChanged("CurrentPost", oldValue, _currentPost, true);
+            }
+        }
+
+        public CommentViewModel CurrentComment
+        {
+            get
+            {
+                return _currentComment;
+            }
+            set
+            {
+                CommentViewModel oldValue = _currentComment;
+                _currentComment = value;
+
+                if (oldValue != null && oldValue is CommentViewModel)
+                {
+                    oldValue.IsSelected = false;
+                }
+
+                if (_currentComment != null && _currentComment is CommentViewModel)
+                {
+                    _currentComment.IsSelected = true;
+                }
+
+                RaisePropertyChanged("CurrentComment", oldValue, _currentComment, true);
             }
         }
 

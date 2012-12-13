@@ -11,11 +11,26 @@ namespace RedditStoreApp.ViewModels
     {
         private Comment _comment;
         private int _indentLevel;
+        private bool _isSelected;
 
         public CommentViewModel(Comment c, int indentLevel) : base()
         {
             _comment = c;
             _indentLevel = indentLevel;
+            _isSelected = false;
+        }
+
+        public bool IsSelected
+        {
+            get
+            {
+                return _isSelected;
+            }
+            set
+            {
+                _isSelected = value;
+                RaisePropertyChanged("IsSelected");
+            }
         }
 
         public int IndentLevel
