@@ -19,6 +19,22 @@ namespace RedditStoreApp.ViewModels
             Initialize();
         }
 
+        public NewCommentViewModel AddReplyBox(FlatCommentCollectionItem insertBefore)
+        {
+            var ncvm = new NewCommentViewModel("", 0, this);
+
+            if (insertBefore == null)
+            {
+                this.Insert(0, ncvm);
+            }
+            else
+            {
+                this.Insert(this.IndexOf(insertBefore)+1, ncvm);
+            }
+
+            return ncvm;
+        }
+
         private void Initialize()
         {
             foreach (Comment comment in _root)

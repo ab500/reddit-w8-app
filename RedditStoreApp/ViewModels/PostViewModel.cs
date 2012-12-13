@@ -15,13 +15,77 @@ namespace RedditStoreApp.ViewModels
         private Post _post;
         private FlatCommentCollection _comments;
         private bool _isLoading;
+        private NewCommentViewModel _currentEditBox;
+
+        private RelayCommand _upvote;
+        private RelayCommand _downvote;
+        private RelayCommand _addComment;
 
         public PostViewModel(Post post)
         {
             _post = post;
             _comments = new FlatCommentCollection(_post.Comments);
+
+            _upvote = new RelayCommand(UpvoteAction);
+            _downvote = new RelayCommand(DownvoteAction);
+            _addComment = new RelayCommand(AddCommentAction);
         }
 
+        public RelayCommand Upvote
+        {
+            get
+            {
+                return _upvote;
+            }
+        }
+
+        public RelayCommand Downvote
+        {
+            get
+            {
+                return _downvote;
+            }
+        }
+
+        public RelayCommand AddComment
+        {
+            get
+            {
+                return _addComment;
+            }
+        }
+
+        private void UpvoteAction()
+        {
+
+        }
+
+        private void DownvoteAction()
+        {
+
+        }
+
+        private void AddCommentAction()
+        {
+            this.CurrentEditBox = _comments.AddReplyBox(null);
+        }
+
+        public NewCommentViewModel CurrentEditBox
+        {
+            get
+            {
+                return _currentEditBox;
+            }
+            set
+            {
+                if (_currentEditBox != null)
+                {
+                    // Removes the current edit box from the comment pane.
+                    _currentEditBox.Dismiss.Execute(null);
+                }
+                _currentEditBox = value;
+            }
+        }
         public bool IsLoading
         {
             get

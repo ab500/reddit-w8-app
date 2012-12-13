@@ -49,7 +49,7 @@
                             </StackPanel>
                         </Grid>
                         <StackPanel VerticalAlignment="Top" Orientation="Horizontal" HorizontalAlignment="Right" Visibility="{Binding IsSelected, Converter={StaticResource VisibilityConverter}}">
-                            <Button Margin="5,10,5,0" Style="{StaticResource ReplyButtonStyle}" />
+                            <Button Margin="5,10,5,0" Style="{StaticResource ReplyButtonStyle}"  />
                             <Button Margin="5,10,5,0" Style="{StaticResource UpvoteButtonStyle}" />
                             <Button Margin="5,10,5,0" Style="{StaticResource DownvoteButtonStyle}" />
                         </StackPanel>
@@ -77,7 +77,30 @@
             </Grid>
         </DataTemplate>
 
-        <selectors:CommentSelector x:Name="CommentSelector" MoreTemplate="{StaticResource MoreCommentTemplate}" StandardTemplate="{StaticResource StandardCommentTemplate}"/>
+        <DataTemplate x:Key="NewCommentTemplate">
+            <Grid Background="White" Height="200">
+                 <Border BorderBrush="{StaticResource ReplyHighlightBrush}" BorderThickness="4,0,0,0" Margin="{Binding IndentLevel,Converter={StaticResource IndentThicknessConverter}}">
+                    <Grid Background="White" Margin="15,0,15,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Margin="0,10,0,3" Text="Enter your comment below:" />
+                        <TextBox Text="{Binding Body}" Grid.Row="1" AcceptsReturn="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></TextBox>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Margin="0,0,0,10">
+                            <Button Command="{Binding Dismiss}" Content="Cancel" />
+                            <Button Command="{Binding Post}" Content="Post" />
+                        </StackPanel>
+                    </Grid>
+                </Border>               
+            </Grid>
+        </DataTemplate>
+
+        <selectors:CommentSelector x:Name="CommentSelector" NewCommentTemplate="{StaticResource NewCommentTemplate}" MoreTemplate="{StaticResource MoreCommentTemplate}" StandardTemplate="{StaticResource StandardCommentTemplate}"/>
     </Page.Resources>
 
     <Grid x:Name="MainGrid" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
@@ -130,7 +153,7 @@
                     <TextBlock Margin="2,10,0,0" Style="{StaticResource BasicTextStyle}" FontSize="14" Text="{Binding CurrentPost.Author}" Height="22" VerticalAlignment="Top"/>
                 </StackPanel>
                 <StackPanel Grid.Column="1" Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Margin="5,0,5,0" Style="{StaticResource ReplyButtonStyle}" />
+                    <Button Margin="5,0,5,0" Style="{StaticResource ReplyButtonStyle}" Command="{Binding CurrentPost.AddComment}"/>
                     <Button Margin="5,0,5,0" Style="{StaticResource UpvoteButtonStyle}" />
                     <Button Margin="5,0,5,0" Style="{StaticResource DownvoteButtonStyle}" />
                 </StackPanel>

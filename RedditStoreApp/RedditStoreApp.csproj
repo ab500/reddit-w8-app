@@ -134,6 +134,7 @@
     <Compile Include="ViewModels\FlatCommentCollection.cs" />
     <Compile Include="ViewModels\FlatCommentCollectionItem.cs" />
     <Compile Include="ViewModels\MoreActionViewModel.cs" />
+    <Compile Include="ViewModels\NewCommentViewModel.cs" />
     <Compile Include="ViewModels\PostViewModel.cs" />
     <Compile Include="ViewModels\SupportIncrementalLoadingWrapper.cs" />
     <Compile Include="Views\BrowserView.xaml.cs">

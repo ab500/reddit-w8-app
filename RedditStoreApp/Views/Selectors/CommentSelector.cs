@@ -13,6 +13,7 @@ namespace RedditStoreApp.Views.Selectors
     {
         private DataTemplate _moreTemplate;
         private DataTemplate _standardTemplate;
+        private DataTemplate _newCommentTemplate;
 
         public DataTemplate MoreTemplate
         {
@@ -38,11 +39,27 @@ namespace RedditStoreApp.Views.Selectors
             }
         }
 
+        public DataTemplate NewCommentTemplate
+        {
+            get
+            {
+                return _newCommentTemplate;
+            }
+            set
+            {
+                _newCommentTemplate = value;
+            }
+        }
+
         protected override Windows.UI.Xaml.DataTemplate SelectTemplateCore(object item, Windows.UI.Xaml.DependencyObject container)
         {
             if (item is MoreActionViewModel)
             {
                 return _moreTemplate;
+            }
+            else if (item is NewCommentViewModel)
+            {
+                return _newCommentTemplate;
             }
             else
             {
