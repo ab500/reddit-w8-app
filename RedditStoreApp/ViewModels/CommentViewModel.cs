@@ -47,7 +47,8 @@ namespace RedditStoreApp.ViewModels
                 return (new MarkdownSharp.Markdown(new MarkdownSharp.MarkdownOptions()
                 {
                     AutoNewlines = false,
-                    AutoHyperlink = true
+                    AutoHyperlink = true,
+                    EmptyElementSuffix = "/>"
                 })).Transform(_comment.Body);
             }
         }
