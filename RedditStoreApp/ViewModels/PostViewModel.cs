@@ -231,5 +231,13 @@ namespace RedditStoreApp.ViewModels
                 return _post.Url;
             }
         }
+
+        public bool? Likes
+        {
+            get
+            {
+                return _post.Likes;
+            }
+        }
     }
 }
